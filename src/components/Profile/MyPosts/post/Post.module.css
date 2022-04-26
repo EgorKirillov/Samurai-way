@@ -11,3 +11,7 @@
     border-radius: 40%;
     background-color: white;
 }
+.span img {
+    width: 20px;
+    height: 20px;
+}

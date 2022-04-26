@@ -11,10 +11,8 @@ export function MyPosts() {
         <button> Submitt </button>
         <div> new post</div>
         <div>
-          <Post />
-          <Post />
-          <Post />
-          <Post />
+          <Post message={"First post "} likeCount={55}/>
+          <Post message={"It's my second post "} likeCount={12}/>
 
         </div>
     </div>
