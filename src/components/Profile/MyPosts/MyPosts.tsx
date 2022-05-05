@@ -3,16 +3,20 @@ import s from "./MyPosts.module.css"
 import {Post} from "./post/Post";
 
 export function MyPosts() {
-    return <div>
+    return <div className={s.postsBlocks}>
 
-        <div>my post</div>
-        <textarea> </textarea>
-        <button> Add </button>
-        <button> Submitt </button>
-        <div> new post</div>
+        <h3>my post</h3>
         <div>
-          <Post message={"First post "} likeCount={55}/>
-          <Post message={"It's my second post "} likeCount={12}/>
+            <textarea> </textarea>
+        </div>
+        <div>
+            <button> Add</button>
+            <button> clear</button>
+        </div>
+        <div> new post</div>
+        <div className={s.post}>
+            <Post message={"First post "} likeCount={55}/>
+            <Post message={"It's my second post "} likeCount={12}/>
 
         </div>
     </div>
