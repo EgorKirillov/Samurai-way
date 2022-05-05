@@ -1,3 +1,21 @@
 .content {
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+    padding: 0.5em;
+}
 
+.dialogList {
+
+}
+
+.dialog {
+    padding: 10px;
+}
+
+.messageList {
+
+}
+
+.message {
+    padding: 0.3em;
 }
