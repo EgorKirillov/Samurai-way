@@ -6,18 +6,20 @@
     /* src: url(https://fonts.googleapis.com/css2?family=Cabin:wdth,wght@90,400&display=swap);
     font-family: Pompadur; !* Имя шрифта *!
     src: url(fonts/pompadur.ttf); !* Путь к файлу со шрифтом *!*/
-    padding: 10px 0px;
+    padding: 20px 10px;
+
 }
-.item {
-    /*color: cadetblue;*/
+.item a{
+    color: white;
     height: 20px;
     /*border: 1px ;*/
     /*box-shadow: 8px 8px 5px #444;*/
-    padding: 5px 10px;
+    padding: 10px 10px;
+    text-decoration: none;  /* cсылка без подчеркивания*/
     /*background-image: linear-gradient(180deg, #fff, #ddd 40%, #ccc);*/
 }
-.active {
+.item a.active{
 
-
-    background-color: gold;
+    color: gold;
+    /*background-color: greenyellow;*/
 }

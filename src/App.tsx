@@ -13,7 +13,7 @@ import {Settings} from "./components/settings/settings";
 
 function App() {
     return (
-        <BrowserRouter>
+        <BrowserRouter >
             <div className={'app-wrapper'}>
 
                 <Header/>
