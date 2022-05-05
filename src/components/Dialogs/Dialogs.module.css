@@ -10,6 +10,10 @@
 
 .dialog {
     padding: 10px;
+    color: darkgreen;
+}
+.activeDialog{
+    color: rebeccapurple;
 }
 
 .messageList {
