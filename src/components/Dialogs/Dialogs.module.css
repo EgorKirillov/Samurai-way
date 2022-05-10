@@ -5,19 +5,30 @@
 }
 
 .dialogList {
-
+    color: white;
+    text-decoration: none;
 }
 
+.dialogList a{
+    color: white;
+    text-decoration: none;
+
+}
+.dialogList a.dialogListActive {
+    color: gold;
+    text-decoration: none;
+}
 .dialog {
     padding: 10px;
     color: darkgreen;
 }
-.activeDialog{
+
+.activeDialog {
     color: rebeccapurple;
 }
 
 .messageList {
-
+    color: white;
 }
 
 .message {

@@ -6,51 +6,58 @@ type PropsDialogItemTypes = {
     linkID: number,
     userName: string
 }
+type PropsMessageTypes = {
+    messageText: string
+}
 
 const DialogItem = (props: PropsDialogItemTypes) => {
     return (
         <div className={s.dialog + ' ' + s.activeDialog}>
-            <NavLink to={"/dialogs/" + props.linkID}> {props.userName} </NavLink>
+            <NavLink to={"/dialogs/" + props.linkID} activeClassName={s.dialogListActive}> {props.userName} </NavLink>
         </div>
     )
 }
-type PropsMessageTypes = {
-    MessageText:string
-}
-const Message = (props:PropsMessageTypes) => {
+
+const Message = (props: PropsMessageTypes) => {
     return (
-        <div className={s.message}>{props.MessageText}</div>
+        <div className={s.message}>{props.messageText}</div>
     )
 }
-
-
-
-
 export const Dialogs = () => {
-    return (
+    const dialogsData/*: Array<PropsDialogItemTypes>*/ = [
+        {id: 1, user: 'Egor'},
+        {id: 2, user: 'Vlad'},
+        {id: 3, user: 'Sasha'},
+        {id: 4, user: 'Sveta'},
+        {id: 5, user: 'Dim'},
+        {id: 6, user: 'Serg'},
+        {id: 7, user: 'Mark'},
+        {id: 71, user: 'Mark'},
+        {id: 8, user: 'Player one'}
+    ]
 
+    const messagesData = [
+        {messageText: "Hi!"},
+        {messageText: "Hello!!"},
+        {messageText: "yo"},
+        {messageText: "sdfl dj"},
+        {messageText: "||||||||||||||"},
+        {messageText: "Zelt"},
+        {messageText: "Zelt"},
+        {messageText: "Zelt"},
+
+    ]
+
+    let dialogElements = dialogsData.map(dialog => <DialogItem linkID={dialog.id} userName={dialog.user}/>)
+    let messageElements = messagesData.map(message => <Message messageText={message.messageText}/>)
+    return (
         <div className={s.content}>
             <div className={s.dialogList}>
-                <DialogItem linkID={1} userName={'User 1'}/>
-                <DialogItem linkID={2} userName={'User 2'}/>
-                <DialogItem linkID={3} userName={'User 3'}/>
-                <DialogItem linkID={4} userName={'User 4'}/>
-                <DialogItem linkID={5} userName={'User 5'}/>
-                <DialogItem linkID={6} userName={'User 6'}/>
+                {dialogElements}
             </div>
-
             <div className={s.messageList}>
-                <Message MessageText={"Hello!"}/>
-                <Message MessageText={"Hi!"}/>
-                <Message MessageText={"yo"}/>
-                <Message MessageText={"sdfl dj"}/>
-                <Message MessageText={"||||||||||||||||||"}/>
-
-
-
+                {messageElements}
             </div>
-
-
         </div>
     );
 }
