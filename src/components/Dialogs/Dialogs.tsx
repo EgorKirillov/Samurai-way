@@ -1,29 +1,34 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+/*import {NavLink} from 'react-router-dom';*/
 import s from './Dialogs.module.css'
+import { DialogItem } from './DialogsItms/DialogItems';
+import { Message } from './Messages/Mesages';
 
-type PropsDialogItemTypes = {
+/*type PropsDialogItemTypes = {
     linkID: number,
     userName: string
-}
+}*/
+/*
 type PropsMessageTypes = {
     messageText: string
 }
+*/
 
-const DialogItem = (props: PropsDialogItemTypes) => {
+/*const DialogItem = (props: PropsDialogItemTypes) => {
     return (
         <div className={s.dialog + ' ' + s.activeDialog}>
             <NavLink to={"/dialogs/" + props.linkID} activeClassName={s.dialogListActive}> {props.userName} </NavLink>
         </div>
     )
-}
-
+}*/
+/*
 const Message = (props: PropsMessageTypes) => {
     return (
         <div className={s.message}>{props.messageText}</div>
     )
-}
+}*/
 export const Dialogs = () => {
+
     const dialogsData/*: Array<PropsDialogItemTypes>*/ = [
         {id: 1, user: 'Egor'},
         {id: 2, user: 'Vlad'},
