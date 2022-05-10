@@ -11,7 +11,31 @@ import {Music} from "./components/music";
 import {Settings} from "./components/settings/settings";
 
 
-function App() {
+export type MessageTypes = {
+    messageText: string
+}
+
+export type DialogItemTypes = {
+    linkID: number,
+    userName: string
+}
+export type MyPostsType = {
+    id: number,
+    postText: string,
+    likeCount: number
+}
+
+type AppPropsType = {
+    dialogsData: Array<DialogItemTypes>
+    messagesData: Array<MessageTypes>
+    posts:Array<MyPostsType>
+}
+
+function App(props:AppPropsType) {
+
+
+
+
     return (
         <BrowserRouter >
             <div className={'app-wrapper'}>
@@ -20,8 +44,13 @@ function App() {
                 <Navbar/>
 
                 <div className={'app-wrapper-content'}>
-                    <Route path={'/dialogs'} component={Dialogs}/>
-                    <Route path={'/profile'} component={Profile}/>
+                    <Route path={'/dialogs'} render={
+                        ()=><Dialogs dialogsData={props.dialogsData}
+                                     messagesData={props.messagesData} />
+                    }/>
+                    <Route path={'/profile'} render={
+                        ()=> <Profile posts={props.posts} />
+                    }/>
                     <Route path={'/news'} component={News}/>
                     <Route path={'/music'} component={Music}/>
                     <Route path={'/settings'} component={Settings}/>

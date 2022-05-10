@@ -1,12 +1,9 @@
 import React from "react";
 import s from "./MyPosts.module.css"
 import {Post} from "./post/Post";
+import {MyPostsType} from "../../../App";
 
-type MyPostsType = {
-    id: number,
-    postText: string,
-    likeCount: number
-}
+
 type PropsMyPostsType = {
     posts: Array<MyPostsType>
 }
