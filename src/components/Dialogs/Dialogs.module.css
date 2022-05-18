@@ -2,29 +2,36 @@
     display: grid;
     grid-template-columns: 2fr 10fr;
     padding: 0.5em;
+
 }
 
 .dialogList {
-    color: white;
+ /*   color: white;
     text-decoration: none;
+*/
 }
 
 .dialogList a{
     color: white;
     text-decoration: none;
+    vertical-align: 50%;
 
-}
+  }
 .dialogList a.dialogListActive {
     color: gold;
     text-decoration: none;
+
 }
 .dialog {
     padding: 10px;
-    color: darkgreen;
+}
+.dialog img{
+    width: 40px;
+    height: 40px;
 }
 
 .activeDialog {
-    color: rebeccapurple;
+    /*color: greenyellow;*/
 }
 
 .messageList {

@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import {state} from './stateApp'
 
+/*
 const dialogsData = [
     {linkID: 1, userName: 'Egor'},
     {linkID: 2, userName: 'Vlad'},
@@ -37,12 +39,12 @@ const posts = [
     {id: 16, postText: "And Last post ", likeCount: 35},
     {id: 17, postText: "Lastest post ", likeCount: 99}
 ]
+*/
 
 
 ReactDOM.render(
-    <App dialogsData={dialogsData}
-         messagesData={messagesData}
-         posts={posts}
+    <App profilePage={state.profilePage}
+         dialogsPage={state.dialogsPage}
     />,
   document.getElementById('root')
 );

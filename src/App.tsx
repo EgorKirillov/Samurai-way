@@ -9,53 +9,28 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./components/news/news";
 import {Music} from "./components/music";
 import {Settings} from "./components/settings/settings";
+import {AppStateType, state} from "./stateApp"
 
-
-export type MessageTypes = {
-    messageText: string
-}
-
-export type DialogItemTypes = {
-    linkID: number,
-    userName: string
-}
-export type MyPostsType = {
-    id: number,
-    postText: string,
-    likeCount: number
-}
-
-type AppPropsType = {
-    dialogsData: Array<DialogItemTypes>
-    messagesData: Array<MessageTypes>
-    posts:Array<MyPostsType>
-}
-
-function App(props:AppPropsType) {
-
-
-
+function App(props: AppStateType) {
 
     return (
-        <BrowserRouter >
+        <BrowserRouter>
             <div className={'app-wrapper'}>
-
                 <Header/>
                 <Navbar/>
 
                 <div className={'app-wrapper-content'}>
                     <Route path={'/dialogs'} render={
-                        ()=><Dialogs dialogsData={props.dialogsData}
-                                     messagesData={props.messagesData} />
+                        () => <Dialogs dialogsData={props.dialogsPage.dialogsData}
+                                       messagesData={props.dialogsPage.messagesData}/>
                     }/>
                     <Route path={'/profile'} render={
-                        ()=> <Profile posts={props.posts} />
+                        () => <Profile posts={props.profilePage.posts}/>
                     }/>
                     <Route path={'/news'} component={News}/>
                     <Route path={'/music'} component={Music}/>
                     <Route path={'/settings'} component={Settings}/>
                 </div>
-
 
 
             </div>

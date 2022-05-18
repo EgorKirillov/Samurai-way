@@ -2,14 +2,9 @@ import React from "react";
 import s from "./Profile.module.css"
 import {MyPosts} from "./MyPosts/MyPosts";
 import {PropfileInfo} from "./ProfileInfo/PropfileInfo";
-import {MyPostsType} from "../../App";
+import {ProfilePageType} from "../../stateApp";
 
-
-type ProfilePropsTypes = {
-    posts: Array<MyPostsType>
-}
-
-export function Profile(props:ProfilePropsTypes) {
+export function Profile(props:ProfilePageType) {
     return <div className={s.content}>
         <PropfileInfo/>
         <MyPosts posts={props.posts}/>

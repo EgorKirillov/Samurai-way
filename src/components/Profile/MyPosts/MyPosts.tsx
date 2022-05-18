@@ -1,16 +1,11 @@
 import React from "react";
 import s from "./MyPosts.module.css"
 import {Post} from "./post/Post";
-import {MyPostsType} from "../../../App";
+import { ProfilePageType} from "../../../stateApp";
 
+export function MyPosts(props: ProfilePageType) {
 
-type PropsMyPostsType = {
-    posts: Array<MyPostsType>
-}
-
-export function MyPosts(props: PropsMyPostsType) {
-
-    const postsElements = props.posts.map(p => <Post message={p.postText} likeCount={p.likeCount}/>)
+    const postsElements = props.posts.map(p => <Post id={p.id} postText={p.postText} likeCount={p.likeCount}/>)
 
     return <div className={s.postsBlocks}>
         <h3>my post</h3>
