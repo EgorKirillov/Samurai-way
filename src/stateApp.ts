@@ -1,7 +1,6 @@
 export type MessageTypes = {
     messageText: string
 }
-
 export type DialogItemTypes = {
     linkID: number
     userName: string
@@ -19,7 +18,6 @@ export type DialogPagesType = {
 export type ProfilePageType = {
     posts: Array<MyPostsType>
 }
-
 export type AppStateType = {
     dialogsPage: DialogPagesType
     profilePage: ProfilePageType
