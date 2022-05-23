@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from './DialogsItms/DialogItems';
 import {Message} from './Messages/Mesages';
-import {DialogPagesType} from "../../stateApp";
+import {DialogPagesType} from "../../Redux/stateApp";
 import {InputAndButton} from './Messages/InputAndBatton';
 
 

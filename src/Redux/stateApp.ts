@@ -17,7 +17,7 @@ export type DialogPagesType = {
 }
 export type ProfilePageType = {
     posts: Array<MyPostsType>
-}
+   }
 export type AppStateType = {
     dialogsPage: DialogPagesType
     profilePage: ProfilePageType
@@ -62,4 +62,7 @@ export const state:AppStateType = {
         ]
     }
 }
-
+export const addMyPost=(postText:string)=> {
+    state.profilePage.posts=[{id: 18, postText: postText, likeCount: 0},...state.profilePage.posts]
+    debugger
+}
