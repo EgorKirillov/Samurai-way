@@ -9,7 +9,7 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./components/news/news";
 import {Music} from "./components/music";
 import {Settings} from "./components/settings/settings";
-import {AppStateType, state} from "./stateApp"
+import {AppStateType} from "./stateApp"
 
 function App(props: AppStateType) {
 

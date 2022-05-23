@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from './DialogsItms/DialogItems';
 import {Message} from './Messages/Mesages';
 import {DialogPagesType} from "../../stateApp";
-import { InputAndButton } from './Messages/InputAndBatton';
-
+import {InputAndButton} from './Messages/InputAndBatton';
 
 
 export const Dialogs = (props: DialogPagesType) => {
@@ -18,10 +17,10 @@ export const Dialogs = (props: DialogPagesType) => {
     let [messageElements, setMessageElements] = useState(props.messagesData.map(message =>
         <Message messageText={message.messageText}/>))
 
-    const addMessage = (text:string) => {
-       // const adedMessage = { messageText: text }
-        setMessageElements([...messageElements, <Message messageText={text}/>])
+    const addMessage = (text: string) => {
+        // const adedMessage = { messageText: text }
 
+        setMessageElements([...messageElements, <Message messageText={text}/>])
     }
 
     return (
@@ -30,10 +29,10 @@ export const Dialogs = (props: DialogPagesType) => {
                 {dialogElements}
             </div>
             <div>
-            <div className={s.messageList}>
-                {messageElements}
-            </div>
-                <InputAndButton  key={'key of universal input'} callback={addMessage} />
+                <div className={s.messageList}>
+                    {messageElements}
+                </div>
+                <InputAndButton key={'key of universal input'} callback={addMessage}/>
             </div>
         </div>
     );
