@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from './DialogsItms/DialogItems';
 import {Message} from './Messages/Mesages';
-import {changeMessageText, DialogPagesType} from "../../Redux/stateApp";
+import {DialogPagesType} from "../../Redux/stateApp";
 import {InputAndButton} from './Messages/InputAndBatton';
 
 

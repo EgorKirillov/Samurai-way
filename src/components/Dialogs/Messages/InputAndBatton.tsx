@@ -1,4 +1,4 @@
-import React, {ChangeEvent, ChangeEventHandler, useRef, KeyboardEvent} from 'react';
+import React, {ChangeEvent, KeyboardEvent} from 'react';
 
 type inputAndButtonPropsType = {
     addMessage: (text: string) => void
@@ -13,18 +13,15 @@ export const InputAndButton = (props: inputAndButtonPropsType) => {
 
             if (props.valueTextarea.trim() !== "") {
                 props.addMessage(props.valueTextarea.trim())
-                props.changeMessageText("")
-            }
+                     } else {props.changeMessageText("") }
 
         }
         const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
             if (e.key === "Enter") {
                 if (props.valueTextarea.trim() !== "") {
                     props.addMessage(props.valueTextarea.trim())
-                    props.changeMessageText("")
-                } else {
-                    props.changeMessageText('')
                 }
+                props.changeMessageText("")
             }
         }
         const onChangeTextArea = (e: ChangeEvent<HTMLTextAreaElement>) => {

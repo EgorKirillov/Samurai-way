@@ -9,10 +9,17 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./components/news/news";
 import {Music} from "./components/music";
 import {Settings} from "./components/settings/settings";
-import {addMyPost, changeMessageText, addMessage, StateType} from "./Redux/stateApp"
+import {AppStateType} from "./Redux/stateApp"
 
+type AppPropsType = {
+    state: AppStateType
+    changeMessageText: (newText: string) => void
+    addMessageText: (messageText: string) => void
+    addMyPost: (postText: string) => void
 
-function App(props:StateType) {
+}
+
+function App(props: AppPropsType) {
 
     return (
         <BrowserRouter>
@@ -25,15 +32,15 @@ function App(props:StateType) {
                     <Route path={'/dialogs'} render={
                         () => <Dialogs
                             data={props.state.dialogsPage}
-                            changeMessageText={changeMessageText}
-                            addMessageText={addMessage}
+                            changeMessageText={props.changeMessageText}
+                            addMessageText={props.addMessageText}
 
                         />
                     }/>
 
                     <Route path={'/profile'} render={
                         () => <Profile posts={props.state.profilePage.posts}
-                                       addPost={addMyPost}/>
+                                       addPost={props.addMyPost}/>
                     }/>
 
                     <Route path={'/news'} component={News}/>
