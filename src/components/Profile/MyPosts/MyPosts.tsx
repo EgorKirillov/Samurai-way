@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import s from "./MyPosts.module.css"
 import {Post} from "./post/Post";
 import {MyPostsType, ProfilePageType} from "../../../Redux/stateApp";
@@ -12,14 +12,15 @@ export function MyPosts(props: PropsType ) {
     //let newPostElement=useRef<HTMLTextAreaElement>(null)
     let newPostElement = React.createRef<HTMLTextAreaElement>()
 
-    const postsElements = props.posts.map(p => <Post id={p.id} postText={p.postText} likeCount={p.likeCount}/>)
+    const [postsElements, setPostElements] = useState<Array<any>>(props.posts.map(p => <Post id={p.id} postText={p.postText} likeCount={p.likeCount}/>))
 
 
     const onClickAddButtonHandler = () => {
+       /* let newPosts=postsElements
         if (newPostElement.current) {
             props.addPost(newPostElement.current.value)
             newPostElement.current.value=""
-        }
+        }setPostElements(props.posts.map(p => <Post id={p.id} postText={p.postText} likeCount={p.likeCount}/>))*/
     }
 
     return <div className={s.postsBlocks}>
@@ -37,3 +38,4 @@ export function MyPosts(props: PropsType ) {
         </div>
     </div>
 }
+

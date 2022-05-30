@@ -1,30 +1,47 @@
-import React, {useRef, useState} from 'react';
+import React, {ChangeEvent, ChangeEventHandler, useRef, KeyboardEvent} from 'react';
 
 type inputAndButtonPropsType = {
-    callback: (text: string) => void
+    addMessage: (text: string) => void
+    valueTextarea: string
+    changeMessageText: (valueTextarea: string) => void
 }
 
 export const InputAndButton = (props: inputAndButtonPropsType) => {
-   // let [textValue, setTextValue] = useState("")
-    let texareaValue = useRef<HTMLTextAreaElement>(null)
 
-    const onClickAddMessage = () => {
-       // debugger
-        // console.log(texareaValue.current)
-        if (texareaValue.current  && texareaValue.current.value.trim() !== '' ) {
-            props.callback(texareaValue.current.value);
-        texareaValue.current.value = ''
+
+        const onClickAddMessage = () => {
+
+            if (props.valueTextarea.trim() !== "") {
+                props.addMessage(props.valueTextarea.trim())
+                props.changeMessageText("")
+            }
+
+        }
+        const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+            if (e.key === "Enter") {
+                if (props.valueTextarea.trim() !== "") {
+                    props.addMessage(props.valueTextarea.trim())
+                    props.changeMessageText("")
+                } else {
+                    props.changeMessageText('')
+                }
+            }
+        }
+        const onChangeTextArea = (e: ChangeEvent<HTMLTextAreaElement>) => {
+            props.changeMessageText(e.currentTarget.value)
+        }
+
+        return (
+            <div>
+                <textarea
+                    value={props.valueTextarea}
+                    onChange={onChangeTextArea}
+                    onKeyPress={onKeyPressHandler}
+                    id="123" cols={15} rows={3}> </textarea>
+                <button onClick={onClickAddMessage}>add message</button>
+
+            </div>
+        );
     }
-}
-return (
-    <div>
-
-        {/*<input type="text"/>*/}
-        <textarea  ref={texareaValue} name="add message" id="123" cols={15} rows={3}></textarea>
-        <button onClick={onClickAddMessage}>add message</button>
-
-    </div>
-);
-}
 ;
 

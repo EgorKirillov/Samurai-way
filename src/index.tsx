@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import {state} from './Redux/stateApp'
+import { rerenderEntireTree } from './render';
 
 /*
 const dialogsData = [
@@ -42,9 +43,5 @@ const posts = [
 */
 
 
-ReactDOM.render(
-    <App profilePage={state.profilePage}
-         dialogsPage={state.dialogsPage}
-    />,
-  document.getElementById('root')
-);
+
+rerenderEntireTree(state)

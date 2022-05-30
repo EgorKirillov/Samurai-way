@@ -2,25 +2,33 @@ import React, {useState} from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from './DialogsItms/DialogItems';
 import {Message} from './Messages/Mesages';
-import {DialogPagesType} from "../../Redux/stateApp";
+import {changeMessageText, DialogPagesType} from "../../Redux/stateApp";
 import {InputAndButton} from './Messages/InputAndBatton';
 
 
-export const Dialogs = (props: DialogPagesType) => {
+type DialogsPropsType = {
+    data: DialogPagesType
+    changeMessageText: (newText: string) => void
+    addMessageText: (messageText: string) => void
+
+}
+
+export const Dialogs = (props: DialogsPropsType) => {
 
 
-    let dialogElements = props.dialogsData.map(dialog =>
+    let dialogElements = props.data.dialogsData.map(dialog =>
         <DialogItem linkID={dialog.linkID}
                     userName={dialog.userName}
                     avatarLink={dialog.avatarLink}/>)
 
-    let [messageElements, setMessageElements] = useState(props.messagesData.map(message =>
-        <Message messageText={message.messageText}/>))
+
+
+
+    let messageElements = props.data.messagesData.map(message =>
+        <Message messageText={message.messageText}/>)
 
     const addMessage = (text: string) => {
-        // const adedMessage = { messageText: text }
-
-        setMessageElements([...messageElements, <Message messageText={text}/>])
+        props.addMessageText(text)
     }
 
     return (
@@ -32,7 +40,12 @@ export const Dialogs = (props: DialogPagesType) => {
                 <div className={s.messageList}>
                     {messageElements}
                 </div>
-                <InputAndButton key={'key of universal input'} callback={addMessage}/>
+                <InputAndButton
+                    changeMessageText={props.changeMessageText}
+                    key={'key of universal input'}
+                    valueTextarea={props.data.newMessageText}
+                    addMessage={addMessage}
+                />
             </div>
         </div>
     );
