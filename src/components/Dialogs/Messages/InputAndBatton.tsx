@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent} from 'react';
-import {ActionTypes, addMessageActionCreator, changeMessageTextActionCreator} from "../../../Redux/stateApp";
+import {addMessageActionCreator, changeMessageTextActionCreator} from '../../../Redux/dialogsReducer';
+import {ActionTypes} from "../../../Redux/stateApp";
 
 type inputAndButtonPropsType = {
     valueTextarea: string
