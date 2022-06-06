@@ -26,8 +26,6 @@ export type AppStateType = {
     dialogsPage: DialogPagesType
     profilePage: ProfilePageType
 }
-
-
 export type StoreType = {
     _state: AppStateType,
     _onChange: () => void,
@@ -39,27 +37,30 @@ export type StoreType = {
     subscribe: (observer: () => void) => void,
     dispatch: (action: any) => void,
 }
-
-type addMyPostActionType = {
-    type: "ADD-POST"
-}
-type changeNewPostTextActionType = {
-    type: "CHANGE-NEW-POST"
-    newPostText: string
-}
-type changeMessageTextActionType = {
-    type: "CHANGE-MESSAGE-TEXT"
-    newMessageText: string
-}
-type addMessageActionType = {
-    type: "ADD-MESSAGE"
-}
-
+// type addMyPostActionType = {
+//     type: "ADD-POST"
+// }
+// type changeNewPostTextActionType = {
+//     type: "CHANGE-NEW-POST"
+//     newPostText: string
+// }
+// type changeMessageTextActionType = {
+//     type: "CHANGE-MESSAGE-TEXT"
+//     newMessageText: string
+// }
+// type addMessageActionType = {
+//     type: "ADD-MESSAGE"
+// }
+//export type ActionTypes =
+//     addMyPostActionType
+//     | changeNewPostTextActionType
+//     | changeMessageTextActionType
+//     | addMessageActionType
 export type ActionTypes =
-    addMyPostActionType
-    | changeNewPostTextActionType
-    | changeMessageTextActionType
-    | addMessageActionType
+   ReturnType<typeof addMyPostActionCreator>
+|  ReturnType<typeof changeNewPostTextActionCreator>
+|  ReturnType<typeof changeMessageTextActionCreator>
+|  ReturnType<typeof addMessageActionCreator>
 
 export const store: StoreType = {
     _state: {
@@ -151,6 +152,22 @@ export const store: StoreType = {
 
     },
 }
+
+export const addMyPostActionCreator = () => ({
+    type: "ADD-POST",
+} as const)
+export const changeNewPostTextActionCreator = (newPostText:string) => ({
+    type: "CHANGE-NEW-POST",
+    newPostText: newPostText
+} as const)
+export const changeMessageTextActionCreator = (newMessageText:string) => ({
+    type: "CHANGE-MESSAGE-TEXT",
+    newMessageText: newMessageText,
+} as const)
+export const addMessageActionCreator = () => ({
+    type: "ADD-MESSAGE",
+} as const)
+
 
 /*
 export const state: AppStateType = {

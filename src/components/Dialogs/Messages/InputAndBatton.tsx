@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent} from 'react';
-import {ActionTypes} from "../../../Redux/stateApp";
+import {ActionTypes, addMessageActionCreator, changeMessageTextActionCreator} from "../../../Redux/stateApp";
 
 type inputAndButtonPropsType = {
     valueTextarea: string
@@ -11,20 +11,23 @@ export const InputAndButton = (props: inputAndButtonPropsType) => {
 
         const onClickAddMessage = () => {
             if (props.valueTextarea) {
-                props.dispatch({type: "ADD-MESSAGE"})
+                props.dispatch(addMessageActionCreator())
+                //props.dispatch({type: "ADD-MESSAGE"})
                 // props.addMessage()
             }
         }
         const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
             if (e.key === "Enter") {
                 if (props.valueTextarea.trim()) {
-                    props.dispatch({type: "ADD-MESSAGE"})
+                    props.dispatch(addMessageActionCreator())
+                    //props.dispatch({type: "ADD-MESSAGE"})
                     //props.addMessage()
                 }
             }
         }
         const onChangeTextArea = (e: ChangeEvent<HTMLTextAreaElement>) => {
-            props.dispatch({type: "CHANGE-MESSAGE-TEXT", newMessageText: e.currentTarget.value})
+            props.dispatch(changeMessageTextActionCreator(e.currentTarget.value))
+            //props.dispatch({type: "CHANGE-MESSAGE-TEXT", newMessageText: e.currentTarget.value})
             //props.changeMessageText(e.currentTarget.value)
         }
 
