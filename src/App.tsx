@@ -9,16 +9,12 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./components/news/news";
 import {Music} from "./components/Music/music";
 import {Settings} from "./components/settings/settings";
-import {AppStateType} from "./Redux/stateApp"
+import {ActionTypes, AppStateType} from "./Redux/stateApp"
 
 type AppPropsType = {
     state: AppStateType
-    changeMessageText: (newText: string) => void
-    addMessageText: (messageText: string) => void
-    addMyPost: () => void
-    changeNewPostText: (postText: string) => void
-
-}
+    dispatch: (action: ActionTypes)=> void
+  }
 
 function App(props: AppPropsType) {
 
@@ -32,27 +28,22 @@ function App(props: AppPropsType) {
 
 
                     <Route exact path="/">
-                        <Profile posts={props.state.profilePage.posts}
-                                 newPostValue={props.state.profilePage.newPostText}
-                                 addPost={props.addMyPost}
-                                 changeNewPostText={props.changeNewPostText}
+                        <Profile postsPage={props.state.profilePage}
+                                 dispatch = {props.dispatch}
                         />
                     </Route>
 
                     <Route path={'/dialogs'} render={
                         () => <Dialogs
                             data={props.state.dialogsPage}
-                            changeMessageText={props.changeMessageText}
-                            addMessageText={props.addMessageText}
+                            dispatch = {props.dispatch}
 
                         />
                     }/>
 
                     <Route path={'/profile'} render={
-                        () => <Profile posts={props.state.profilePage.posts}
-                                       newPostValue={props.state.profilePage.newPostText}
-                                       addPost={props.addMyPost}
-                                       changeNewPostText={props.changeNewPostText}
+                        () => <Profile postsPage={props.state.profilePage}
+                                       dispatch = {props.dispatch}
 
                         />
                     }/>

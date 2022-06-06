@@ -2,14 +2,13 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from './DialogsItms/DialogItems';
 import {Message} from './Messages/Mesages';
-import {DialogPagesType} from "../../Redux/stateApp";
+import {ActionTypes, DialogPagesType} from "../../Redux/stateApp";
 import {InputAndButton} from './Messages/InputAndBatton';
 
 
 type DialogsPropsType = {
     data: DialogPagesType
-    changeMessageText: (newText: string) => void
-    addMessageText: (messageText: string) => void
+    dispatch: (action: ActionTypes)=> void
 
 }
 
@@ -27,10 +26,6 @@ export const Dialogs = (props: DialogsPropsType) => {
     let messageElements = props.data.messagesData.map(message =>
         <Message messageText={message.messageText}/>)
 
-    const addMessage = (text: string) => {
-        props.addMessageText(text)
-    }
-
     return (
         <div className={s.content}>
             <div className={s.dialogList}>
@@ -41,10 +36,9 @@ export const Dialogs = (props: DialogsPropsType) => {
                     {messageElements}
                 </div>
                 <InputAndButton
-                    changeMessageText={props.changeMessageText}
                     key={'key of universal input'}
                     valueTextarea={props.data.newMessageText}
-                    addMessage={addMessage}
+                    dispatch={props.dispatch}
                 />
             </div>
         </div>

@@ -9,10 +9,7 @@ export const rerenderEntireTree = () => {
     ReactDOM.render(
         <App
             state={store.getState()}
-            changeMessageText={store.changeMessageText.bind(store)}
-            addMessageText={store.addMessage.bind(store)}
-            addMyPost={store.addMyPost.bind(store)}
-            changeNewPostText={store.changeNewPostText.bind(store)}
+            dispatch = {store.dispatch.bind(store)}
         />,
         document.getElementById('root')
     );

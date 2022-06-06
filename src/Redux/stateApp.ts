@@ -1,5 +1,3 @@
-
-
 export type MessageTypes = {
     messageText: string
 }
@@ -28,10 +26,7 @@ export type AppStateType = {
     dialogsPage: DialogPagesType
     profilePage: ProfilePageType
 }
-export type StateType = {
-    state: AppStateType
 
-}
 
 export type StoreType = {
     _state: AppStateType,
@@ -40,9 +35,31 @@ export type StoreType = {
     addMyPost: () => void,
     changeNewPostText: (postText: string) => void,
     changeMessageText: (newPostText: string) => void,
-    addMessage: (newText: string) => void,
+    addMessage: () => void,
     subscribe: (observer: () => void) => void,
+    dispatch: (action: any) => void,
 }
+
+type addMyPostActionType = {
+    type: "ADD-POST"
+}
+type changeNewPostTextActionType = {
+    type: "CHANGE-NEW-POST"
+    newPostText: string
+}
+type changeMessageTextActionType = {
+    type: "CHANGE-MESSAGE-TEXT"
+    newMessageText: string
+}
+type addMessageActionType = {
+    type: "ADD-MESSAGE"
+}
+
+export type ActionTypes =
+    addMyPostActionType
+    | changeNewPostTextActionType
+    | changeMessageTextActionType
+    | addMessageActionType
 
 export const store: StoreType = {
     _state: {
@@ -101,12 +118,12 @@ export const store: StoreType = {
         this._state.profilePage.newPostText = newPostText
         this._onChange()
     },
-    changeMessageText(newText: string) {
-        this._state.dialogsPage.newMessageText = newText
+    changeMessageText(newMessageText: string) {
+        this._state.dialogsPage.newMessageText = newMessageText
         this._onChange()
     },
-    addMessage(newText: string) {
-        this._state.dialogsPage.messagesData.push({messageText: newText})
+    addMessage() {
+        this._state.dialogsPage.messagesData.push({messageText: this._state.dialogsPage.newMessageText})
         this._state.dialogsPage.newMessageText = ""
         this._onChange()
     },
@@ -115,7 +132,24 @@ export const store: StoreType = {
     },
     subscribe(observer: () => void) {
         this._onChange = observer
-    }
+    },
+    dispatch(action: ActionTypes) {
+       switch (action.type) {
+           case "ADD-POST":
+               this.addMyPost()
+               break
+           case "ADD-MESSAGE":
+               this.addMessage()
+               break
+           case "CHANGE-MESSAGE-TEXT":
+               this.changeMessageText(action.newMessageText)
+               break
+           case "CHANGE-NEW-POST":
+               this.changeNewPostText(action.newPostText)
+               break
+       }
+
+    },
 }
 
 /*
