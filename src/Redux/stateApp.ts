@@ -1,6 +1,5 @@
-let rerenderEntireTree = () => {
 
-}
+
 export type MessageTypes = {
     messageText: string
 }
@@ -22,6 +21,8 @@ export type DialogPagesType = {
 }
 export type ProfilePageType = {
     posts: Array<MyPostsType>
+    newPostText: string
+
 }
 export type AppStateType = {
     dialogsPage: DialogPagesType
@@ -34,11 +35,12 @@ export type StateType = {
 
 export type StoreType = {
     _state: AppStateType,
-    getState:()=> AppStateType
-    addMyPost: (postText: string) => void,
-    changeMessageText: (newText: string) => void,
+    _onChange: () => void,
+    getState: () => AppStateType
+    addMyPost: () => void,
+    changeNewPostText: (postText: string) => void,
+    changeMessageText: (newPostText: string) => void,
     addMessage: (newText: string) => void,
-    _onChange:() => void,
     subscribe: (observer: () => void) => void,
 }
 
@@ -72,21 +74,31 @@ export const store: StoreType = {
         },
         profilePage: {
             posts: [
-                {id: 11, postText: "First post ", likeCount: 25},
-                {id: 12, postText: "Second post ", likeCount: 5},
-                {id: 13, postText: "Bad post ", likeCount: 11},
-                {id: 14, postText: "Good post ", likeCount: 12},
-                {id: 15, postText: "Last post give me LIKE", likeCount: 0},
-                {id: 16, postText: "And Last post ", likeCount: 35},
-                {id: 17, postText: "Lastest post ", likeCount: 99}
-            ]
+                {id: 0, postText: "First post ", likeCount: 25},
+                {id: 1, postText: "Second post ", likeCount: 5},
+                {id: 2, postText: "Bad post ", likeCount: 11},
+                {id: 3, postText: "Good post ", likeCount: 12},
+                {id: 4, postText: "Last post give me LIKE", likeCount: 0},
+                {id: 5, postText: "And Last post ", likeCount: 35},
+                {id: 6, postText: "Lastest post ", likeCount: 99}
+            ],
+            newPostText: "",
         }
     },
-    getState(){
+    getState() {
         return this._state
     },
-    addMyPost(postText: string) {
-        this._state.profilePage.posts = [{id: 18, postText: postText, likeCount: 0}, ...this._state.profilePage.posts]
+    addMyPost() {
+        this._state.profilePage.posts = [{
+            id: this._state.profilePage.posts.length,
+            postText: this._state.profilePage.newPostText,
+            likeCount: 0
+        }, ...this._state.profilePage.posts]
+        this._state.profilePage.newPostText = ""
+        this._onChange()
+    },
+    changeNewPostText(newPostText: string) {
+        this._state.profilePage.newPostText = newPostText
         this._onChange()
     },
     changeMessageText(newText: string) {

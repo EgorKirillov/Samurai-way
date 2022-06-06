@@ -7,7 +7,7 @@ import {Dialogs} from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
 
 import {News} from "./components/news/news";
-import {Music} from "./components/music";
+import {Music} from "./components/Music/music";
 import {Settings} from "./components/settings/settings";
 import {AppStateType} from "./Redux/stateApp"
 
@@ -15,7 +15,8 @@ type AppPropsType = {
     state: AppStateType
     changeMessageText: (newText: string) => void
     addMessageText: (messageText: string) => void
-    addMyPost: (postText: string) => void
+    addMyPost: () => void
+    changeNewPostText: (postText: string) => void
 
 }
 
@@ -29,6 +30,15 @@ function App(props: AppPropsType) {
 
                 <div className={'app-wrapper-content'}>
 
+
+                    <Route exact path="/">
+                        <Profile posts={props.state.profilePage.posts}
+                                 newPostValue={props.state.profilePage.newPostText}
+                                 addPost={props.addMyPost}
+                                 changeNewPostText={props.changeNewPostText}
+                        />
+                    </Route>
+
                     <Route path={'/dialogs'} render={
                         () => <Dialogs
                             data={props.state.dialogsPage}
@@ -40,7 +50,11 @@ function App(props: AppPropsType) {
 
                     <Route path={'/profile'} render={
                         () => <Profile posts={props.state.profilePage.posts}
-                                       addPost={props.addMyPost}/>
+                                       newPostValue={props.state.profilePage.newPostText}
+                                       addPost={props.addMyPost}
+                                       changeNewPostText={props.changeNewPostText}
+
+                        />
                     }/>
 
                     <Route path={'/news'} component={News}/>

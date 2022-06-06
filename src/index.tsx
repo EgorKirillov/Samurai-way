@@ -12,13 +12,11 @@ export const rerenderEntireTree = () => {
             changeMessageText={store.changeMessageText.bind(store)}
             addMessageText={store.addMessage.bind(store)}
             addMyPost={store.addMyPost.bind(store)}
-
-
+            changeNewPostText={store.changeNewPostText.bind(store)}
         />,
         document.getElementById('root')
     );
 }
 
 rerenderEntireTree()
-
 store.subscribe(rerenderEntireTree)

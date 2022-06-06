@@ -11,17 +11,20 @@ export const InputAndButton = (props: inputAndButtonPropsType) => {
 
         const onClickAddMessage = () => {
 
-            if (props.valueTextarea.trim() !== "") {
+            if (props.valueTextarea.trim()) {
                 props.addMessage(props.valueTextarea.trim())
-                     } else {props.changeMessageText("") }
+            } else {
+                // props.changeMessageText("")
+            }
 
         }
         const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
             if (e.key === "Enter") {
-                if (props.valueTextarea.trim() !== "") {
+                if (props.valueTextarea.trim()) {
                     props.addMessage(props.valueTextarea.trim())
+                    props.changeMessageText("")
                 }
-                props.changeMessageText("")
+                // props.changeMessageText("")
             }
         }
         const onChangeTextArea = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -31,6 +34,8 @@ export const InputAndButton = (props: inputAndButtonPropsType) => {
         return (
             <div>
                 <textarea
+
+                    placeholder={"enter your message"}
                     value={props.valueTextarea}
                     onChange={onChangeTextArea}
                     onKeyPress={onKeyPressHandler}
