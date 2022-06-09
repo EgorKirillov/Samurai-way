@@ -1,5 +1,5 @@
-import profileReducer, {ProfileReducerStateType} from "./profileReducer";
-import dialogsReducer, {DialogsReducerStateType} from "./dialogsReducer";
+import {ProfileReducerStateType} from "./profileReducer";
+import {DialogsReducerStateType} from "./dialogsReducer";
 
 export type MessageTypes = {
     messageText: string
@@ -37,6 +37,8 @@ export type StoreType = {
     dispatch: (action: ActionTypes) => void,
 }
 export type ActionTypes = ProfileReducerStateType | DialogsReducerStateType
+
+/*
 
 export const store: StoreType = {
     _state: {
@@ -94,3 +96,4 @@ export const store: StoreType = {
         this._onChange()
     },
 }
+*/
