@@ -30,8 +30,8 @@ export type AppStateType = {
     profilePage: ProfilePageType
 }
 export type StoreType = {
-    _state: AppStateType,
-    _onChange: () => void,
+    //_state: AppStateType,
+    //_onChange: () => void,
     getState: () => AppStateType
     subscribe: (observer: () => void) => void,
     dispatch: (action: ActionTypes) => void,

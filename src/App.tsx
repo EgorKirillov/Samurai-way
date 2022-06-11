@@ -9,9 +9,10 @@ import {Music} from "./components/Music/music";
 import {Settings} from "./components/settings/settings";
 import {Store} from "redux";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+import {StoreType} from "./Redux/store";
 
 type AppPropsType = {
-   store: Store
+   //store: StoreType
 }
 
 function App(props: AppPropsType) {
@@ -23,20 +24,23 @@ function App(props: AppPropsType) {
            <Navbar/>
            <div className={'app-wrapper-content'}>
               <Route exact path="/">
-                 <Profile postsPage={props.store.getState().profilePage}
-                          dispatch={props.store.dispatch}
-                 />
+                 <Profile/>
+                 {/*<Profile postsPage={props.store.getState().profilePage}*/}
+                 {/*         dispatch={props.store.dispatch}*/}
+                 {/*/>*/}
               </Route>
               <Route path={'/dialogs'} render={
-                 () => <DialogsContainer
-                   data={props.store.getState().dialogsPage}
-                   dispatch={props.store.dispatch}
-                 />
+                 ()=> <DialogsContainer />
+                 // () => <DialogsContainer
+                 //   data={props.store.getState().dialogsPage}
+                 //   dispatch={props.store.dispatch}
+                 // />
               }/>
               <Route path={'/profile'} render={
-                 () => <Profile postsPage={props.store.getState().profilePage}
-                                dispatch={props.store.dispatch}
-                 />
+                 ()=><Profile/>
+                 // () => <Profile postsPage={props.store.getState().profilePage}
+                 //                dispatch={props.store.dispatch}
+                 // />
               }/>
               
               <Route path={'/news'} component={News}/>
