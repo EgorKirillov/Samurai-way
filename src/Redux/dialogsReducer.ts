@@ -10,6 +10,7 @@ export const changeMessageTextActionCreator = (newMessageText: string) => ({
     type: "CHANGE-MESSAGE-TEXT",
     newMessageText: newMessageText,
 } as const)
+
 export const addMessageActionCreator = () => ({
     type: "ADD-MESSAGE",
 } as const)

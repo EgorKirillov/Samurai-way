@@ -39,7 +39,6 @@ export type StoreType = {
 export type ActionTypes = ProfileReducerStateType | DialogsReducerStateType
 
 /*
-
 export const store: StoreType = {
     _state: {
         dialogsPage: {

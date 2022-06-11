@@ -2,26 +2,30 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from './DialogsItms/DialogItems';
 import {Message} from './Messages/Mesages';
-import {ActionTypes, DialogPagesType} from "../../Redux/store";
+import {DialogItemTypes, MessageTypes} from "../../Redux/store";
 import {InputAndButton} from './Messages/InputAndBatton';
 
 
 type DialogsPropsType = {
-   data: DialogPagesType
-   dispatch: (action: ActionTypes) => void
+      newMessageTextValue: string
+   dialogsData: Array<DialogItemTypes>
+   messagesData: Array<MessageTypes>
+   changeNewMessageValue: (newMessageTextValue: string) => void
+   addNewMessage: () => void
+   
 }
 
 export const Dialogs = (props: DialogsPropsType) => {
    
    
-   let dialogElements = props.data.dialogsData.map(dialog =>
+   let dialogElements = props.dialogsData.map(dialog =>
      <DialogItem
        linkID={dialog.linkID}
        userName={dialog.userName}
        avatarLink={dialog.avatarLink}/>)
    
    
-   let messageElements = props.data.messagesData.map(message =>
+   let messageElements = props.messagesData.map(message =>
      <Message messageText={message.messageText}/>)
    
    return (
@@ -35,8 +39,9 @@ export const Dialogs = (props: DialogsPropsType) => {
            </div>
            <InputAndButton
              key={'key of universal input'}
-             valueTextarea={props.data.newMessageText}
-             dispatch={props.dispatch}
+             valueTextarea={props.newMessageTextValue}
+             addMessage={props.addNewMessage}
+             changeMessageValue={props.changeNewMessageValue}
            />
         </div>
      </div>
