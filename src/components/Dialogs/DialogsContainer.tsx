@@ -1,14 +1,15 @@
 import React from 'react';
-import {ActionTypes, DialogPagesType} from "../../Redux/store";
+
 import {Dialogs} from "./Dialogs";
 import {addMessageActionCreator, changeMessageTextActionCreator} from '../../Redux/dialogsReducer';
 
 import {connect} from "react-redux";
+import {AppStateType} from "../../Redux/redux-store";
 
-type DialogsPropsType = {
+// type DialogsPropsType = {
    // data: DialogPagesType
    // dispatch: (action: ActionTypes) => void
-}
+// }
 
 // export const DialogsContaine1r = (props: DialogsPropsType) => {
 //    return (
@@ -29,12 +30,12 @@ type DialogsPropsType = {
 //      </StoreContext.Consumer>
 //    )
 
-const mapStateToProps = (state: any) => { //// refactr
+const mapStateToProps = (state: AppStateType) => {
    return {
       dialogsPage: state.dialogsPage
    }
 }
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: any) => { //// refactr
    
    return {
       changeNewMessageValue: (text: string) => dispatch(changeMessageTextActionCreator(text)),
