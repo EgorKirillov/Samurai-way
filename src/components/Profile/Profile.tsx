@@ -3,7 +3,7 @@ import s from "./Profile.module.css"
 import {PropfileInfo} from "./ProfileInfo/PropfileInfo";
 import {ActionTypes, ProfilePageType} from "../../Redux/store";
 import { MyPostsConteiner } from "./MyPosts/MyPostsContainer";
-import { StoreContext } from "../../StoreContext";
+
 
 type PropsType = {
     // postsPage: ProfilePageType

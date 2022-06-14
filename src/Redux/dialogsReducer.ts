@@ -42,21 +42,19 @@ const initialStateDialogPage:DialogPagesType ={
         newMessageText: "text mess"
     }
 
-export const dialogsReducer = (state: DialogPagesType = initialStateDialogPage, action: DialogsReducerStateType) => {
-
-    function addMessage() {
-        state.messagesData.push({messageText: state.newMessageText})
-        state.newMessageText = ""
-    }
+export const dialogsReducer = (state: DialogPagesType = initialStateDialogPage, action: DialogsReducerStateType):DialogPagesType => {
 
     function changeMessageText(newMessageText: string) {
         state.newMessageText = newMessageText
     }
 
     switch (action.type) {
-        case "ADD-MESSAGE":
-            addMessage()
+        case "ADD-MESSAGE": {
+            const stateCopy = {...state}
+            state.messagesData.push({messageText: state.newMessageText})
+            state.newMessageText = ""
             break
+        }
         case "CHANGE-MESSAGE-TEXT":
             changeMessageText(action.newMessageText)
             break
