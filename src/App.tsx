@@ -7,15 +7,14 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./components/news/news";
 import {Music} from "./components/Music/music";
 import {Settings} from "./components/settings/settings";
-import {Store} from "redux";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
-import {StoreType} from "./Redux/store";
+import { UsersPageConteiner } from './components/Users/UsersPageConteiner';
 
-type AppPropsType = {
+// type AppPropsType = {
    //store: StoreType
-}
+// }
 
-function App(props: AppPropsType) {
+function App(/*props: AppPropsType*/) {
    
    return (
      <BrowserRouter>
@@ -42,7 +41,14 @@ function App(props: AppPropsType) {
                  //                dispatch={props.store.dispatch}
                  // />
               }/>
-              
+              <Route path={'/users'} render={
+                 ()=><UsersPageConteiner/>
+                 // () => <Profile postsPage={props.store.getState().profilePage}
+                 //                dispatch={props.store.dispatch}
+                 // />
+              }/>
+   
+   
               <Route path={'/news'} component={News}/>
               <Route path={'/music'} component={Music}/>
               <Route path={'/settings'} component={Settings}/>
