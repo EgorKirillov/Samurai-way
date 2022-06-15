@@ -3,6 +3,8 @@ import {addMyPostActionCreator, changeNewPostTextActionCreator} from "../../../R
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../Redux/redux-store";
+import {MyPostsType} from "../../../Redux/store";
+import {Dispatch} from "redux";
 
 
 // type PropsType = {
@@ -33,13 +35,23 @@ import {AppStateType} from "../../../Redux/redux-store";
 // )
 // }
 
-const mapStateToProps = (state: AppStateType) => { //// refactr
-   return {
+type MapStateToProps = {
+   posts: Array<MyPostsType>
+   newPostValue: string
+}
+type MapDispatchToProps = {
+   onClickAddPost: () => void
+   changeNewPostText: (text: string) => void
+}
+export type MyPostPropsFromConteinerType = MapStateToProps & MapDispatchToProps
+
+const mapStateToProps = (state: AppStateType) => {
+    return {
       posts: state.profilePage.posts,
       newPostValue: state.profilePage.newPostText,
    }
 }
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch) => {// import Dispatch from REDUX!!
    return {
       onClickAddPost: () => dispatch(addMyPostActionCreator()),
       changeNewPostText: (text: string) => dispatch(changeNewPostTextActionCreator(text))

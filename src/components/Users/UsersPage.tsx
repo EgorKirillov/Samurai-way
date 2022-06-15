@@ -1,15 +1,15 @@
 import React from 'react';
-import {UserPageStateType} from "../../Redux/usersReducer";
 import s from "./UserPage.module.css"
+import {MapDispatchPropType, MapStatePropType} from "./UsersPageConteiner";
 
 
-type UserPagePropsType = {
-   usersPage: UserPageStateType
-   onClickSetUsers: () => void
-   onClickFollow: (id: number) => void
-   onClickUnfollow: (id: number) => void
-   
-}
+// type UserPagePropsType = {
+//    usersPage: UserPageStateType
+//    onClickSetUsers: () => void
+//    onClickFollow: (id: number) => void
+//    onClickUnfollow: (id: number) => void
+//    }
+type UserPagePropsType = MapDispatchPropType & MapStatePropType
 
 export const UsersPage = (props: UserPagePropsType) => {
    return (

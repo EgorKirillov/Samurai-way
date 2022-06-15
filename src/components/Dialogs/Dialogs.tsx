@@ -2,19 +2,20 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from './DialogsItms/DialogItems';
 import {Message} from './Messages/Mesages';
-import {DialogItemTypes, DialogPagesType, MessageTypes} from "../../Redux/store";
 import {InputAndButton} from './Messages/InputAndBatton';
+import {DialogsFromConteinerType} from "./DialogsContainer";
 
 
-type DialogsPropsType = {
-   dialogsPage:DialogPagesType
-   // newMessageTextValue: string
-   // dialogsData: Array<DialogItemTypes>
-   // messagesData: Array<MessageTypes>
-   changeNewMessageValue: (newMessageTextValue: string) => void
-   addNewMessage: () => void
-   
-}
+type DialogsPropsType = DialogsFromConteinerType
+// {
+//    dialogsPage:DialogPagesType
+//    // newMessageTextValue: string
+//    // dialogsData: Array<DialogItemTypes>
+//    // messagesData: Array<MessageTypes>
+//    changeNewMessageValue: (newMessageTextValue: string) => void
+//    addNewMessage: () => void
+//
+// }
 
 export const Dialogs = (props: DialogsPropsType) => {
    
