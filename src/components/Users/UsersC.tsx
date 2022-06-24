@@ -28,6 +28,12 @@ class UsersC extends React.Component<UserPagePropsType> {
            this.props.getUsers(response.data.items)
         })
    }
+   componentDidMount() {
+      axios.get("https://social-network.samuraijs.com/api/1.0/users")
+        .then(response => {
+           this.props.getUsers(response.data.items)
+        })
+   }
    
    render = () => {
       return <div className={s.conteiner}>
