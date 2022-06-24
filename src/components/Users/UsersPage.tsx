@@ -62,7 +62,7 @@ export const UsersPage = (props: UserPagePropsType) => {
    const onClickHandler = () => {
       axios.get("https://social-network.samuraijs.com/api/1.0/users")
         .then(response => {
-           props.onClickSetUsers(response.data.items)
+           props.getUsers(response.data.items)
         })
    }
    
