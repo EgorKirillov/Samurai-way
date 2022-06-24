@@ -1,7 +1,6 @@
 import React, {ChangeEvent} from "react";
 import s from "./MyPosts.module.css"
 import {Post} from "./post/Post";
-import { MyPostsType } from "../../../Redux/store";
 import {MyPostPropsFromConteinerType} from "./MyPostsContainer";
 
 

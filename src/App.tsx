@@ -8,7 +8,7 @@ import {News} from "./components/news/news";
 import {Music} from "./components/Music/music";
 import {Settings} from "./components/settings/settings";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
-import { UsersPageConteiner } from './components/Users/UsersPageConteiner';
+import { UsersPageContainer } from './components/Users/UsersPageConteiner';
 
 // type AppPropsType = {
    //store: StoreType
@@ -42,7 +42,7 @@ function App(/*props: AppPropsType*/) {
                  // />
               }/>
               <Route path={'/users'} render={
-                 ()=><UsersPageConteiner/>
+                 ()=><UsersPageContainer/>
                  // () => <Profile postsPage={props.store.getState().profilePage}
                  //                dispatch={props.store.dispatch}
                  // />
