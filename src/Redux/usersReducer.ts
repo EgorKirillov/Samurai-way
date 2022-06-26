@@ -1,18 +1,19 @@
 export type LocationType = {
-   country: string,
-   city: string,
+   country: string
+   city: string
 }
 export type PhotosType = {
-   small: string,
-   large: string,
+   small: string
+   large: string
 }
 
 export type UserType = {
-   id: number,
-   name: string,
-   photos: PhotosType,
-   status: string,
-   followed: boolean,
+   id: number
+   name: string
+   photos: PhotosType
+   status: string
+   followed: boolean
+   
 //   location: LocationType,
 }
 
@@ -22,6 +23,7 @@ export type UserPageStateType = {
    totalPagesCount: number
    countUsersPerPage: number
    currentUsersPage: number
+   isFatching: boolean
    
 }
 
@@ -33,6 +35,7 @@ export type UsersReducerStateType =
   | ReturnType<typeof changeTotalUsersCountAC>
   | ReturnType<typeof changeTotalPagesCountAC>
   | ReturnType<typeof setUsersAC>
+  | ReturnType<typeof setIsFatchingValueAC>
 
 
 export const followAC = (id: number) => ({type: "CHANGE-ON-FOLLOW", id} as const)
@@ -48,6 +51,7 @@ export const changeTotalUsersCountAC = (totalUsersCount: number) => ({
 
 export const changeTotalPagesCountAC=(totalPagesCount:number)=>({type: "CHANGE-TOTAL-PAGES-COUNT" as const, totalPagesCount,})
 export const setUsersAC = (users: Array<UserType> ) => ({type: "SET-USERS" as const, users,})
+export const setIsFatchingValueAC = (isFatching: boolean ) => ({type: "SET-ISFATCHING-VALUE" as const, isFatching,})
 
 const fakeUsers: Array<UserType> = [
 //   {
@@ -90,6 +94,7 @@ const initialStateUsersPage: UserPageStateType = {
    totalPagesCount: 5,
    countUsersPerPage: 50,
    currentUsersPage: 2,
+   isFatching: false,
 }
 
 export const usersReducer = (state: UserPageStateType = initialStateUsersPage, action: UsersReducerStateType): UserPageStateType => {
@@ -139,6 +144,12 @@ export const usersReducer = (state: UserPageStateType = initialStateUsersPage, a
          return {
             ...state,
             totalPagesCount: action.totalPagesCount,
+         }
+      }
+      case "SET-ISFATCHING-VALUE":{
+         return {
+            ...state,
+            isFatching: action.isFatching
          }
       }
    }

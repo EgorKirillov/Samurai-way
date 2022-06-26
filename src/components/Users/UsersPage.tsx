@@ -2,7 +2,7 @@ import React from 'react';
 import s from "./UserPage.module.css"
 import userphoto from "./../../assets/images/user.png"
 import {UserType} from "../../Redux/usersReducer";
-
+import Preloader from "../common/Preloader/Preloader";
 
 type UserPagePropsType = {
    pagesArr: Array<number>
@@ -12,6 +12,7 @@ type UserPagePropsType = {
    onClickFollow: (id: number) => void
    onClickUnfollow: (id: number) => void
    onChangeCurrentUsersPage: (n: number) => void
+   isFatching: boolean
 }
 
 
@@ -31,7 +32,9 @@ const UsersPage = (props: UserPagePropsType) => {
         })}
         
         <div>{`total count=${props.totalUsersCount}`}</div>
-        {props.users.map(u => {
+      {props.isFatching
+        ?<Preloader/>
+        :props.users.map(u => {
            return <div className={s.oneUser} key={u.id}>
               <div className={s.oneUserAva}>
                  <img className={s.ava} src={u.photos.large !== null ? u.photos.large : userphoto} alt=""/>

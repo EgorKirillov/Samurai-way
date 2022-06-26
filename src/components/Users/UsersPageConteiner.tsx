@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {
    changeCurrentPageAC, changeTotalPagesCountAC,
    changeTotalUsersCountAC,
-   followAC,
+   followAC, setIsFatchingValueAC,
    setUsersAC,
    unfollowAC,
    UserType
@@ -21,6 +21,7 @@ export type MapDispatchPropType = {
    onClickUnfollow: (userid: number) => void
    changeTotalUsersCount: (totalUsersCount: number) => void
    changeTotalPagesCount: (totalPagesCount: number) => void
+   setIsFatchingValue: (isFatchung: boolean) => void
 }
 export type MapStatePropType = {
    users: Array<UserType>
@@ -28,6 +29,7 @@ export type MapStatePropType = {
    totalPagesCount: number
    countUsersPerPage: number
    currentUsersPage: number
+   isFatching: boolean
 }
 
 type UserPagePropsType = MapDispatchPropType & MapStatePropType
@@ -35,21 +37,24 @@ type UserPagePropsType = MapDispatchPropType & MapStatePropType
 class UsersC extends React.Component<UserPagePropsType> {
    
    componentDidMount() {
+      this.props.setIsFatchingValue(true)
       axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentUsersPage}&count=${this.props.countUsersPerPage}`)
         .then(response => {
            this.props.getUsers(response.data.items)
            this.props.changeTotalUsersCount(response.data.totalCount)
            this.props.changeTotalPagesCount(Math.ceil(response.data.totalCount / this.props.countUsersPerPage))
-           debugger
+           this.props.setIsFatchingValue(false)
         })
    }
    
    onChangeCurrentUsersPage = (pageNumber: number) => {
+      this.props.setIsFatchingValue(true)
       this.props.changeCurrentUserPage(pageNumber)
       axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.countUsersPerPage}`)
         .then(response => {
            this.props.getUsers(response.data.items)
            this.props.changeTotalUsersCount(response.data.totalCount)
+           this.props.setIsFatchingValue(false)
         })
    }
    
@@ -66,6 +71,7 @@ class UsersC extends React.Component<UserPagePropsType> {
                         onClickFollow={this.props.onClickFollow}
                         onClickUnfollow={this.props.onClickUnfollow}
                         totalUsersCount={this.props.totalUsersCount}
+                        isFatching={this.props.isFatching}
       />
    }
 }
@@ -78,6 +84,7 @@ const mapStateToProps = (state: AppStateType) => {
       totalPagesCount: state.usersPage.totalPagesCount,
       countUsersPerPage: state.usersPage.countUsersPerPage,
       currentUsersPage: state.usersPage.currentUsersPage,
+      isFatching:state.usersPage.isFatching,
    }
 }
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropType => { // import Dispatch from REDUX!!
@@ -88,6 +95,7 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropType => { // imp
       changeCurrentUserPage: (currentUserPage: number) => dispatch(changeCurrentPageAC(currentUserPage)),
       changeTotalUsersCount: (totalUsersCount: number) => dispatch(changeTotalUsersCountAC(totalUsersCount)),
       changeTotalPagesCount: (totalPagesCount: number) => dispatch(changeTotalPagesCountAC(totalPagesCount)),
+      setIsFatchingValue: (isFatchung: boolean) => dispatch(setIsFatchingValueAC(isFatchung)),
       
       
    }
