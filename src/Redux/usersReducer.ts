@@ -31,6 +31,7 @@ export type UsersReducerStateType =
   | ReturnType<typeof unfollowAC>
   | ReturnType<typeof changeCurrentPageAC>
   | ReturnType<typeof changeTotalUsersCountAC>
+  | ReturnType<typeof changeTotalPagesCountAC>
   | ReturnType<typeof setUsersAC>
 
 
@@ -44,6 +45,8 @@ export const changeTotalUsersCountAC = (totalUsersCount: number) => ({
    type: "CHANGE-TOTAL-USERS-COUNT",
    totalUsersCount
 } as const)
+
+export const changeTotalPagesCountAC=(totalPagesCount:number)=>({type: "CHANGE-TOTAL-PAGES-COUNT" as const, totalPagesCount,})
 export const setUsersAC = (users: Array<UserType> ) => ({type: "SET-USERS" as const, users,})
 
 const fakeUsers: Array<UserType> = [
@@ -85,7 +88,7 @@ const initialStateUsersPage: UserPageStateType = {
    users: [...fakeUsers],
    totalUsersCount: 20,
    totalPagesCount: 5,
-   countUsersPerPage: 5,
+   countUsersPerPage: 50,
    currentUsersPage: 2,
 }
 
@@ -130,6 +133,12 @@ export const usersReducer = (state: UserPageStateType = initialStateUsersPage, a
          return {
             ...state,
             totalUsersCount: action.totalUsersCount,
+         }
+      }
+      case "CHANGE-TOTAL-PAGES-COUNT": {
+         return {
+            ...state,
+            totalPagesCount: action.totalPagesCount,
          }
       }
    }
