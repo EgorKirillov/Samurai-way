@@ -1,5 +1,3 @@
-
-
 export type LocationType = {
    country: string,
    city: string,
@@ -20,21 +18,35 @@ export type UserType = {
 
 export type UserPageStateType = {
    users: Array<UserType>
+   totalUsersCount: number
+   totalPagesCount: number
+   countUsersPerPage: number
+   currentUsersPage: number
+   
 }
 
 
 export type UsersReducerStateType =
   ReturnType<typeof followAC>
   | ReturnType<typeof unfollowAC>
+  | ReturnType<typeof changeCurrentPageAC>
+  | ReturnType<typeof changeTotalUsersCountAC>
   | ReturnType<typeof setUsersAC>
 
 
-export const followAC = (id: number) => ({type: "CHANGE-ON-FOLLOW", id } as const)
+export const followAC = (id: number) => ({type: "CHANGE-ON-FOLLOW", id} as const)
 export const unfollowAC = (id: number) => ({type: "CHANGE-ON-UNFOLLOW", id} as const)
-//export const setUsersAC = (users:Array<UserType>) => ({type: "SET-USERS" as const, users: users,})
-export const setUsersAC = (users:Array<UserType>) => ({type: "SET-USERS" as const, users})
+export const changeCurrentPageAC = (currentUsersPage: number) => ({
+   type: "CHANGE-CURRENT-PAGE",
+   currentUsersPage
+} as const)
+export const changeTotalUsersCountAC = (totalUsersCount: number) => ({
+   type: "CHANGE-TOTAL-USERS-COUNT",
+   totalUsersCount
+} as const)
+export const setUsersAC = (users: Array<UserType> ) => ({type: "SET-USERS" as const, users,})
 
-const fakeUsers:Array<UserType> = [
+const fakeUsers: Array<UserType> = [
 //   {
 //    userid: 1,
 //    avatarLink: "http://ling.ulstu.ru/linguistics/resourses/student_works/nazimova/people/5.jpg",
@@ -71,29 +83,54 @@ const fakeUsers:Array<UserType> = [
 ]
 const initialStateUsersPage: UserPageStateType = {
    users: [...fakeUsers],
+   totalUsersCount: 20,
+   totalPagesCount: 5,
+   countUsersPerPage: 5,
+   currentUsersPage: 2,
 }
 
 export const usersReducer = (state: UserPageStateType = initialStateUsersPage, action: UsersReducerStateType): UserPageStateType => {
    
-   
    switch (action.type) {
       case "CHANGE-ON-FOLLOW": {
-         return {...state, users: state.users.map(u=>{
-            return (u.id === action.id)
-              ? {...u, followed:true}
-              :u})}
+         return {
+            ...state, users: state.users.map(u => {
+               return (u.id === action.id)
+                 ? {...u, followed: true}
+                 : u
+            })
+         }
          
       }
       case "CHANGE-ON-UNFOLLOW": {
-         return {...state, users: state.users.map(u=>{
+         return {
+            ...state, users: state.users.map(u => {
                return (u.id === action.id)
-                 ? {...u, followed:false}
-                 :u})}
+                 ? {...u, followed: false}
+                 : u
+            })
+         }
          
       }
       case "SET-USERS": {
-         return {...state, users: [...state.users,...action.users]}
+         return {
+            ...state,
+            users: [...action.users],
+            
+         }
          
+      }
+      case "CHANGE-CURRENT-PAGE": {
+         return {
+            ...state,
+            currentUsersPage: action.currentUsersPage,
+         }
+      }
+      case "CHANGE-TOTAL-USERS-COUNT": {
+         return {
+            ...state,
+            totalUsersCount: action.totalUsersCount,
+         }
       }
    }
    return state

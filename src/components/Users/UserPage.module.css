@@ -1,6 +1,6 @@
 .ava {
     width: 100px;
-    height: 130px;
+    /*height: 130px;*/
     border: solid green 1px;
     border-radius: 10%;
 }
@@ -39,4 +39,7 @@
 }
 .location {
     background-color: blue;
+}
+.selectedPages {
+    font-size: 130%;
 }

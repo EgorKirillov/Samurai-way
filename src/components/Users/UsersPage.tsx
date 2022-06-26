@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React from 'react';
 import s from "./UserPage.module.css"
 import userphoto from "./../../assets/images/user.png"
@@ -12,8 +11,8 @@ import {MapDispatchPropType, MapStatePropType} from "./UsersPageConteiner";
 //    onClickUnfollow: (id: number) => void
 //    }
 type UserPagePropsType = MapDispatchPropType & MapStatePropType
-
-export const UsersPage = (props: UserPagePropsType) => {
+// старая функциональная компонента, вместо нее используем классовую
+ const UsersPage = (props: UserPagePropsType) => {
    
    /*   if (props.users.length === 0) {
          debugger
@@ -59,12 +58,12 @@ export const UsersPage = (props: UserPagePropsType) => {
            )*!/
       }*/
    
-   const onClickHandler = () => {
+/*   const onClickHandler = () => {
       axios.get("https://social-network.samuraijs.com/api/1.0/users")
         .then(response => {
            props.getUsers(response.data.items)
         })
-   }
+   }*/
    
    return (
      <div className={s.conteiner}>
@@ -86,7 +85,7 @@ export const UsersPage = (props: UserPagePropsType) => {
            
         })}
         {/*<button onClick={()=>props.onClickSetUsers(setUsersAC())}>add</button>*/}
-        <button onClick={onClickHandler}>add</button>
+        {/*<button onClick={onClickHandler}>add</button>*/}
      </div>
    );
 };
