@@ -7,7 +7,7 @@ export const PropfileInfo = (props: { profile: UserProfileType }) => {
    return (
      <div>
         
-        <img
+        <img className={s.mainImg}
           src={'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Moench_2339.jpg/1200px-Moench_2339.jpg'}
           alt={'mountain image'}/>
         {(props.profile.photos.large) && <div>Photo<img src={props.profile.photos.large} alt={'Photo'}/></div>}

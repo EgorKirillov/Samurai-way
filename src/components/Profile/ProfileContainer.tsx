@@ -31,7 +31,7 @@ class ProfileContainerC extends React.Component<MapStateToPropsType & MapDispatc
    
    componentDidMount() {
       debugger
-      axios.get(`https://social-network.samuraijs.com/api/1.0/profile/22`)
+      axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
         .then(response => {
            this.props.setUserProfile(response.data)
         })
