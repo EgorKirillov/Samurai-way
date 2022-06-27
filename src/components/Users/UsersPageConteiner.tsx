@@ -2,23 +2,22 @@ import React from 'react';
 import {AppStateType} from "../../Redux/redux-store";
 import {connect} from "react-redux";
 import {
-   changeCurrentPageAC, changeTotalPagesCountAC,
-   changeTotalUsersCountAC,
-   followAC, setIsFatchingValueAC,
-   setUsersAC,
-   unfollowAC,
+   changeCurrentPage, changeTotalPagesCount,
+   changeTotalUsersCount,
+   follow, setIsFatchingValue,
+   getUsers,
+   unfollow,
    UserType
 } from "../../Redux/usersReducer";
-import {Dispatch} from "redux";
 import axios from "axios";
 import UsersPage from "./UsersPage";
 
 
 export type MapDispatchPropType = {
    getUsers: (users: Array<UserType>) => void
-   changeCurrentUserPage: (currentUserPage: number) => void
-   onClickFollow: (userid: number) => void
-   onClickUnfollow: (userid: number) => void
+   changeCurrentPage: (currentUserPage: number) => void
+   follow: (userid: number) => void
+   unfollow: (userid: number) => void
    changeTotalUsersCount: (totalUsersCount: number) => void
    changeTotalPagesCount: (totalPagesCount: number) => void
    setIsFatchingValue: (isFatchung: boolean) => void
@@ -49,7 +48,7 @@ class UsersC extends React.Component<UserPagePropsType> {
    
    onChangeCurrentUsersPage = (pageNumber: number) => {
       this.props.setIsFatchingValue(true)
-      this.props.changeCurrentUserPage(pageNumber)
+      this.props.changeCurrentPage(pageNumber)
       axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.countUsersPerPage}`)
         .then(response => {
            this.props.getUsers(response.data.items)
@@ -68,8 +67,8 @@ class UsersC extends React.Component<UserPagePropsType> {
                         pagesArr={pages}
                         onChangeCurrentUsersPage={this.onChangeCurrentUsersPage}
                         users={this.props.users}
-                        onClickFollow={this.props.onClickFollow}
-                        onClickUnfollow={this.props.onClickUnfollow}
+                        onClickFollow={this.props.follow}
+                        onClickUnfollow={this.props.unfollow}
                         totalUsersCount={this.props.totalUsersCount}
                         isFatching={this.props.isFatching}
       />
@@ -87,17 +86,16 @@ const mapStateToProps = (state: AppStateType) => {
       isFatching:state.usersPage.isFatching,
    }
 }
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropType => { // import Dispatch from REDUX!!
+/*const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropType => { // import Dispatch from REDUX!!
    return {
-      getUsers: (users: Array<UserType>) => dispatch(setUsersAC(users)),
-      onClickFollow: (userid: number) => dispatch(followAC(userid)),
-      onClickUnfollow: (userid: number) => dispatch(unfollowAC(userid)),
-      changeCurrentUserPage: (currentUserPage: number) => dispatch(changeCurrentPageAC(currentUserPage)),
-      changeTotalUsersCount: (totalUsersCount: number) => dispatch(changeTotalUsersCountAC(totalUsersCount)),
-      changeTotalPagesCount: (totalPagesCount: number) => dispatch(changeTotalPagesCountAC(totalPagesCount)),
-      setIsFatchingValue: (isFatchung: boolean) => dispatch(setIsFatchingValueAC(isFatchung)),
-      
-      
+      getUsers: (users: Array<UserType>) => dispatch(getUsers(users)),
+      follow: (userid: number) => dispatch(follow(userid)),
+      unfollow: (userid: number) => dispatch(unfollow(userid)),
+      changeCurrentPage: (currentUserPage: number) => dispatch(changeCurrentPage(currentUserPage)),
+      changeTotalUsersCount: (totalUsersCount: number) => dispatch(changeTotalUsersCount(totalUsersCount)),
+      changeTotalPagesCount: (totalPagesCount: number) => dispatch(changeTotalPagesCount(totalPagesCount)),
+      setIsFatchingValue: (isFatchung: boolean) => dispatch(setIsFatchingValue(isFatchung)),
    }
-}
-export const UsersPageContainer = connect(mapStateToProps, mapDispatchToProps)(UsersC)
+}*/
+
+export const UsersPageContainer = connect(mapStateToProps, { getUsers,follow,unfollow,changeCurrentPage,changeTotalUsersCount,changeTotalPagesCount,setIsFatchingValue})(UsersC)

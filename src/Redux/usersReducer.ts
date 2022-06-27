@@ -29,67 +29,33 @@ export type UserPageStateType = {
 
 
 export type UsersReducerStateType =
-  ReturnType<typeof followAC>
-  | ReturnType<typeof unfollowAC>
-  | ReturnType<typeof changeCurrentPageAC>
-  | ReturnType<typeof changeTotalUsersCountAC>
-  | ReturnType<typeof changeTotalPagesCountAC>
-  | ReturnType<typeof setUsersAC>
-  | ReturnType<typeof setIsFatchingValueAC>
+  ReturnType<typeof follow>
+  | ReturnType<typeof unfollow>
+  | ReturnType<typeof changeCurrentPage>
+  | ReturnType<typeof changeTotalUsersCount>
+  | ReturnType<typeof changeTotalPagesCount>
+  | ReturnType<typeof getUsers>
+  | ReturnType<typeof setIsFatchingValue>
 
 
-export const followAC = (id: number) => ({type: "CHANGE-ON-FOLLOW", id} as const)
-export const unfollowAC = (id: number) => ({type: "CHANGE-ON-UNFOLLOW", id} as const)
-export const changeCurrentPageAC = (currentUsersPage: number) => ({
+export const follow = (id: number) => ({type: "CHANGE-ON-FOLLOW", id} as const)
+export const unfollow = (id: number) => ({type: "CHANGE-ON-UNFOLLOW", id} as const)
+export const changeCurrentPage = (currentUsersPage: number) => ({
    type: "CHANGE-CURRENT-PAGE",
    currentUsersPage
 } as const)
-export const changeTotalUsersCountAC = (totalUsersCount: number) => ({
+export const changeTotalUsersCount = (totalUsersCount: number) => ({
    type: "CHANGE-TOTAL-USERS-COUNT",
    totalUsersCount
 } as const)
 
-export const changeTotalPagesCountAC=(totalPagesCount:number)=>({type: "CHANGE-TOTAL-PAGES-COUNT" as const, totalPagesCount,})
-export const setUsersAC = (users: Array<UserType> ) => ({type: "SET-USERS" as const, users,})
-export const setIsFatchingValueAC = (isFatching: boolean ) => ({type: "SET-ISFATCHING-VALUE" as const, isFatching,})
+export const changeTotalPagesCount=(totalPagesCount:number)=>({type: "CHANGE-TOTAL-PAGES-COUNT" as const, totalPagesCount,})
+export const getUsers = (users: Array<UserType> ) => ({type: "SET-USERS" as const, users,})
+export const setIsFatchingValue = (isFatching: boolean ) => ({type: "SET-ISFATCHING-VALUE" as const, isFatching,})
 
-const fakeUsers: Array<UserType> = [
-//   {
-//    userid: 1,
-//    avatarLink: "http://ling.ulstu.ru/linguistics/resourses/student_works/nazimova/people/5.jpg",
-//    followed: true,
-//    fullUserName: 'Egor K.V.',
-//    status: "I am dandelion",
-//    location: {country: "Belarus", city: "Minsk"}
-// },
-//    {
-//       userid: 2,
-//       avatarLink: "http://ling.ulstu.ru/linguistics/resourses/student_works/nazimova/people/6.jpg",
-//       followed: false,
-//       fullUserName: 'Den S.G.',
-//       status: "I am dumn",
-//       location: {country: "Somali", city: "Dhahar"}
-//    },
-//    {
-//       userid: 3,
-//       avatarLink: "https://avatars.mds.yandex.net/get-kinopoisk-image/1599028/5c020550-2e0f-495a-a2d6-fd6b70da3567/1920x",
-//       followed: false,
-//       fullUserName: 'Yang I.G.',
-//       status: "sun is great",
-//       location: {country: "China", city: "China"}
-//    },
-//    {
-//       userid: 4,
-//       avatarLink: "https://izsambo.by/upload/iblock/485/4853c6fcb09f50fa795a3cab14f25330.jpg",
-//       followed: false,
-//       fullUserName: 'Mal G.',
-//       status: "HollyWood",
-//       location: {country: "Use", city: "NY"}
-//    },
 
-]
 const initialStateUsersPage: UserPageStateType = {
-   users: [...fakeUsers],
+   users: [] as Array<UserType>,
    totalUsersCount: 20,
    totalPagesCount: 5,
    countUsersPerPage: 50,
