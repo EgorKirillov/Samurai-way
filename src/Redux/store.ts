@@ -1,4 +1,4 @@
-import {ProfileReducerStateType} from "./profileReducer";
+import {ProfileReducerStateType, UserProfileType} from "./profileReducer";
 import {DialogsReducerStateType} from "./dialogsReducer";
 
 export type MessageTypes = {
@@ -23,6 +23,7 @@ export type DialogPagesType = {
 export type ProfilePageType = {
     posts: Array<MyPostsType>
     newPostText: string
+    userProfile: UserProfileType
 
 }
 export type AppStateType = {

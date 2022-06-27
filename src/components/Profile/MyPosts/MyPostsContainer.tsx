@@ -1,5 +1,5 @@
 import React from "react";
-import {addMyPostActionCreator, changeNewPostTextActionCreator} from "../../../Redux/profileReducer";
+import {addMyPost, changeNewPostText} from "../../../Redux/profileReducer";
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../Redux/redux-store";
@@ -40,7 +40,7 @@ type MapStateToProps = {
    newPostValue: string
 }
 type MapDispatchToProps = {
-   onClickAddPost: () => void
+   addMyPost: () => void
    changeNewPostText: (text: string) => void
 }
 export type MyPostPropsFromConteinerType = MapStateToProps & MapDispatchToProps
@@ -53,8 +53,8 @@ const mapStateToProps = (state: AppStateType) => {
 }
 const mapDispatchToProps = (dispatch: Dispatch) => {// import Dispatch from REDUX!!
    return {
-      onClickAddPost: () => dispatch(addMyPostActionCreator()),
-      changeNewPostText: (text: string) => dispatch(changeNewPostTextActionCreator(text))
+      addMyPost: () => dispatch(addMyPost()),
+      changeNewPostText: (text: string) => dispatch(changeNewPostText(text))
    }
 }
 export const MyPostsConteiner = connect(mapStateToProps, mapDispatchToProps)(MyPosts)

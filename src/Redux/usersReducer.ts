@@ -58,8 +58,8 @@ const initialStateUsersPage: UserPageStateType = {
    users: [] as Array<UserType>,
    totalUsersCount: 20,
    totalPagesCount: 5,
-   countUsersPerPage: 50,
-   currentUsersPage: 2,
+   countUsersPerPage: 10,
+   currentUsersPage: 1965,
    isFatching: false,
 }
 

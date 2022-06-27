@@ -3,6 +3,7 @@ import s from "./UserPage.module.css"
 import userphoto from "./../../assets/images/user.png"
 import {UserType} from "../../Redux/usersReducer";
 import Preloader from "../common/Preloader/Preloader";
+import { NavLink } from 'react-router-dom';
 
 type UserPagePropsType = {
    pagesArr: Array<number>
@@ -37,7 +38,9 @@ const UsersPage = (props: UserPagePropsType) => {
         :props.users.map(u => {
            return <div className={s.oneUser} key={u.id}>
               <div className={s.oneUserAva}>
-                 <img className={s.ava} src={u.photos.large !== null ? u.photos.large : userphoto} alt=""/>
+                 <NavLink to={"/profile/"+u.id}>
+                    <img className={s.ava} src={u.photos.large !== null ? u.photos.large : userphoto} alt=""/>
+                 </NavLink>
                  {u.followed
                    ? <button onClick={() => props.onClickUnfollow(u.id)}>follow</button>
                    : <button onClick={() => props.onClickFollow(u.id)}>unfollow</button>}

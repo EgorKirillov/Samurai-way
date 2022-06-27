@@ -15,7 +15,7 @@ import {MyPostPropsFromConteinerType} from "./MyPostsContainer";
 export function MyPosts(props: MyPostPropsFromConteinerType) { // MyPostPropsFromConteinerType или PropsType
 
     const postsElements = (props.posts.map(p => <Post id={p.id} postText={p.postText} likeCount={p.likeCount}/>))
-    const onClickAddButtonHandler = () =>   props.onClickAddPost()
+    const onClickAddButtonHandler = () =>   props.addMyPost()
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) =>    props.changeNewPostText(e.currentTarget.value)
 
     return <div className={s.postsBlocks}>

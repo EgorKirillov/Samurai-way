@@ -1,16 +1,45 @@
 import {ProfilePageType} from "./store";
 
 export type ProfileReducerStateType =
-  ReturnType<typeof addMyPostActionCreator>
-  | ReturnType<typeof changeNewPostTextActionCreator>
+  ReturnType<typeof addMyPost>
+  | ReturnType<typeof changeNewPostText>
+  | ReturnType<typeof setUserProfile>
 
+export type UsersContactType = {
+   facebook: string
+   website: string
+   vk: string
+   twitter: string
+   instagram: string
+   youtube: string
+   github: string
+   mainLink: string
+}
+export type ProfilePhotoType = {
+   small: string
+   large: string
+}
+export type UserProfileType = {
+   aboutMe: string
+   contacts: UsersContactType
+   lookingForAJob: boolean
+   lookingForAJobDescription: string
+   fullName: string
+   userId: number
+   photos: ProfilePhotoType
+}
 
-export const addMyPostActionCreator = () => ({
+export const addMyPost = () => ({
    type: "ADD-POST",
 } as const)
-export const changeNewPostTextActionCreator = (newPostText: string) => ({
+export const changeNewPostText = (newPostText: string) => ({
    type: "CHANGE-NEW-POST",
    newPostText: newPostText
+} as const)
+export const setUserProfile = (profile: UserProfileType) => ({
+   type: "SET-USER-PROFILE",
+   profile
+   
 } as const)
 const initialStateProfilePage = {
    posts: [
@@ -23,6 +52,27 @@ const initialStateProfilePage = {
       {id: 6, postText: "Lastest post ", likeCount: 99}
    ],
    newPostText: "",
+   userProfile: {
+      aboutMe: "",
+      contacts: {
+         facebook: "",
+         website: "",
+         vk: "",
+         twitter: "",
+         instagram: "",
+         youtube: "",
+         github: "",
+         mainLink: "",
+      },
+      lookingForAJob: false,
+      lookingForAJobDescription: "",
+      fullName: "",
+      userId: 0,
+      photos: {
+         small: "",
+         large: "",
+      }
+   }
 }
 
 
@@ -40,6 +90,17 @@ const profileReducer = (state: ProfilePageType = initialStateProfilePage, action
       }
       case "CHANGE-NEW-POST": {
          const stateCopy = {...state, newPostText: action.newPostText}
+         return stateCopy
+      }
+      case "SET-USER-PROFILE": {
+         const stateCopy = {
+            ...state,
+            userProfile: {
+               ...action.profile,
+               contacts: {...action.profile.contacts},
+               photos: {...action.profile.photos}
+            }
+         }
          return stateCopy
       }
    }
