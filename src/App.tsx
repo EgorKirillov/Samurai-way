@@ -35,7 +35,7 @@ function App(/*props: AppPropsType*/) {
                  //   dispatch={props.store.dispatch}
                  // />
               }/>
-              <Route path={'/profile'} render={
+              <Route path={'/profile/:userId?'} render={
                  () => <ProfileContainer/>
                  // () => <Profile postsPage={props.store.getState().profilePage}
                  //                dispatch={props.store.dispatch}
