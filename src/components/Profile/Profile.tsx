@@ -10,7 +10,7 @@ type PropsType = {
 }
 
 export function Profile(props: PropsType) {
-   debugger
+   
    return <div className={s.content}>
       <PropfileInfo profile={props.profile}/>
       <MyPostsConteiner/>

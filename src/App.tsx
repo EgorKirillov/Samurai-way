@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import {Header} from "./components/Header/Header";
 import {Navbar} from "./components/Navbar/Navbar";
 import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./components/news/news";
@@ -9,6 +8,7 @@ import {Settings} from "./components/settings/settings";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {UsersPageContainer} from './components/Users/UsersPageConteiner';
 import ProfileContainer from "./components/Profile/ProfileContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
 
 // type AppPropsType = {
 //store: StoreType
@@ -19,7 +19,7 @@ function App(/*props: AppPropsType*/) {
    return (
      <BrowserRouter>
         <div className={'app-wrapper'}>
-           <Header/>
+           <HeaderContainer/>
            <Navbar/>
            <div className={'app-wrapper-content'}>
               <Route exact path="/">
