@@ -37,7 +37,14 @@ class UsersC extends React.Component<UserPagePropsType> {
    
    componentDidMount() {
       this.props.setIsFatchingValue(true)
-      axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentUsersPage}&count=${this.props.countUsersPerPage}`)
+      axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentUsersPage}&count=${this.props.countUsersPerPage}`,
+        {
+           withCredentials: true,
+           headers: {
+              "API-KEY": "8fa8d5a8-7252-4514-960a-b4b00d0670e7"
+           }
+        }
+      )
         .then(response => {
            this.props.getUsers(response.data.items)
            this.props.changeTotalUsersCount(response.data.totalCount)
@@ -49,7 +56,13 @@ class UsersC extends React.Component<UserPagePropsType> {
    onChangeCurrentUsersPage = (pageNumber: number) => {
       this.props.setIsFatchingValue(true)
       this.props.changeCurrentPage(pageNumber)
-      axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.countUsersPerPage}`)
+      axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.countUsersPerPage}`,
+        {
+           withCredentials: true,
+           headers: {
+              "API-KEY": "8fa8d5a8-7252-4514-960a-b4b00d0670e7"
+           }
+        })
         .then(response => {
            this.props.getUsers(response.data.items)
            this.props.changeTotalUsersCount(response.data.totalCount)
@@ -83,7 +96,7 @@ const mapStateToProps = (state: AppStateType) => {
       totalPagesCount: state.usersPage.totalPagesCount,
       countUsersPerPage: state.usersPage.countUsersPerPage,
       currentUsersPage: state.usersPage.currentUsersPage,
-      isFatching:state.usersPage.isFatching,
+      isFatching: state.usersPage.isFatching,
    }
 }
 /*const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropType => { // import Dispatch from REDUX!!
@@ -98,4 +111,12 @@ const mapStateToProps = (state: AppStateType) => {
    }
 }*/
 
-export const UsersPageContainer = connect(mapStateToProps, { getUsers,follow,unfollow,changeCurrentPage,changeTotalUsersCount,changeTotalPagesCount,setIsFatchingValue})(UsersC)
+export const UsersPageContainer = connect(mapStateToProps, {
+   getUsers,
+   follow,
+   unfollow,
+   changeCurrentPage,
+   changeTotalUsersCount,
+   changeTotalPagesCount,
+   setIsFatchingValue
+})(UsersC)
