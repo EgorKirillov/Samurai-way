@@ -15,6 +15,8 @@ type UserPagePropsType = {
    onClickUnfollow: (id: number) => void
    onChangeCurrentUsersPage: (n: number) => void
    isFatching: boolean
+   followingIsProgress: Array<number>
+   toggleFollowInProgress: (isFatchung: boolean, id: number) => void
 }
 
 
@@ -43,21 +45,25 @@ const UsersPage = (props: UserPagePropsType) => {
                       <img className={s.ava} src={u.photos.large !== null ? u.photos.large : userphoto} alt=""/>
                    </NavLink>
                    {u.followed
-                     ? <button onClick={() => {
+                     ? <button disabled={props.followingIsProgress.some(id => id === u.id)} onClick={() => {
+                        props.toggleFollowInProgress(true, u.id)
                         usersAPI.changeUserToUnfollow(u.id)
                           .then(resultCode => {
                              if (resultCode === 0) {
                                 props.onClickUnfollow(u.id)
                              }
+                             props.toggleFollowInProgress(false, u.id)
                           })
                      }
                      }>unfollow</button>
-                     : <button onClick={() => {
+                     : <button disabled={props.followingIsProgress.some(id => id === u.id)} onClick={() => {
+                        props.toggleFollowInProgress(true, u.id)
                         usersAPI.changeUserToFollow(u.id)
                           .then(resultCode => {
                              if (resultCode === 0) {
                                 props.onClickFollow(u.id)
                              }
+                             props.toggleFollowInProgress(false, u.id)
                           })
                      }
                      }>follow</button>}
@@ -71,9 +77,6 @@ const UsersPage = (props: UserPagePropsType) => {
              </div>
              
           })}
-        {/*<button onClick={()=>props.onClickSetUsers(setUsersAC())}>add</button>*/}
-        {/*<button onClick={this.onClickHandler}>add</button>*/}
-        {/*<button >add</button>*/}
      </div>
    );
 };

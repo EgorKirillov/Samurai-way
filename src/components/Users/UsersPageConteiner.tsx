@@ -7,7 +7,7 @@ import {
    follow, setIsFatchingValue,
    getUsers,
    unfollow,
-   UserType
+   UserType, toggleFollowInProgress
 } from "../../Redux/usersReducer";
 import UsersPage from "./UsersPage";
 import {usersAPI} from "../../api/api";
@@ -21,6 +21,7 @@ export type MapDispatchPropType = {
    changeTotalUsersCount: (totalUsersCount: number) => void
    changeTotalPagesCount: (totalPagesCount: number) => void
    setIsFatchingValue: (isFatchung: boolean) => void
+   toggleFollowInProgress: (isFatchung: boolean, id: number) => void
 }
 export type MapStatePropType = {
    users: Array<UserType>
@@ -29,6 +30,7 @@ export type MapStatePropType = {
    countUsersPerPage: number
    currentUsersPage: number
    isFatching: boolean
+   followingIsProgress: Array<number>
 }
 
 type UserPagePropsType = MapDispatchPropType & MapStatePropType
@@ -71,6 +73,8 @@ class UsersC extends React.Component<UserPagePropsType> {
                         onClickUnfollow={this.props.unfollow}
                         totalUsersCount={this.props.totalUsersCount}
                         isFatching={this.props.isFatching}
+                        followingIsProgress={this.props.followingIsProgress}
+                        toggleFollowInProgress={this.props.toggleFollowInProgress}
       />
    }
 }
@@ -84,6 +88,7 @@ const mapStateToProps = (state: AppStateType) => {
       countUsersPerPage: state.usersPage.countUsersPerPage,
       currentUsersPage: state.usersPage.currentUsersPage,
       isFatching: state.usersPage.isFatching,
+      followingIsProgress: state.usersPage.followingInProgress,
    }
 }
 /*const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropType => { // import Dispatch from REDUX!!
@@ -105,5 +110,6 @@ export const UsersPageContainer = connect(mapStateToProps, {
    changeCurrentPage,
    changeTotalUsersCount,
    changeTotalPagesCount,
-   setIsFatchingValue
+   setIsFatchingValue,
+   toggleFollowInProgress,
 })(UsersC)

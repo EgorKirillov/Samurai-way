@@ -1,7 +1,4 @@
-export type LocationType = {
-   country: string
-   city: string
-}
+
 export type PhotosType = {
    small: string
    large: string
@@ -13,8 +10,7 @@ export type UserType = {
    photos: PhotosType
    status: string
    followed: boolean
-   
-//   location: LocationType,
+
 }
 
 export type UserPageStateType = {
@@ -24,6 +20,7 @@ export type UserPageStateType = {
    countUsersPerPage: number
    currentUsersPage: number
    isFatching: boolean
+   followingInProgress: Array<number>
    
 }
 
@@ -36,6 +33,7 @@ export type UsersReducerStateType =
   | ReturnType<typeof changeTotalPagesCount>
   | ReturnType<typeof getUsers>
   | ReturnType<typeof setIsFatchingValue>
+  | ReturnType<typeof toggleFollowInProgress>
 
 
 export const follow = (id: number) => ({type: "CHANGE-ON-FOLLOW", id} as const)
@@ -49,9 +47,14 @@ export const changeTotalUsersCount = (totalUsersCount: number) => ({
    totalUsersCount
 } as const)
 
-export const changeTotalPagesCount=(totalPagesCount:number)=>({type: "CHANGE-TOTAL-PAGES-COUNT" as const, totalPagesCount,})
-export const getUsers = (users: Array<UserType> ) => ({type: "SET-USERS" as const, users,})
-export const setIsFatchingValue = (isFatching: boolean ) => ({type: "SET-ISFATCHING-VALUE" as const, isFatching,})
+export const changeTotalPagesCount = (totalPagesCount: number) => ({
+   type: "CHANGE-TOTAL-PAGES-COUNT" as const, totalPagesCount,
+})
+export const getUsers = (users: Array<UserType>) => ({type: "SET-USERS" as const, users,})
+export const setIsFatchingValue = (isFatching: boolean) => ({type: "SET-ISFATCHING-VALUE" as const, isFatching,})
+export const toggleFollowInProgress = (isFatching: boolean, id: number) => ({
+   type: "TOGGLE-FOLLOW-IN-PROGRESS" as const, isFatching, id,
+})
 
 
 const initialStateUsersPage: UserPageStateType = {
@@ -61,6 +64,7 @@ const initialStateUsersPage: UserPageStateType = {
    countUsersPerPage: 10,
    currentUsersPage: 1965,
    isFatching: false,
+   followingInProgress: []
 }
 
 export const usersReducer = (state: UserPageStateType = initialStateUsersPage, action: UsersReducerStateType): UserPageStateType => {
@@ -74,7 +78,6 @@ export const usersReducer = (state: UserPageStateType = initialStateUsersPage, a
                  : u
             })
          }
-         
       }
       case "CHANGE-ON-UNFOLLOW": {
          return {
@@ -84,7 +87,6 @@ export const usersReducer = (state: UserPageStateType = initialStateUsersPage, a
                  : u
             })
          }
-         
       }
       case "SET-USERS": {
          return {
@@ -92,7 +94,6 @@ export const usersReducer = (state: UserPageStateType = initialStateUsersPage, a
             users: [...action.users],
             
          }
-         
       }
       case "CHANGE-CURRENT-PAGE": {
          return {
@@ -112,12 +113,22 @@ export const usersReducer = (state: UserPageStateType = initialStateUsersPage, a
             totalPagesCount: action.totalPagesCount,
          }
       }
-      case "SET-ISFATCHING-VALUE":{
+      case "SET-ISFATCHING-VALUE": {
          return {
             ...state,
             isFatching: action.isFatching
          }
       }
+      
+      case "TOGGLE-FOLLOW-IN-PROGRESS": {
+         return {
+            ...state,
+            followingInProgress: action.isFatching
+              ? [...state.followingInProgress, action.id]
+              : state.followingInProgress.filter(id => id !== action.id)
+         }
+      }
+      
    }
    return state
 }
