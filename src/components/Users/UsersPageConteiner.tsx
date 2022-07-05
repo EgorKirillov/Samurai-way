@@ -9,8 +9,8 @@ import {
    unfollow,
    UserType
 } from "../../Redux/usersReducer";
-import axios from "axios";
 import UsersPage from "./UsersPage";
+import {usersAPI} from "../../api/api";
 
 
 export type MapDispatchPropType = {
@@ -37,18 +37,11 @@ class UsersC extends React.Component<UserPagePropsType> {
    
    componentDidMount() {
       this.props.setIsFatchingValue(true)
-      axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentUsersPage}&count=${this.props.countUsersPerPage}`,
-        {
-           withCredentials: true,
-           headers: {
-              "API-KEY": "8fa8d5a8-7252-4514-960a-b4b00d0670e7"
-           }
-        }
-      )
-        .then(response => {
-           this.props.getUsers(response.data.items)
-           this.props.changeTotalUsersCount(response.data.totalCount)
-           this.props.changeTotalPagesCount(Math.ceil(response.data.totalCount / this.props.countUsersPerPage))
+      usersAPI.getUsers(this.props.currentUsersPage, this.props.countUsersPerPage)
+        .then(data => {
+           this.props.getUsers(data.items)
+           this.props.changeTotalUsersCount(data.totalCount)
+           this.props.changeTotalPagesCount(Math.ceil(data.totalCount / this.props.countUsersPerPage))
            this.props.setIsFatchingValue(false)
         })
    }
@@ -56,16 +49,10 @@ class UsersC extends React.Component<UserPagePropsType> {
    onChangeCurrentUsersPage = (pageNumber: number) => {
       this.props.setIsFatchingValue(true)
       this.props.changeCurrentPage(pageNumber)
-      axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.countUsersPerPage}`,
-        {
-           withCredentials: true,
-           headers: {
-              "API-KEY": "8fa8d5a8-7252-4514-960a-b4b00d0670e7"
-           }
-        })
-        .then(response => {
-           this.props.getUsers(response.data.items)
-           this.props.changeTotalUsersCount(response.data.totalCount)
+      usersAPI.changePageUsers(pageNumber, this.props.countUsersPerPage)
+        .then(data => {
+           this.props.getUsers(data.items)
+           this.props.changeTotalUsersCount(data.totalCount)
            this.props.setIsFatchingValue(false)
         })
    }

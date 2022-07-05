@@ -4,7 +4,7 @@ import userphoto from "./../../assets/images/user.png"
 import {UserType} from "../../Redux/usersReducer";
 import Preloader from "../common/Preloader/Preloader";
 import {NavLink} from 'react-router-dom';
-import axios from "axios";
+import {usersAPI} from "../../api/api";
 
 type UserPagePropsType = {
    pagesArr: Array<number>
@@ -23,7 +23,7 @@ const UsersPage = (props: UserPagePropsType) => {
    
    return (<div className={s.conteiner}>
         {props.pagesArr.map(p => {
-           if (Math.abs(p - props.currentUsersPage) < 3 || p === props.pagesArr.length - 1 || p === 1) {
+           if (Math.abs(p - props.currentUsersPage) < 3 || p === props.pagesArr.length || p === 1) {
               return <span onClick={() => props.onChangeCurrentUsersPage(p)}
                            className={(props.currentUsersPage === p) ? s.selectedPages : ''}>
               {p}.
@@ -44,28 +44,18 @@ const UsersPage = (props: UserPagePropsType) => {
                    </NavLink>
                    {u.followed
                      ? <button onClick={() => {
-                        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
-                           withCredentials: true,
-                           headers: {
-                              "API-KEY": "8fa8d5a8-7252-4514-960a-b4b00d0670e7"
-                           }
-                        })
-                          .then(response => {
-                             if (response.data.resultCode === 0) {
+                        usersAPI.changeUserToUnfollow(u.id)
+                          .then(resultCode => {
+                             if (resultCode === 0) {
                                 props.onClickUnfollow(u.id)
                              }
                           })
                      }
                      }>unfollow</button>
                      : <button onClick={() => {
-                        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
-                           withCredentials: true,
-                           headers: {
-                              "API-KEY": "8fa8d5a8-7252-4514-960a-b4b00d0670e7"
-                           }
-                        })
-                          .then(response => {
-                             if (response.data.resultCode === 0) {
+                        usersAPI.changeUserToFollow(u.id)
+                          .then(resultCode => {
+                             if (resultCode === 0) {
                                 props.onClickFollow(u.id)
                              }
                           })
