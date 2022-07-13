@@ -1,26 +1,26 @@
 import React from "react";
-import { setAuthData, setAuthIsFatchingValue} from "../../Redux/authReducer";
+import {authMeThunk, setAuthData, setAuthIsFatchingValue} from "../../Redux/authReducer";
 import {Header} from "./Header";
 import {AppStateType} from "../../Redux/redux-store";
 import {connect} from "react-redux";
-import axios from "axios";
 
-
- class HeaderContainer extends React.Component<HeaderContainerPropsType> {
-    
-    componentDidMount() {
-       this.props.setAuthIsFatchingValue(true)
-       axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`,{withCredentials:true})
-         .then(response => {
-            if (response.data.resultCode === 0) {
-               this.props.setAuthData(response.data.data.id, response.data.data.login, response.data.data.email,)
-            }
-            
-            this.props.setAuthIsFatchingValue(false)
-         })
-    }
+class HeaderContainer extends React.Component<HeaderContainerPropsType> {
    
-    render = () =>  {
+   componentDidMount() {
+      this.props.authMeThunk()
+      /*  this.props.setAuthIsFatchingValue(true)
+        authAPI.getMyData()
+          //axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`,{withCredentials:true})
+          .then(data => {
+             if (data.resultCode === 0) {
+                this.props.setAuthData(data.data.id, data.data.login, data.data.email,)
+             }
+             
+             this.props.setAuthIsFatchingValue(false)
+          })*/
+   }
+   
+   render = () => {
       return (
         <Header {...this.props}/>
       )
@@ -31,7 +31,7 @@ import axios from "axios";
 const mapStateToProps = (state: AppStateType) => {
    return {
       id: state.auth.id,
-      login:state.auth.login,
+      login: state.auth.login,
       email: state.auth.email,
       isFetching: state.auth.isFetching,
       isAuth: state.auth.isAuth,
@@ -40,17 +40,18 @@ const mapStateToProps = (state: AppStateType) => {
 
 
 export type MapDispatchPropType = {
-   setAuthData: (id:number,login:string,email:string) => void
+   setAuthData: (id: number, login: string, email: string) => void
    setAuthIsFatchingValue: (isFatchung: boolean) => void
+   authMeThunk: () => any
 }
 export type MapStatePropType = {
    id: number
-   login:string
+   login: string
    email: string
    isFetching: boolean
-   isAuth:boolean
+   isAuth: boolean
 }
 
 type HeaderContainerPropsType = MapDispatchPropType & MapStatePropType
 
-export default connect(mapStateToProps,{setAuthIsFatchingValue, setAuthData})(HeaderContainer)
+export default connect(mapStateToProps, {setAuthIsFatchingValue, setAuthData, authMeThunk})(HeaderContainer)
