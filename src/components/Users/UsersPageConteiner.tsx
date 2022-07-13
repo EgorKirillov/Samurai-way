@@ -4,24 +4,26 @@ import {connect} from "react-redux";
 import {
    changeCurrentPage, changeTotalPagesCount,
    changeTotalUsersCount,
-   follow, setIsFatchingValue,
+   followSuccess, setIsFatchingValue,
    getUsers,
-   unfollow,
-   UserType, toggleFollowInProgress
+   unfollowSuccess,
+   UserType, toggleFollowInProgress, getUsersThunkCreator, unfollowUserThunk, followUserThunk
 } from "../../Redux/usersReducer";
 import UsersPage from "./UsersPage";
-import {usersAPI} from "../../api/api";
 
 
 export type MapDispatchPropType = {
    getUsers: (users: Array<UserType>) => void
    changeCurrentPage: (currentUserPage: number) => void
-   follow: (userid: number) => void
-   unfollow: (userid: number) => void
+   followSuccess: (userid: number) => void
+   unfollowSuccess: (userid: number) => void
    changeTotalUsersCount: (totalUsersCount: number) => void
    changeTotalPagesCount: (totalPagesCount: number) => void
    setIsFatchingValue: (isFatchung: boolean) => void
    toggleFollowInProgress: (isFatchung: boolean, id: number) => void
+   getUsersThunkCreator:(currentUsersPage: number, countUsersPerPage: number) => any
+   unfollowUserThunk: (userID:number)=> any
+   followUserThunk: (userID:number)=> any
 }
 export type MapStatePropType = {
    users: Array<UserType>
@@ -38,25 +40,20 @@ type UserPagePropsType = MapDispatchPropType & MapStatePropType
 class UsersC extends React.Component<UserPagePropsType> {
    
    componentDidMount() {
-      this.props.setIsFatchingValue(true)
-      usersAPI.getUsers(this.props.currentUsersPage, this.props.countUsersPerPage)
-        .then(data => {
-           this.props.getUsers(data.items)
-           this.props.changeTotalUsersCount(data.totalCount)
-           this.props.changeTotalPagesCount(Math.ceil(data.totalCount / this.props.countUsersPerPage))
-           this.props.setIsFatchingValue(false)
-        })
+      this.props.getUsersThunkCreator(this.props.currentUsersPage, this.props.countUsersPerPage)
    }
    
    onChangeCurrentUsersPage = (pageNumber: number) => {
-      this.props.setIsFatchingValue(true)
+      this.props.getUsersThunkCreator(pageNumber, this.props.countUsersPerPage)
+      this.props.changeCurrentPage(pageNumber) // не было в 66 уроке
+    /*  this.props.setIsFatchingValue(true)
       this.props.changeCurrentPage(pageNumber)
       usersAPI.changePageUsers(pageNumber, this.props.countUsersPerPage)
         .then(data => {
            this.props.getUsers(data.items)
            this.props.changeTotalUsersCount(data.totalCount)
            this.props.setIsFatchingValue(false)
-        })
+        })*/
    }
    
    render = () => {
@@ -69,8 +66,8 @@ class UsersC extends React.Component<UserPagePropsType> {
                         pagesArr={pages}
                         onChangeCurrentUsersPage={this.onChangeCurrentUsersPage}
                         users={this.props.users}
-                        onClickFollow={this.props.follow}
-                        onClickUnfollow={this.props.unfollow}
+                        onClickFollow={this.props.followUserThunk}
+                        onClickUnfollow={this.props.unfollowUserThunk}
                         totalUsersCount={this.props.totalUsersCount}
                         isFatching={this.props.isFatching}
                         followingIsProgress={this.props.followingIsProgress}
@@ -105,11 +102,14 @@ const mapStateToProps = (state: AppStateType) => {
 
 export const UsersPageContainer = connect(mapStateToProps, {
    getUsers,
-   follow,
-   unfollow,
+   followSuccess,
+   unfollowSuccess,
    changeCurrentPage,
    changeTotalUsersCount,
    changeTotalPagesCount,
    setIsFatchingValue,
    toggleFollowInProgress,
+   getUsersThunkCreator,
+   unfollowUserThunk,
+   followUserThunk,
 })(UsersC)

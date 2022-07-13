@@ -4,7 +4,6 @@ import userphoto from "./../../assets/images/user.png"
 import {UserType} from "../../Redux/usersReducer";
 import Preloader from "../common/Preloader/Preloader";
 import {NavLink} from 'react-router-dom';
-import {usersAPI} from "../../api/api";
 
 type UserPagePropsType = {
    pagesArr: Array<number>
@@ -46,25 +45,28 @@ const UsersPage = (props: UserPagePropsType) => {
                    </NavLink>
                    {u.followed
                      ? <button disabled={props.followingIsProgress.some(id => id === u.id)} onClick={() => {
-                        props.toggleFollowInProgress(true, u.id)
+                        props.onClickUnfollow(u.id)
+                        /*props.toggleFollowInProgress(true, u.id)
                         usersAPI.changeUserToUnfollow(u.id)
                           .then(resultCode => {
                              if (resultCode === 0) {
                                 props.onClickUnfollow(u.id)
                              }
                              props.toggleFollowInProgress(false, u.id)
-                          })
+                          })*/
                      }
                      }>unfollow</button>
                      : <button disabled={props.followingIsProgress.some(id => id === u.id)} onClick={() => {
-                        props.toggleFollowInProgress(true, u.id)
+                        props.onClickFollow(u.id)
+                        /*props.toggleFollowInProgress(true, u.id)
                         usersAPI.changeUserToFollow(u.id)
                           .then(resultCode => {
                              if (resultCode === 0) {
                                 props.onClickFollow(u.id)
                              }
                              props.toggleFollowInProgress(false, u.id)
-                          })
+                          })*/
+                        
                      }
                      }>follow</button>}
                 </div>

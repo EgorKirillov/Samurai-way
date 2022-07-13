@@ -1,4 +1,6 @@
 import {ProfilePageType} from "./store";
+import {Dispatch} from "redux";
+import {profileAPI} from "../api/api";
 
 export type ProfileReducerStateType =
   ReturnType<typeof addMyPost>
@@ -41,6 +43,14 @@ export const setUserProfile = (profile: UserProfileType) => ({
    profile
    
 } as const)
+export const setUserProfileThunk = (userId: string) => {
+   return (dispatch: Dispatch) => {
+      profileAPI.getUserProfile(userId)
+        .then(data => {
+           dispatch(setUserProfile(data))
+        })
+   }
+}
 const initialStateProfilePage = {
    posts: [
       {id: 0, postText: "First post ", likeCount: 25},

@@ -1,3 +1,5 @@
+import {usersAPI} from "../api/api";
+import {Dispatch} from "redux";
 
 export type PhotosType = {
    small: string
@@ -10,7 +12,7 @@ export type UserType = {
    photos: PhotosType
    status: string
    followed: boolean
-
+   
 }
 
 export type UserPageStateType = {
@@ -26,8 +28,8 @@ export type UserPageStateType = {
 
 
 export type UsersReducerStateType =
-  ReturnType<typeof follow>
-  | ReturnType<typeof unfollow>
+  ReturnType<typeof followSuccess>
+  | ReturnType<typeof unfollowSuccess>
   | ReturnType<typeof changeCurrentPage>
   | ReturnType<typeof changeTotalUsersCount>
   | ReturnType<typeof changeTotalPagesCount>
@@ -36,8 +38,8 @@ export type UsersReducerStateType =
   | ReturnType<typeof toggleFollowInProgress>
 
 
-export const follow = (id: number) => ({type: "CHANGE-ON-FOLLOW", id} as const)
-export const unfollow = (id: number) => ({type: "CHANGE-ON-UNFOLLOW", id} as const)
+export const followSuccess = (id: number) => ({type: "CHANGE-ON-FOLLOW", id} as const)
+export const unfollowSuccess = (id: number) => ({type: "CHANGE-ON-UNFOLLOW", id} as const)
 export const changeCurrentPage = (currentUsersPage: number) => ({
    type: "CHANGE-CURRENT-PAGE",
    currentUsersPage
@@ -56,6 +58,42 @@ export const toggleFollowInProgress = (isFatching: boolean, id: number) => ({
    type: "TOGGLE-FOLLOW-IN-PROGRESS" as const, isFatching, id,
 })
 
+export const getUsersThunkCreator = (currentUsersPage: number, countUsersPerPage: number) => {
+   return (dispatch: Dispatch) => {
+      dispatch(setIsFatchingValue(true))
+      usersAPI.getUsers(currentUsersPage, countUsersPerPage)
+        .then(data => {
+           dispatch(getUsers(data.items))
+           dispatch(changeTotalUsersCount(data.totalCount))
+           dispatch(changeTotalPagesCount(Math.ceil(data.totalCount / countUsersPerPage)))
+           dispatch(setIsFatchingValue(false));
+        })
+   }
+}
+export const followUserThunk = (userID: number) => {
+   return (dispatch: Dispatch) => {
+      dispatch(toggleFollowInProgress(true, userID))
+      usersAPI.changeUserToFollow(userID)
+        .then(resultCode => {
+           if (resultCode === 0) {
+              dispatch(followSuccess(userID))
+           }
+           dispatch(toggleFollowInProgress(false, userID))
+        })
+   }
+}
+export const unfollowUserThunk = (userID: number) => {
+   return (dispatch: Dispatch) => {
+      dispatch(toggleFollowInProgress(true, userID))
+      usersAPI.changeUserToUnfollow(userID)
+        .then(resultCode => {
+           if (resultCode === 0) {
+              dispatch(unfollowSuccess(userID))
+           }
+           dispatch(toggleFollowInProgress(false, userID))
+        })
+   }
+}
 
 const initialStateUsersPage: UserPageStateType = {
    users: [] as Array<UserType>,
@@ -119,7 +157,6 @@ export const usersReducer = (state: UserPageStateType = initialStateUsersPage, a
             isFatching: action.isFatching
          }
       }
-      
       case "TOGGLE-FOLLOW-IN-PROGRESS": {
          return {
             ...state,
@@ -128,7 +165,6 @@ export const usersReducer = (state: UserPageStateType = initialStateUsersPage, a
               : state.followingInProgress.filter(id => id !== action.id)
          }
       }
-      
    }
    return state
 }
