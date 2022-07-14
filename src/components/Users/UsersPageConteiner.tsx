@@ -10,6 +10,7 @@ import {
    UserType, toggleFollowInProgress, getUsersThunkCreator, unfollowUserThunk, followUserThunk
 } from "../../Redux/usersReducer";
 import UsersPage from "./UsersPage";
+import {Redirect} from "react-router-dom";
 
 
 export type MapDispatchPropType = {
@@ -33,6 +34,7 @@ export type MapStatePropType = {
    currentUsersPage: number
    isFatching: boolean
    followingIsProgress: Array<number>
+   isAuth: boolean
 }
 
 type UserPagePropsType = MapDispatchPropType & MapStatePropType
@@ -62,6 +64,7 @@ class UsersC extends React.Component<UserPagePropsType> {
       for (let i = 1; i <= this.props.totalPagesCount; i++) {
          pages.push(i)
       }
+      if (!this.props.isAuth) return <Redirect to={"/login"} />
       return <UsersPage currentUsersPage={this.props.currentUsersPage}
                         pagesArr={pages}
                         onChangeCurrentUsersPage={this.onChangeCurrentUsersPage}
@@ -86,6 +89,7 @@ const mapStateToProps = (state: AppStateType) => {
       currentUsersPage: state.usersPage.currentUsersPage,
       isFatching: state.usersPage.isFatching,
       followingIsProgress: state.usersPage.followingInProgress,
+      isAuth:state.auth.isAuth,
    }
 }
 /*const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropType => { // import Dispatch from REDUX!!
