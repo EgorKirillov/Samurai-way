@@ -13,7 +13,7 @@ export const Header = (props: AuthStateType) => {
       
       <div className={s.loginBlock}>
          {!props.isAuth
-           ? <NavLink to={"/login"}>Login</NavLink>
+           ? <NavLink to={"/login"}>not authorised Login </NavLink>
            : <div>
               <div>name:{props.login}</div>
               <div>id:{props.id}</div>

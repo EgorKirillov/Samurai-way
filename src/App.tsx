@@ -9,6 +9,7 @@ import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {UsersPageContainer} from './components/Users/UsersPageConteiner';
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import Login from "./components/Login/Login";
 
 // type AppPropsType = {
 //store: StoreType
@@ -28,6 +29,11 @@ function App(/*props: AppPropsType*/) {
                  {/*         dispatch={props.store.dispatch}*/}
                  {/*/>*/}
               </Route>
+              <Route exact path="/login">
+                 <Login/>
+                 
+              </Route>
+              
               <Route path={'/dialogs'} render={
                  () => <DialogsContainer/>
                  // () => <DialogsContainer
