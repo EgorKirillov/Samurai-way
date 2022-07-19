@@ -4,7 +4,7 @@ import {DialogItem} from './DialogsItms/DialogItems';
 import {Message} from './Messages/Mesages';
 import {InputAndButton} from './Messages/InputAndBatton';
 import {DialogsFromConteinerType} from "./DialogsContainer";
-import {Redirect} from "react-router-dom";
+//import {Redirect} from "react-router-dom";
 
 
 type DialogsPropsType = DialogsFromConteinerType
@@ -31,8 +31,7 @@ export const Dialogs = (props: DialogsPropsType) => {
    let messageElements = props.dialogsPage.messagesData.map(message =>
      <Message messageText={message.messageText}/>)
    
-   
-   if (!props.isAuth) return <Redirect to={"/login"} />
+ //  if (!props.isAuth) return <Redirect to={"/login"} />
    
    return (
      <div className={s.content}>
