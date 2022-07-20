@@ -12,6 +12,7 @@ import {
 import UsersPage from "./UsersPage";
 // import {Redirect} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 
 export type MapDispatchPropType = {
@@ -23,9 +24,9 @@ export type MapDispatchPropType = {
    changeTotalPagesCount: (totalPagesCount: number) => void
    setIsFatchingValue: (isFatchung: boolean) => void
    toggleFollowInProgress: (isFatchung: boolean, id: number) => void
-   getUsersThunkCreator:(currentUsersPage: number, countUsersPerPage: number) => any
-   unfollowUserThunk: (userID:number)=> any
-   followUserThunk: (userID:number)=> any
+   getUsersThunkCreator: (currentUsersPage: number, countUsersPerPage: number) => any
+   unfollowUserThunk: (userID: number) => any
+   followUserThunk: (userID: number) => any
 }
 export type MapStatePropType = {
    users: Array<UserType>
@@ -35,7 +36,7 @@ export type MapStatePropType = {
    currentUsersPage: number
    isFatching: boolean
    followingIsProgress: Array<number>
- //  isAuth: boolean
+   //  isAuth: boolean
 }
 
 type UserPagePropsType = MapDispatchPropType & MapStatePropType
@@ -49,14 +50,14 @@ class UsersC extends React.Component<UserPagePropsType> {
    onChangeCurrentUsersPage = (pageNumber: number) => {
       this.props.getUsersThunkCreator(pageNumber, this.props.countUsersPerPage)
       this.props.changeCurrentPage(pageNumber) // не было в 66 уроке
-    /*  this.props.setIsFatchingValue(true)
-      this.props.changeCurrentPage(pageNumber)
-      usersAPI.changePageUsers(pageNumber, this.props.countUsersPerPage)
-        .then(data => {
-           this.props.getUsers(data.items)
-           this.props.changeTotalUsersCount(data.totalCount)
-           this.props.setIsFatchingValue(false)
-        })*/
+      /*  this.props.setIsFatchingValue(true)
+        this.props.changeCurrentPage(pageNumber)
+        usersAPI.changePageUsers(pageNumber, this.props.countUsersPerPage)
+          .then(data => {
+             this.props.getUsers(data.items)
+             this.props.changeTotalUsersCount(data.totalCount)
+             this.props.setIsFatchingValue(false)
+          })*/
    }
    
    render = () => {
@@ -81,7 +82,7 @@ class UsersC extends React.Component<UserPagePropsType> {
 }
 
 
-const mapStateToProps = (state: AppStateType) => {
+const mapStateToProps = (state: AppStateType): MapStatePropType => {
    return {
       users: state.usersPage.users,
       totalUsersCount: state.usersPage.totalUsersCount,
@@ -90,7 +91,7 @@ const mapStateToProps = (state: AppStateType) => {
       currentUsersPage: state.usersPage.currentUsersPage,
       isFatching: state.usersPage.isFatching,
       followingIsProgress: state.usersPage.followingInProgress,
-  //    isAuth:state.auth.isAuth,
+      //    isAuth:state.auth.isAuth,
    }
 }
 /*const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropType => { // import Dispatch from REDUX!!
@@ -105,7 +106,7 @@ const mapStateToProps = (state: AppStateType) => {
    }
 }*/
 
-export const UsersPageContainer = withAuthRedirect(connect(mapStateToProps, {
+/*export const UsersPageContainer = withAuthRedirect(connect(mapStateToProps, {
    getUsers,
    followSuccess,
    unfollowSuccess,
@@ -117,4 +118,20 @@ export const UsersPageContainer = withAuthRedirect(connect(mapStateToProps, {
    getUsersThunkCreator,
    unfollowUserThunk,
    followUserThunk,
-})(UsersC))
+})(UsersC))*/
+export default compose<React.ComponentType>(
+  withAuthRedirect,
+  connect(mapStateToProps, {
+     getUsers,
+     followSuccess,
+     unfollowSuccess,
+     changeCurrentPage,
+     changeTotalUsersCount,
+     changeTotalPagesCount,
+     setIsFatchingValue,
+     toggleFollowInProgress,
+     getUsersThunkCreator,
+     unfollowUserThunk,
+     followUserThunk,
+  },)
+)(UsersC)

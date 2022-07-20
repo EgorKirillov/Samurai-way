@@ -6,9 +6,11 @@ import {connect} from "react-redux";
 import {AppStateType} from "../../Redux/redux-store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
+
 export type MapDispatchPropType = {
    setUserProfile: (profile: UserProfileType) => void
-   setUserProfileThunk:(userId:string) => any
+   setUserProfileThunk: (userId: string) => any
 }
 
 type MapStateToPropsType = {
@@ -23,7 +25,7 @@ const mapStateToProps = (state: AppStateType) => {
 }
 
 
-class ProfileContainerC extends React.Component<MapStateToPropsType & MapDispatchPropType & RouteComponentProps<{userId:string}>> {
+class ProfileContainerC extends React.Component<MapStateToPropsType & MapDispatchPropType & RouteComponentProps<{ userId: string }>> {
    /* constructor(props: any) {
        super(props);
        console.log(props)
@@ -35,9 +37,9 @@ class ProfileContainerC extends React.Component<MapStateToPropsType & MapDispatc
    
    componentDidMount() {
       
-      let userId=this.props.match.params.userId
+      let userId = this.props.match.params.userId
       this.props.setUserProfileThunk(userId)
-     // profileAPI.getUserProfile(userId).then(response=>{this.props.setUserProfile(response.data)})
+      // profileAPI.getUserProfile(userId).then(response=>{this.props.setUserProfile(response.data)})
       /*if (!userId) {userId="2"}
       axios.get(`https://social-network.samuraijs.com/api/1.0/profile/`+userId)
         .then(response => {
@@ -46,7 +48,7 @@ class ProfileContainerC extends React.Component<MapStateToPropsType & MapDispatc
    }
    
    render() {
-    //  if (!this.props.isAuth) return <Redirect to={"/login"} />
+      //  if (!this.props.isAuth) return <Redirect to={"/login"} />
       return (
         <div className={s.content}>
            {this.props.profile && <Profile profile={this.props.profile}/>}
@@ -56,4 +58,10 @@ class ProfileContainerC extends React.Component<MapStateToPropsType & MapDispatc
 }
 
 
-export default withAuthRedirect(connect(mapStateToProps, {setUserProfile,setUserProfileThunk})(withRouter(ProfileContainerC)))
+//export default withAuthRedirect(connect(mapStateToProps, {setUserProfile,setUserProfileThunk})(withRouter(ProfileContainerC)))
+
+export default compose<React.ComponentType>(
+  withAuthRedirect,
+  connect(mapStateToProps, {setUserProfile, setUserProfileThunk}),
+  withRouter,
+)(ProfileContainerC)
