@@ -1,16 +1,17 @@
 import React from 'react';
 import s from './ProfileInfo.module.css'
 import {UserProfileType} from "../../../Redux/profileReducer";
+import ProfileStatus from "./ProfileStatus";
 
 export const PropfileInfo = (props: { profile: UserProfileType }) => {
    
    return (
      <div>
         
-        <img className={s.mainImg}
-          src={'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Moench_2339.jpg/1200px-Moench_2339.jpg'}
-          alt={'mountain image'}/>
-        {(props.profile.photos.large) && <div>Photo<img src={props.profile.photos.large} alt={'Photo'}/></div>}
+        {/*<img className={s.mainImg}*/}
+        {/*  src={'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Moench_2339.jpg/1200px-Moench_2339.jpg'}*/}
+        {/*  alt={'mountain image'}/>*/}
+        {(props.profile.photos.large) && <div>Photo<img src={props.profile.photos.large} alt={' avatar'}/></div>}
         {(props.profile.fullName) && <div>Name: {props.profile.fullName}</div>}
         {(props.profile.aboutMe) && <div>About me: {props.profile.aboutMe}</div>}
         {(props.profile.lookingForAJob) && <div>I looking job: {props.profile.lookingForAJob}</div>}
@@ -27,6 +28,10 @@ export const PropfileInfo = (props: { profile: UserProfileType }) => {
         </div>}
         
         <div className={s.discritpionInfo}>ava + description</div>
+        <div>Status:</div>
+         <ProfileStatus />
+        
+        
      </div>
    );
 };
