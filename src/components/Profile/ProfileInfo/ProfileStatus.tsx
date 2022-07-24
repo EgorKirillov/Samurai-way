@@ -12,6 +12,12 @@ class ProfileStatus extends React.Component<ProfileStatusProps> {
         editMode: false,
         status: this.props.statusText,
     }
+    componentDidUpdate(prevProps: Readonly<ProfileStatusProps>, prevState: Readonly<{}>, snapshot?: any) {
+     if (prevProps.statusText !== this.props.statusText) {
+         this.setState({status: this.props.statusText})
+     }
+    }
+    
     onStatusChange = (e:ChangeEvent<HTMLInputElement>) => {
         this.setState({status:e.currentTarget.value})
     }
@@ -39,7 +45,7 @@ class ProfileStatus extends React.Component<ProfileStatusProps> {
             </div>
         );
     }
-};
+}
 
 
 
