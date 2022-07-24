@@ -24,6 +24,7 @@ export type ProfilePageType = {
     posts: Array<MyPostsType>
     newPostText: string
     userProfile: UserProfileType
+    status:string
 
 }
 export type AppStateType = {

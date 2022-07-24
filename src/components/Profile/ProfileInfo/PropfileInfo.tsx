@@ -3,7 +3,13 @@ import s from './ProfileInfo.module.css'
 import {UserProfileType} from "../../../Redux/profileReducer";
 import ProfileStatus from "./ProfileStatus";
 
-export const PropfileInfo = (props: { profile: UserProfileType }) => {
+type ProfileInfoType = {
+    profile: UserProfileType
+    statusText: string
+    updateStatus: (statusText: string) => void
+}
+
+export const PropfileInfo = (props:ProfileInfoType) => {
    
    return (
      <div>
@@ -29,7 +35,10 @@ export const PropfileInfo = (props: { profile: UserProfileType }) => {
         
         <div className={s.discritpionInfo}>ava + description</div>
         <div>Status:</div>
-         <ProfileStatus />
+         <ProfileStatus statusText={props.statusText}
+                        updateStatus={props.updateStatus}
+         
+         />
         
         
      </div>

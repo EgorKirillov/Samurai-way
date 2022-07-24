@@ -9,6 +9,8 @@ const instance = axios.create({
    },
 })
 
+
+
 export const usersAPI = {
    getUsers(currentUsersPage=1,countUsersPerPage=10) {
      return instance.get(`users?page=${currentUsersPage}&count=${countUsersPerPage}`).then(response=>response.data)
@@ -22,12 +24,17 @@ export const usersAPI = {
    changeUserToUnfollow(id:number){
       return instance.delete(`follow/${id}`).then(response=>response.data.resultCode)
    },
-   
 }
 export const profileAPI = {
    getUserProfile(userId="24445") {
       return instance.get(`profile/${userId}`).then(response=>response.data)
-   }
+   },
+   getUserStatus(userId="24445") {
+      return instance.get(`profile/status/${userId}`).then(response=>response.data) //возвращает сам статус
+   },
+   updateMyStatus(status:string) {
+      return instance.put(`profile/status`, {status} ) // обновляем только свой
+   },
 }
 
 export const authAPI = {
