@@ -1,30 +1,16 @@
 import {ProfileReducerStateType, UserProfileType} from "./profileReducer";
-import {DialogsReducerStateType} from "./dialogsReducer";
+import {DialogPagesType, DialogsReducerStateType} from "./dialogsReducer";
 
-export type MessageTypes = {
-    messageText: string
-}
-export type DialogItemTypes = {
-    linkID: number
-    userName: string
-    avatarLink: string
+
+export type ProfilePageType = {
+    posts: Array<MyPostsType>
+    userProfile: UserProfileType
+    status:string
 }
 export type MyPostsType = {
     id: number,
     postText: string
     likeCount: number
-}
-export type DialogPagesType = {
-    dialogsData: Array<DialogItemTypes>
-    messagesData: Array<MessageTypes>
-    newMessageText: string
-
-}
-export type ProfilePageType = {
-    posts: Array<MyPostsType>
-    userProfile: UserProfileType
-    status:string
-
 }
 export type AppStateType = {
     dialogsPage: DialogPagesType
