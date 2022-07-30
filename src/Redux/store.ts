@@ -22,7 +22,6 @@ export type DialogPagesType = {
 }
 export type ProfilePageType = {
     posts: Array<MyPostsType>
-    newPostText: string
     userProfile: UserProfileType
     status:string
 
@@ -31,13 +30,11 @@ export type AppStateType = {
     dialogsPage: DialogPagesType
     profilePage: ProfilePageType
 }
-export type StoreType = {
-    //_state: AppStateType,
-    //_onChange: () => void,
-    getState: () => AppStateType
-    subscribe: (observer: () => void) => void,
-    dispatch: (action: ActionTypes) => void,
-}
+// export type StoreType = {
+//     getState: () => AppStateType
+//     subscribe: (observer: () => void) => void,
+//     dispatch: (action: ActionTypes) => void,
+// }
 export type ActionTypes = ProfileReducerStateType | DialogsReducerStateType
 
 /*

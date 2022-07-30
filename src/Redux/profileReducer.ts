@@ -4,11 +4,8 @@ import {profileAPI} from "../api/api";
 
 export type ProfileReducerStateType =
     ReturnType<typeof addMyPost>
-    | ReturnType<typeof changeNewPostText>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setStatus>
-//| ReturnType<typeof updateStatus>
-
 
 export type UsersContactType = {
     facebook: string
@@ -34,21 +31,9 @@ export type UserProfileType = {
     photos: ProfilePhotoType
 }
 
-export const addMyPost = () => ({
-    type: "ADD-POST",
-} as const)
-export const changeNewPostText = (newPostText: string) => ({
-    type: "CHANGE-NEW-POST",
-    newPostText: newPostText
-} as const)
-export const setUserProfile = (profile: UserProfileType) => ({
-    type: "SET-USER-PROFILE",
-    profile
-} as const)
-export const setStatus = (status: string) => ({
-    type: "SET-STATUS",
-    status,
-} as const)
+export const addMyPost = (newPostText: string) => ({type: "ADD-POST", newPostText} as const)
+export const setUserProfile = (profile: UserProfileType) => ({type: "SET-USER-PROFILE", profile} as const)
+export const setStatus = (status: string) => ({type: "SET-STATUS", status,} as const)
 
 export const setUserProfileThunk = (userId: string) => {
     return (dispatch: Dispatch) => {
@@ -87,7 +72,6 @@ const initialStateProfilePage = {
         {id: 5, postText: "And Last post ", likeCount: 35},
         {id: 6, postText: "Lastest post ", likeCount: 99}
     ],
-    newPostText: "",
     userProfile: {
         aboutMe: "",
         contacts: {
@@ -112,25 +96,16 @@ const initialStateProfilePage = {
     status: ""
 }
 
-
-const profileReducer = (state: ProfilePageType = initialStateProfilePage, action: ProfileReducerStateType) => {
-    
+const profileReducer = (state: ProfilePageType = initialStateProfilePage, action: ProfileReducerStateType): ProfilePageType => {
     
     switch (action.type) {
-        case "ADD-POST": {
-            const stateCopy = {
+        case "ADD-POST":
+            return {
                 ...state,
-                posts: [{id: state.posts.length, postText: state.newPostText, likeCount: 0}, ...state.posts],
-                newPostText: ""
+                posts: [{id: state.posts.length, postText: action.newPostText, likeCount: 0}, ...state.posts],
             }
-            return stateCopy
-        }
-        case "CHANGE-NEW-POST": {
-            const stateCopy = {...state, newPostText: action.newPostText}
-            return stateCopy
-        }
-        case "SET-USER-PROFILE": {
-            const stateCopy = {
+        case "SET-USER-PROFILE":
+            return {
                 ...state,
                 userProfile: {
                     ...action.profile,
@@ -138,17 +113,13 @@ const profileReducer = (state: ProfilePageType = initialStateProfilePage, action
                     photos: {...action.profile.photos}
                 }
             }
-            return stateCopy
-        }
-        case "SET-STATUS": {
-            const stateCopy = {
+        case "SET-STATUS":
+            return {
                 ...state,
                 status: action.status
             }
-            return stateCopy
-        }
+        default:
+            return state
     }
-    
-    return state
 }
 export default profileReducer;
