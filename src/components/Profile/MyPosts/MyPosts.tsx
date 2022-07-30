@@ -4,7 +4,6 @@ import {Post} from "./post/Post";
 import {MyPostPropsFromConteinerType} from "./MyPostsContainer";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 
-
 /*type PropsType = {
     posts: Array<MyPostsType>
     onClickAddPost: ()=>void

@@ -1,7 +1,16 @@
-import {ProfilePageType} from "./store";
 import {Dispatch} from "redux";
 import {profileAPI} from "../api/api";
 
+export type ProfilePageType = {
+    posts: Array<MyPostsType>
+    userProfile: UserProfileType
+    status: string
+}
+export type MyPostsType = {
+    id: number,
+    postText: string
+    likeCount: number
+}
 export type ProfileReducerStateType =
     ReturnType<typeof addMyPost>
     | ReturnType<typeof setUserProfile>
