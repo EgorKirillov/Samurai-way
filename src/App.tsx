@@ -23,7 +23,7 @@ function App() {
                         <ProfileContainer/>
                     </Route>
                     <Route exact path="/login">
-                        <Login/>
+                        <Login />
                     </Route>
                     <Route path={'/dialogs'} render={
                         () => <DialogsContainer/>

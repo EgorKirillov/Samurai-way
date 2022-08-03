@@ -1,10 +1,11 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
 import s from "./Header.module.css"
-import {AuthStateType} from "../../Redux/authReducer";
+//import {AuthStateType} from "../../Redux/authReducer";
+import {HeaderContainerPropsType} from "./HeaderContainer";
 
 
-export const Header = (props: AuthStateType) => {
+export const Header = (props: HeaderContainerPropsType) => {
    
    return <header className={s.header}>
       <img
@@ -16,8 +17,9 @@ export const Header = (props: AuthStateType) => {
            ? <NavLink to={"/login"}>not authorised Login </NavLink>
            : <div>
               <div>name:{props.login}</div>
-              <div>id:{props.id}</div>
-              <div>email:{props.email}</div>
+              {/*<div>id:{props.id}</div>*/}
+              {/*<div>email:{props.email}</div>*/}
+                <button onClick={props.logoutThunk}>log out</button>
            </div>
          }
       </div>

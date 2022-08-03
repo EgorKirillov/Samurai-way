@@ -1,10 +1,15 @@
 import React from "react";
-import {authMeThunk, setAuthData, setAuthIsFatchingValue} from "../../Redux/authReducer";
+import {authMeThunk, logoutThunk, setAuthData, setAuthIsFatchingValue} from "../../Redux/authReducer";
 import {Header} from "./Header";
 import {AppStateType} from "../../Redux/redux-store";
 import {connect} from "react-redux";
 
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
+   // constructor(props:HeaderContainerPropsType) {
+   //    super(props);
+   //
+   //
+   // }
    
    componentDidMount() {
       this.props.authMeThunk()
@@ -40,9 +45,10 @@ const mapStateToProps = (state: AppStateType) => {
 
 
 export type MapDispatchPropType = {
-   setAuthData: (id: number, login: string, email: string) => void
+   setAuthData: (id: number, login: string, email: string, isAuth:boolean) => void
    setAuthIsFatchingValue: (isFatchung: boolean) => void
    authMeThunk: () => any
+   logoutThunk: ()=>void
 }
 export type MapStatePropType = {
    id: number
@@ -52,6 +58,6 @@ export type MapStatePropType = {
    isAuth: boolean
 }
 
-type HeaderContainerPropsType = MapDispatchPropType & MapStatePropType
+export type HeaderContainerPropsType = MapDispatchPropType & MapStatePropType
 
-export default connect(mapStateToProps, {setAuthIsFatchingValue, setAuthData, authMeThunk})(HeaderContainer)
+export default connect(mapStateToProps, {setAuthIsFatchingValue, setAuthData, authMeThunk, logoutThunk})(HeaderContainer)

@@ -15,9 +15,9 @@ export type UsersReducerStateType =
     ReturnType<typeof setAuthData>
     | ReturnType<typeof setAuthIsFatchingValue>
 
-export const setAuthData = (id: number, login: string, email: string) => ({
-    type: "SET-AUTH-DATA" as const, id, login, email,
-})
+export const setAuthData = (id: number, login: string, email: string, isAuth: boolean) => ({
+    type: "SET-AUTH-DATA", id, login, email, isAuth,
+}as const)
 export const setAuthIsFatchingValue = (isFetching: boolean) => ({
     type: "SET-AUTH-ISFATCHING-VALUE" as const, isFetching,
 })
@@ -27,9 +27,29 @@ export const authMeThunk = () => {
         authAPI.getMyData()
             .then(data => {
                 if (data.resultCode === 0) {
-                    dispatch(setAuthData(data.data.id, data.data.login, data.data.email,))
+                    dispatch(setAuthData(data.data.id, data.data.login, data.data.email, true))
                 }
                 dispatch(setAuthIsFatchingValue(false))
+            })
+    }
+}
+export const loginThunk = (email:string, password:string, rememberMe:boolean) => {
+    return (dispatch: Dispatch<any>) => {
+        authAPI.login(email, password, rememberMe)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(authMeThunk())
+                }
+            })
+    }
+}
+export const logoutThunk = () => {
+    return (dispatch: Dispatch<any>) => {
+        authAPI.logout()
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(setAuthData(0, "", "", false))
+                }
             })
     }
 }
@@ -51,7 +71,7 @@ export const authReducer = (state: AuthStateType = initialAuthState, action: Use
                 id: action.id,
                 login: action.login,
                 email: action.email,
-                isAuth: true,
+                isAuth: action.isAuth,
             }
         case "SET-AUTH-ISFATCHING-VALUE":
             return {
