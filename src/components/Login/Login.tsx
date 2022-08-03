@@ -1,42 +1,58 @@
 import React from 'react';
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {SubmitHandler, useForm} from "react-hook-form";
 
 const Login = () => {
-    const onSubmit = (formData: FormDataType) => {
-        console.log(formData)
-    }
     return (
         <div>
             you are not authorized !! LOGIN
-            <LoginReduxForm onSubmit={onSubmit}/>
+            <LoginForm/>
         </div>
     );
 };
-type FormDataType = {
+
+export default Login;
+
+type LoginFormType = {
     login: string
     password: string
     rememberMe: boolean
-}
+};
 
-const LoginForm = (props: InjectedFormProps<FormDataType>) => {
-    
+const LoginForm = () => {
+    const {register, handleSubmit, watch, formState: {errors}} = useForm<LoginFormType>();
+    const onSubmit: SubmitHandler<LoginFormType> = (data) => {
+        console.log(data);
+    }
+    console.log(watch("login"))
     return (
-        <form onSubmit={props.handleSubmit}>
+        /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
+        <form onSubmit={handleSubmit(onSubmit)}>
             <div>
-                <Field component={"input"} name={"login"} type={"text"} placeholder={"Login"}/>
+                <input placeholder={"login"}
+                       {...register("login",
+                           {
+                               required: {value: true, message: 'this field is required'},
+                               maxLength: {value: 15, message: 'max length 15'}
+                           })
+                       }
+                />
+                {errors.login && <span>This field is required</span>}
             </div>
             <div>
-                <Field component={"input"} name={"password"} type={"text"} placeholder={'Password'}/>
+                <input placeholder={"password"}
+                       {...register("password",
+                           {
+                               required: {value: true, message: 'this field is required'},
+                               maxLength: {value: 15, message: 'max length 15'}
+                           })
+                       }
+                />
+                {errors.password && <span>{errors.password.message}</span>}
             </div>
             <div>
-                <Field component={"input"} name={"rememberMe"} type="checkbox"/> Remember me
+                <input type={"checkbox"} {...register("rememberMe")}/>
             </div>
-            <div>
-                <button>login</button>
-            </div>
-        </form>)
+            <button>submit</button>
+        </form>
+    )
 }
-
-const LoginReduxForm = reduxForm<FormDataType>({form: "login"})(LoginForm)
-
-export default Login;
