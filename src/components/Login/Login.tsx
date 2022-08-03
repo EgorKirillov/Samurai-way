@@ -8,6 +8,8 @@ import {Redirect} from "react-router-dom";
 const Login = () => {
     const dispatch = useDispatch<any>()
     const isAuth:boolean = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
+    const errorLogin:string = useSelector<AppStateType, string>(state => state.auth.errorLogin ? state.auth.errorLogin : "")
+    
     const onSubmit = (data:LoginFormType) => {
         dispatch(loginThunk(data.login, data.password, data.rememberMe))
     }
@@ -16,7 +18,9 @@ const Login = () => {
         <div>
             you are not authorized !! LOGIN
             <LoginForm onSubmit={onSubmit}/>
+            {errorLogin}
         </div>
+        
     );
 };
 
