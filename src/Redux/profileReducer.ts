@@ -34,7 +34,7 @@ export type UserProfileType = {
     photos: ProfilePhotoType
 }
 
-export const addMyPost = (newPost:string) => ({
+export const addMyPost = (newPost: string) => ({
     type: "ADD-POST",
     newPost
 } as const)
@@ -76,6 +76,11 @@ export const updateStatusThunk = (status: string) => {
                 }
             })
     }
+}
+export type MyPostsType = {
+    id: number
+    postText: string
+    likeCount: number
 }
 
 const initialStateProfilePage = {
