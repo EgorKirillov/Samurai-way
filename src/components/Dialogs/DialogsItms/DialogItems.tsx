@@ -1,14 +1,12 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import s from './../Dialogs.module.css'
-import {DialogItemTypes} from "../../../Redux/store";
+import {DialogItemTypes} from "../../../Redux/dialogsReducer";
 
 
 export const DialogItem = (props: DialogItemTypes) => {
 
-
     /*let link="../../../avatar/"+props.avatarLink*/
-
 
     return (
         <div className={s.dialog/*+ ' ' + s.activeDialog*/ }>

@@ -11,8 +11,8 @@ import {
 import {connect} from "react-redux";
 import {AppStateType} from "../../Redux/redux-store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 export type MapDispatchPropType = {
    setUserProfile: (profile: UserProfileType) => void
@@ -20,19 +20,16 @@ export type MapDispatchPropType = {
    setStatus: (status:string) => void
    setStatusThunk: (userId: string) => any
    updateStatusThunk: (status:string) => any
-   
 }
 
 type MapStateToPropsType = {
    profile: UserProfileType
    status: string
-   //isAuth: boolean
 }
 const mapStateToProps = (state: AppStateType) => {
    return {
       profile: state.profilePage.userProfile,
       status: state.profilePage.status,
-      // isAuth: state.auth.isAuth,
    }
 }
 
@@ -48,7 +45,6 @@ class ProfileContainerC extends React.Component<MapStateToPropsType & MapDispatc
     }*/
    
    componentDidMount() {
-      
       let userId = this.props.match.params.userId
       if (!userId) {userId="24445"}
       this.props.setUserProfileThunk(userId)
@@ -59,7 +55,6 @@ class ProfileContainerC extends React.Component<MapStateToPropsType & MapDispatc
         .then(response => {
            this.props.setUserProfile(response.data)
         })*/
-      
       //this.props.setStatus(userId)
    }
    
@@ -73,11 +68,9 @@ class ProfileContainerC extends React.Component<MapStateToPropsType & MapDispatc
    }
 }
 
-
 //export default withAuthRedirect(connect(mapStateToProps, {setUserProfile,setUserProfileThunk})(withRouter(ProfileContainerC)))
-
 export default compose<React.ComponentType>(
-  //withAuthRedirect,
+  withAuthRedirect,
   connect(mapStateToProps, {setUserProfile, setUserProfileThunk, setStatus, setStatusThunk, updateStatusThunk}),
   withRouter,
 )(ProfileContainerC)

@@ -11,59 +11,38 @@ import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
 
-// type AppPropsType = {
-//store: StoreType
-// }
-
-function App(/*props: AppPropsType*/) {
-   
-   return (
-     <BrowserRouter>
-        <div className={'app-wrapper'}>
-           <HeaderContainer/>
-           <Navbar/>
-           <div className={'app-wrapper-content'}>
-              <Route exact path="/">
-                 <ProfileContainer/>
-                 {/*<Profile postsPage={props.store.getState().profilePage}*/}
-                 {/*         dispatch={props.store.dispatch}*/}
-                 {/*/>*/}
-              </Route>
-              <Route exact path="/login">
-                 <Login/>
-                 
-              </Route>
-              
-              <Route path={'/dialogs'} render={
-                 () => <DialogsContainer/>
-                 // () => <DialogsContainer
-                 //   data={props.store.getState().dialogsPage}
-                 //   dispatch={props.store.dispatch}
-                 // />
-              }/>
-              <Route path={'/profile/:userId?'} render={
-                 () => <ProfileContainer/>
-                 // () => <Profile postsPage={props.store.getState().profilePage}
-                 //                dispatch={props.store.dispatch}
-                 // />
-              }/>
-              <Route path={'/users'} render={
-                 () => <UsersPageContainer/>
-                 // () => <Profile postsPage={props.store.getState().profilePage}
-                 //                dispatch={props.store.dispatch}
-                 // />
-              }/>
-              
-              
-              <Route path={'/news'} component={News}/>
-              <Route path={'/music'} component={Music}/>
-              <Route path={'/settings'} component={Settings}/>
-           </div>
-        
-        
-        </div>
-     </BrowserRouter>
-   );
+function App() {
+    
+    return (
+        <BrowserRouter>
+            <div className={'app-wrapper'}>
+                <HeaderContainer/>
+                <Navbar/>
+                <div className={'app-wrapper-content'}>
+                    <Route exact path="/">
+                        <ProfileContainer/>
+                    </Route>
+                    <Route exact path="/login">
+                        <Login/>
+                    </Route>
+                    <Route path={'/dialogs'} render={
+                        () => <DialogsContainer/>
+                        
+                    }/>
+                    <Route path={'/profile/:userId?'} render={
+                        () => <ProfileContainer/>
+                    }/>
+                    <Route path={'/users'} render={
+                        () => <UsersPageContainer/>
+                    }/>
+                    
+                    <Route path={'/news'} component={News}/>
+                    <Route path={'/music'} component={Music}/>
+                    <Route path={'/settings'} component={Settings}/>
+                </div>
+            </div>
+        </BrowserRouter>
+    );
 }
 
 export default App;
