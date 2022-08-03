@@ -3,6 +3,8 @@ import s from "./MyPosts.module.css"
 import {Post} from "./post/Post";
 import {MyPostPropsFromConteinerType} from "./MyPostsContainer";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {validators} from "../../../utils/allValidators";
+
 
 /*type PropsType = {
     posts: Array<MyPostsType>
@@ -27,17 +29,22 @@ export function MyPosts(props: MyPostPropsFromConteinerType) { // MyPostPropsFro
 }
 
 
-type AddPostFormDataType = {
+export type AddPostFormDataType = {
     addPostText: string
 }
+const maxLenght30 = validators.maxLength(30)
 
 const AddPostForm = (props: InjectedFormProps<AddPostFormDataType>) => {
+    // let error = useSelector<AppStateType, any>(state => state.form.addPostForm)
     
     return (<form onSubmit={props.handleSubmit}>
         <div>
             <Field component={"textarea"}
                    name={'addPostText'}
-                   type={'text'}/>
+                   type={'text'}
+            validate={[validators.required, maxLenght30, validators.email]}/>
+            {/*{error.syncErrors && error.syncErrors.addPostText}*/}
+            
         </div>
         <div>
             <button> add post</button>
