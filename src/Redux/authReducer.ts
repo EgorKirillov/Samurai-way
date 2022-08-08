@@ -12,7 +12,7 @@ export type AuthStateType = {
     errorLogin?: string
 }
 
-export type UsersReducerStateType =
+export type AuthReducerStateType =
     ReturnType<typeof setAuthData>
     | ReturnType<typeof setAuthIsFatchingValue>
     | ReturnType<typeof setErrorLogin>
@@ -28,17 +28,16 @@ export const setAuthIsFatchingValue = (isFetching: boolean) => ({
     type: "SET-AUTH-ISFATCHING-VALUE" as const, isFetching,
 })
 
-export const authMeThunk = () => {
-    return (dispatch: Dispatch) => {
-        dispatch(setAuthIsFatchingValue(true))
-        authAPI.getMyData()
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(setAuthData(data.data.id, data.data.login, data.data.email, true))
-                }
-                dispatch(setAuthIsFatchingValue(false))
-            })
-    }
+export const authMeThunk = () => (dispatch: Dispatch) => {
+    dispatch(setAuthIsFatchingValue(true))
+    let result = authAPI.getMyData()
+        .then(data => {
+            if (data.resultCode === 0) {
+                dispatch(setAuthData(data.data.id, data.data.login, data.data.email, true))
+            }
+           dispatch(setAuthIsFatchingValue(false))
+        })
+    return result
 }
 export const loginThunk = (email: string, password: string, rememberMe: boolean) => {
     return (dispatch: Dispatch<any>) => {
@@ -64,15 +63,15 @@ export const logoutThunk = () => {
 }
 
 const initialAuthState: AuthStateType = {
-    id: -1,
-    login: "",
-    email: "",
-    isFetching: true,
-    isAuth: false,
-    errorLogin: "",
-}
+    // id: null,
+    // login: "",
+    // email: "",
+    // isFetching: true,
+    // isAuth: false,
+    // errorLogin: "",
+} as AuthStateType
 
-export const authReducer = (state: AuthStateType = initialAuthState, action: UsersReducerStateType): AuthStateType => {
+export const authReducer = (state: AuthStateType = initialAuthState, action: AuthReducerStateType): AuthStateType => {
     
     switch (action.type) {
         case "SET-AUTH-DATA":

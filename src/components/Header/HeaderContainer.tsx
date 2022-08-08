@@ -11,19 +11,19 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType> {
    //
    // }
    
-   componentDidMount() {
-      this.props.authMeThunk()
-      /*  this.props.setAuthIsFatchingValue(true)
-        authAPI.getMyData()
-          //axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`,{withCredentials:true})
-          .then(data => {
-             if (data.resultCode === 0) {
-                this.props.setAuthData(data.data.id, data.data.login, data.data.email,)
-             }
-             
-             this.props.setAuthIsFatchingValue(false)
-          })*/
-   }
+   // componentDidMount() {
+   //    this.props.authMeThunk()
+   //    /*  this.props.setAuthIsFatchingValue(true)
+   //      authAPI.getMyData()
+   //        //axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`,{withCredentials:true})
+   //        .then(data => {
+   //           if (data.resultCode === 0) {
+   //              this.props.setAuthData(data.data.id, data.data.login, data.data.email,)
+   //           }
+   //
+   //           this.props.setAuthIsFatchingValue(false)
+   //        })*/
+   // }
    
    render = () => {
       return (

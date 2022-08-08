@@ -117,7 +117,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropType => {
    followUserThunk,
 })(UsersC))*/
 export default compose<React.ComponentType>(
-    withAuthRedirect,
+    //withAuthRedirect,
     connect(mapStateToProps, {
         getUsers,
         followSuccess,
