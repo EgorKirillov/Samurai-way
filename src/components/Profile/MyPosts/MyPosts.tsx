@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import s from "./MyPosts.module.css"
 import {Post} from "./post/Post";
 import {MyPostPropsFromConteinerType} from "./MyPostsContainer";
@@ -12,8 +12,8 @@ import {SubmitHandler, useForm} from "react-hook-form";
     onClickAddPost: ()=>void
 }*/
 
-
-export function MyPosts(props: MyPostPropsFromConteinerType) { // MyPostPropsFromConteinerType или PropsType
+//87 React.memo без него и так работает хорошо
+export const  MyPosts = React.memo((props: MyPostPropsFromConteinerType) => { // MyPostPropsFromConteinerType или PropsType
     
     const postsElements = (props.posts.map(p => <Post id={p.id} postText={p.postText} likeCount={p.likeCount}/>))
     const onClickAddButtonHandler = (newPost: string) => props.addMyPost(newPost)
@@ -27,7 +27,7 @@ export function MyPosts(props: MyPostPropsFromConteinerType) { // MyPostPropsFro
             {postsElements}
         </div>
     </div>
-}
+})
 
 
 type AddPostFormType = {
@@ -56,7 +56,7 @@ const AddPostForm = (props: { addPost: (value: string) => void }) => {
                     }
                 )}
             />
-                {errors.postValue && <span>{errors.postValue.message}</span>}
+                {errors.postValue && touchedFields && <span>{errors.postValue.message}</span>}
               
             </div>
             <div>
