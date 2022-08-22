@@ -25,7 +25,8 @@ const ProfileStatusWithHooks = (props: ProfileStatusProps) => {
     props.updateStatus(status)
   }
   useEffect(() => {
-  }, [] )
+    setStatus(props.statusText)
+  }, [props.statusText] )
 
 return (
   <div>
