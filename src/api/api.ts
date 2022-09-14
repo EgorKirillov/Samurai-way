@@ -19,10 +19,10 @@ export const usersAPI = {
       return instance.get(`users?page=${pageNumber}&count=${countUsersPerPage}`).then(response=>response.data)
    },
    changeUserToFollow(id:number){
-      return instance.post(`follow/${id}`).then(response=>response.data.resultCode)
+      return instance.post(`follow/${id}`).then(response=>response.data)
    },
    changeUserToUnfollow(id:number){
-      return instance.delete(`follow/${id}`).then(response=>response.data.resultCode)
+      return instance.delete(`follow/${id}`).then(response=>response.data)
    },
 }
 export const profileAPI = {

@@ -1,6 +1,6 @@
 import {applyMiddleware, combineReducers, legacy_createStore as createStore} from "redux";
-import dialogReducer, {DialogsReducerStateType} from "./dialogsReducer"
-import profileReducer, {ProfileReducerStateType} from "./profileReducer"
+import {dialogsReducer, DialogsReducerActionType} from "./dialogsReducer"
+import {profileReducer, ProfileReducerActionType} from "./profileReducer"
 import {usersReducer, UsersReducerStateType} from "./usersReducer";
 import {authReducer, AuthReducerStateType } from "./authReducer";
 import thunkMiddleware, {ThunkAction, ThunkDispatch } from "redux-thunk";
@@ -9,10 +9,10 @@ import { useDispatch } from "react-redux";
 
 export type AppStateType = ReturnType<typeof rootReducer>
 
-export type ActionType = ProfileReducerStateType | DialogsReducerStateType | UsersReducerStateType | AuthReducerStateType | AppReducerStateType
+export type ActionType = ProfileReducerActionType | DialogsReducerActionType | UsersReducerStateType | AuthReducerStateType | AppReducerStateType
 
 let rootReducer = combineReducers({
-    dialogsPage: dialogReducer,
+    dialogsPage: dialogsReducer,
     profilePage: profileReducer,
     usersPage: usersReducer,
     auth: authReducer,
@@ -23,6 +23,7 @@ let store = createStore(rootReducer, applyMiddleware(thunkMiddleware)) // или
 
 
 export type AppDispatch = ThunkDispatch<AppStateType, unknown, ActionType>;
+
 export const useAppDispatch: () => AppDispatch = useDispatch
 
 // типизация Thunk Action для всего объекта

@@ -1,26 +1,24 @@
 import {authMeThunk} from "./authReducer";
-import {useAppDispatch} from "./hooks";
+import {AppThunk} from "./redux-store";
 
-export type AppReducerType = {
-    initialized: boolean
-}
+// action
+export const initializedSuccess = () => ({type: "app/SET-INITIALIZED"} as const)
 
-export type AppReducerStateType =
-    | ReturnType<typeof initializedSuccess>
-
-export const initializedSuccess = () => ({
-    type: "app/SET-INITIALIZED"
-} as const)
-
-export const initializeAppThunk = () => (dispatch=useAppDispatch()) => {
-    let pr = dispatch(authMeThunk())
-    pr.then(() => dispatch(initializedSuccess()) )
+//thunk
+export const initializeAppThunk = ():AppThunk => async (dispatch) => {
+    try {
+        await dispatch(authMeThunk())
+        dispatch(initializedSuccess())
+    }
+    catch (e) {
+        console.log('ошибка инициализации')
+    }
 }
 
 const initialAuthState: AppReducerType = {
     initialized: false,
 }
-
+//reducer
 export const appReducer = (state: AppReducerType = initialAuthState, action: AppReducerStateType): AppReducerType => {
     
     switch (action.type) {
@@ -33,3 +31,13 @@ export const appReducer = (state: AppReducerType = initialAuthState, action: App
             return state
     }
 }
+
+
+//types
+export type AppReducerType = {
+    initialized: boolean
+}
+
+export type AppReducerStateType =
+  | ReturnType<typeof initializedSuccess>
+

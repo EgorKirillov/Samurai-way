@@ -1,19 +1,5 @@
-export type MessageTypes = {
-    messageText: string
-}
-export type DialogItemTypes = {
-    linkID: number
-    userName: string
-    avatarLink: string
-}
-export type DialogPagesType = {
-    dialogsData: Array<DialogItemTypes>
-    messagesData: Array<MessageTypes>
-}
 
-export type DialogsReducerStateType =
-    ReturnType<typeof addMessageActionCreator>
-
+//action
 export const addMessageActionCreator = (newMessage: string) => ({
     type: "dialogs/ADD-MESSAGE", newMessage
 } as const)
@@ -43,8 +29,10 @@ const initialStateDialogPage: DialogPagesType = {
         {messageText: "Zelt1"},
     ],
 }
+//thunk
 
-export const dialogsReducer = (state: DialogPagesType = initialStateDialogPage, action: DialogsReducerStateType): DialogPagesType => {
+//reducer
+export const dialogsReducer = (state: DialogPagesType = initialStateDialogPage, action: DialogsReducerActionType): DialogPagesType => {
     switch (action.type) {
         case "dialogs/ADD-MESSAGE":
             return {...state, messagesData: [...state.messagesData, {messageText: action.newMessage}]}
@@ -52,5 +40,20 @@ export const dialogsReducer = (state: DialogPagesType = initialStateDialogPage, 
             return state
     }
 }
+//types
+export type MessageTypes = {
+    messageText: string
+}
+export type DialogItemTypes = {
+    linkID: number
+    userName: string
+    avatarLink: string
+}
+export type DialogPagesType = {
+    dialogsData: Array<DialogItemTypes>
+    messagesData: Array<MessageTypes>
+}
 
-export default dialogsReducer;
+export type DialogsReducerActionType =  ReturnType<typeof addMessageActionCreator>
+
+

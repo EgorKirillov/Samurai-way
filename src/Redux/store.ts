@@ -1,5 +1,5 @@
-import {ProfileReducerStateType, UserProfileType} from "./profileReducer";
-import {DialogsReducerStateType} from "./dialogsReducer";
+import {ProfileReducerActionType, UserProfileType} from "./profileReducer";
+import {DialogsReducerActionType} from "./dialogsReducer";
 
 export type MessageTypes = {
     messageText: string
@@ -37,7 +37,7 @@ export type StoreType = {
     subscribe: (observer: () => void) => void,
     dispatch: (action: ActionTypes) => void,
 }
-export type ActionTypes = ProfileReducerStateType | DialogsReducerStateType
+export type ActionTypes = ProfileReducerActionType | DialogsReducerActionType
 
 /*
 export const store: StoreType = {
