@@ -5,9 +5,10 @@ import {
     changeCurrentPage, changeTotalPagesCount,
     changeTotalUsersCount,
     followSuccess, setIsFatchingValue,
+    followToggle,
     getUsers,
     unfollowSuccess,
-    UserType, toggleFollowInProgress, getUsersThunkCreator, unfollowUserThunk, followUserThunk
+    UserType, toggleFollowInProgress, getUsersThunkCreator, unfollowUserThunk, followUserThunk, followToggleUserThunk
 } from "../../Redux/usersReducer";
 import UsersPage from "./UsersPage";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
@@ -17,8 +18,9 @@ import {compose} from "redux";
 export type MapDispatchPropType = {
     getUsers: (users: Array<UserType>) => void
     changeCurrentPage: (currentUserPage: number) => void
-    followSuccess: (userid: number) => void
-    unfollowSuccess: (userid: number) => void
+    // followSuccess: (userid: number) => void
+    // unfollowSuccess: (userid: number) => void
+    // followToggle: (userid: number, isFollow: boolean) => void
     changeTotalUsersCount: (totalUsersCount: number) => void
     changeTotalPagesCount: (totalPagesCount: number) => void
     setIsFatchingValue: (isFatchung: boolean) => void
@@ -26,6 +28,7 @@ export type MapDispatchPropType = {
     getUsersThunkCreator: (currentUsersPage: number, countUsersPerPage: number) => any
     unfollowUserThunk: (userID: number) => any
     followUserThunk: (userID: number) => any
+    followToggleUserThunk: (userid: number, isFollow: boolean) => any
 }
 export type MapStatePropType = {
     users: Array<UserType>
@@ -71,6 +74,7 @@ class UsersC extends React.Component<UserPagePropsType> {
                           users={this.props.users}
                           onClickFollow={this.props.followUserThunk}
                           onClickUnfollow={this.props.unfollowUserThunk}
+                          onClickFollowToggle={this.props.followToggleUserThunk}
                           totalUsersCount={this.props.totalUsersCount}
                           isFatching={this.props.isFatching}
                           followingIsProgress={this.props.followingIsProgress}
@@ -130,5 +134,6 @@ export default compose<React.ComponentType>(
         getUsersThunkCreator,
         unfollowUserThunk,
         followUserThunk,
+        followToggleUserThunk,
     },)
 )(UsersC)

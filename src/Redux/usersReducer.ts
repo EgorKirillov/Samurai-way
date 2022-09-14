@@ -6,6 +6,8 @@ export const followSuccess = (id: number) => ({type: "users/CHANGE-ON-FOLLOW", i
 
 export const unfollowSuccess = (id: number) => ({type: "users/CHANGE-ON-UNFOLLOW", id} as const)
 
+export const followToggle = (id: number, isFollow: boolean) => ({type: "users/FOLLOW-TOGGLE", id, isFollow} as const)
+
 export const changeCurrentPage = (currentUsersPage: number) => ({
   type: "users/CHANGE-CURRENT-PAGE",
   currentUsersPage
@@ -59,6 +61,18 @@ export const unfollowUserThunk = (userID: number): AppThunk => async dispatch =>
   dispatch(toggleFollowInProgress(false, userID))
 }
 
+export const followToggleUserThunk = (userID: number, isFollow: boolean): AppThunk => async dispatch => {
+  
+  dispatch(toggleFollowInProgress(true, userID))
+  const res =  isFollow ? await usersAPI.changeUserToFollow(userID) : await usersAPI.changeUserToUnfollow(userID)
+  
+  if (res.resultCode === 0) {
+    dispatch(followToggle(userID, isFollow))
+  }
+  dispatch(toggleFollowInProgress(false, userID))
+}
+
+
 const initialStateUsersPage: UserPageStateType = {
   users: [] as Array<UserType>,
   totalUsersCount: 20,
@@ -91,6 +105,16 @@ export const usersReducer = (state: UserPageStateType = initialStateUsersPage, a
         })
       }
     }
+    case "users/FOLLOW-TOGGLE": {
+      return {
+        ...state, users: state.users.map(u => {
+          return (u.id === action.id)
+            ? {...u, followed: action.isFollow}
+            : u
+        })
+      }
+    }
+    
     case "users/SET-USERS": {
       return {
         ...state,
@@ -169,3 +193,4 @@ export type UsersReducerStateType =
   | ReturnType<typeof getUsers>
   | ReturnType<typeof setIsFatchingValue>
   | ReturnType<typeof toggleFollowInProgress>
+  | ReturnType<typeof followToggle>

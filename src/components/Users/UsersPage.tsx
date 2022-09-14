@@ -12,6 +12,7 @@ type UserPagePropsType = {
     totalUsersCount: number
     onClickFollow: (id: number) => void
     onClickUnfollow: (id: number) => void
+    onClickFollowToggle:(id: number, isFollow: boolean) => void
     onChangeCurrentUsersPage: (n: number) => void
     isFatching: boolean
     followingIsProgress: Array<number>
@@ -42,15 +43,18 @@ const UsersPage = (props: UserPagePropsType) => {
                                 <img className={s.ava} src={u.photos.large !== null ? u.photos.large : userphoto}
                                      alt=""/>
                             </NavLink>
-                            {u.followed
-                                ? <button disabled={props.followingIsProgress.some(id => id === u.id)} onClick={() => {
-                                    props.onClickUnfollow(u.id)
+                            {/*{u.followed*/}
+                            {/*  */}
+                            {/*    ? */}
+                              <button disabled={props.followingIsProgress.some(id => id === u.id)} onClick={() => {
+                                    props.onClickFollowToggle(u.id, !u.followed)
                                 }
-                                }>unfollow</button>
-                                : <button disabled={props.followingIsProgress.some(id => id === u.id)} onClick={() => {
-                                    props.onClickFollow(u.id)
-                                }
-                                }>follow</button>}
+                                }>{u.followed ? 'unfollow': 'follow'}</button>
+                              
+                                {/*: <button disabled={props.followingIsProgress.some(id => id === u.id)} onClick={() => {*/}
+                                {/*  props.onClickFollowToggle(u.id, !u.followed)*/}
+                                {/*}*/}
+                                {/*}>follow</button>}*/}
                         </div>
                         <div className={s.oneUserDescription}>
                  <span><div className={s.name}>{u.name}</div>
