@@ -9,7 +9,7 @@ export type AppReducerStateType =
     | ReturnType<typeof initializedSuccess>
 
 export const initializedSuccess = () => ({
-    type: "SET-INITIALIZED"
+    type: "app/SET-INITIALIZED"
 } as const)
 
 export const initializeAppThunk = () => (dispatch=useAppDispatch()) => {
@@ -24,7 +24,7 @@ const initialAuthState: AppReducerType = {
 export const appReducer = (state: AppReducerType = initialAuthState, action: AppReducerStateType): AppReducerType => {
     
     switch (action.type) {
-        case "SET-INITIALIZED":
+        case "app/SET-INITIALIZED":
             return {
                 ...state,
                 initialized: true,

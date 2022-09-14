@@ -15,7 +15,7 @@ export type DialogsReducerStateType =
     ReturnType<typeof addMessageActionCreator>
 
 export const addMessageActionCreator = (newMessage: string) => ({
-    type: "ADD-MESSAGE", newMessage
+    type: "dialogs/ADD-MESSAGE", newMessage
 } as const)
 
 const initialStateDialogPage: DialogPagesType = {
@@ -46,7 +46,7 @@ const initialStateDialogPage: DialogPagesType = {
 
 export const dialogsReducer = (state: DialogPagesType = initialStateDialogPage, action: DialogsReducerStateType): DialogPagesType => {
     switch (action.type) {
-        case "ADD-MESSAGE":
+        case "dialogs/ADD-MESSAGE":
             return {...state, messagesData: [...state.messagesData, {messageText: action.newMessage}]}
         default:
             return state

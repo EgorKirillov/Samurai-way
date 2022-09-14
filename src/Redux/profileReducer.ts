@@ -35,19 +35,20 @@ export type UserProfileType = {
 }
 
 export const addMyPost = (newPost: string) => ({
-    type: "ADD-POST",
+    type: "profile/ADD-POST",
     newPost
 } as const)
+// проверить может не надо уже
 export const changeNewPostText = (newPostText: string) => ({
-    type: "CHANGE-NEW-POST",
+    type: "profile/CHANGE-NEW-POST",
     newPostText: newPostText
 } as const)
 export const setUserProfile = (profile: UserProfileType) => ({
-    type: "SET-USER-PROFILE",
+    type: "profile/SET-USER-PROFILE",
     profile
 } as const)
 export const setStatus = (status: string) => ({
-    type: "SET-STATUS",
+    type: "profile/SET-STATUS",
     status,
 } as const)
 
@@ -123,7 +124,7 @@ const profileReducer = (state: ProfilePageType = initialStateProfilePage, action
     
     
     switch (action.type) {
-        case "ADD-POST": {
+        case "profile/ADD-POST": {
             const stateCopy = {
                 ...state,
                 posts: [{id: state.posts.length, postText: action.newPost, likeCount: 0}, ...state.posts],
@@ -131,7 +132,7 @@ const profileReducer = (state: ProfilePageType = initialStateProfilePage, action
             }
             return stateCopy
         }
-        case "SET-USER-PROFILE": {
+        case "profile/SET-USER-PROFILE": {
             const stateCopy = {
                 ...state,
                 userProfile: {
@@ -142,7 +143,7 @@ const profileReducer = (state: ProfilePageType = initialStateProfilePage, action
             }
             return stateCopy
         }
-        case "SET-STATUS": {
+        case "profile/SET-STATUS": {
             const stateCopy = {
                 ...state,
                 status: action.status

@@ -19,13 +19,13 @@ export type AuthReducerStateType =
 
 
 export const setAuthData = (id: number, login: string, email: string, isAuth: boolean) => ({
-    type: "SET-AUTH-DATA", id, login, email, isAuth,
+    type: "auth/SET-AUTH-DATA", id, login, email, isAuth,
 } as const)
 export const setErrorLogin = (error: string) => ({
-    type: "SET-ERROR-LOGIN", error,
+    type: "auth/SET-ERROR-LOGIN", error,
 } as const)
 export const setAuthIsFatchingValue = (isFetching: boolean) => ({
-    type: "SET-AUTH-ISFATCHING-VALUE" as const, isFetching,
+    type: "auth/SET-AUTH-ISFATCHING-VALUE" as const, isFetching,
 })
 
 export const authMeThunk = () => (dispatch: Dispatch) => {
@@ -74,7 +74,7 @@ const initialAuthState: AuthStateType = {
 export const authReducer = (state: AuthStateType = initialAuthState, action: AuthReducerStateType): AuthStateType => {
     
     switch (action.type) {
-        case "SET-AUTH-DATA":
+        case "auth/SET-AUTH-DATA":
             return {
                 ...state,
                 id: action.id,
@@ -83,12 +83,12 @@ export const authReducer = (state: AuthStateType = initialAuthState, action: Aut
                 isAuth: action.isAuth,
                 errorLogin: "",
             }
-        case "SET-AUTH-ISFATCHING-VALUE":
+        case "auth/SET-AUTH-ISFATCHING-VALUE":
             return {
                 ...state,
                 isFetching: action.isFetching
             }
-        case "SET-ERROR-LOGIN" : {
+        case "auth/SET-ERROR-LOGIN" : {
             return {
                 ...state,
                 errorLogin: action.error
