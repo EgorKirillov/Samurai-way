@@ -18,6 +18,10 @@ export const setStatus = (status: string) => ({
   type: "profile/SET-STATUS",
   status,
 } as const)
+export const setPhotoSuccess = (photos: ProfilePhotoType) => ({
+  type: "profile/SET-PHOTO-SUCCESS",
+  photos,
+} as const)
 
 //thunk
 export const setUserProfileThunk = (userId: string): AppThunk =>
@@ -40,6 +44,15 @@ export const updateStatusThunk = (status: string):AppThunk =>
     }
   }
 
+export const savePhoto = (photo: File):AppThunk =>
+  async dispatch => {
+    const res = await profileAPI.savePhoto(photo)
+    if (res.data.resultCode === 0) {
+      debugger
+      dispatch(setPhotoSuccess(res.data.data.photos))
+    }
+  }
+  
 
 const initialStateProfilePage = {
   posts: [
@@ -101,6 +114,14 @@ export const profileReducer = (state: ProfilePageType = initialStateProfilePage,
         status: action.status
       }
     }
+    case "profile/SET-PHOTO-SUCCESS": {
+      debugger
+      return {  ...state,
+        userProfile: {
+          ...state.userProfile,
+          photos: {...action.photos}
+        }}
+    }
   }
   return state
 }
@@ -111,6 +132,7 @@ export type ProfileReducerActionType =
   ReturnType<typeof addMyPost>
   | ReturnType<typeof setUserProfile>
   | ReturnType<typeof setStatus>
+  | ReturnType<typeof setPhotoSuccess>
 
 export type UsersContactType = {
   facebook: string

@@ -2,6 +2,7 @@ import React from "react";
 import s from "./Profile.module.css"
 import {Profile} from "./Profile";
 import {
+    savePhoto,
     setStatus,
     setStatusThunk,
     setUserProfile,
@@ -20,6 +21,7 @@ export type MapDispatchPropType = {
     setStatus: (status: string) => void
     setStatusThunk: (userId: string) => any
     updateStatusThunk: (status: string) => any
+    savePhoto: (photo:File) => void
 }
 
 type MapStateToPropsType = {
@@ -36,16 +38,8 @@ const mapStateToProps = (state: AppStateType) => {
 }
 
 class ProfileContainerC extends React.Component<MapStateToPropsType & MapDispatchPropType & RouteComponentProps<{ userId: string }>> {
-    /* constructor(props: any) {
-        super(props);
-        console.log(props)
-     }*/
-    
-    /* componentWillUnmount() {
-        console.log('unmount')
-     }*/
-    
-    componentDidMount() {
+  
+    refreshProfile() {
         let userId = this.props.match.params.userId
         if (!userId) {
             userId = this.props.authID
@@ -55,13 +49,15 @@ class ProfileContainerC extends React.Component<MapStateToPropsType & MapDispatc
         }
         this.props.setUserProfileThunk(userId)
         this.props.setStatusThunk(userId)
-        // profileAPI.getUserProfile(userId).then(response=>{this.props.setUserProfile(response.data)})
-        /*if (!userId) {userId="2"}
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/`+userId)
-          .then(response => {
-             this.props.setUserProfile(response.data)
-          })*/
-        //this.props.setStatus(userId)
+    }
+    
+    componentDidMount() {
+      this.refreshProfile()
+    }
+    
+    componentDidUpdate(prevProps: Readonly<MapStateToPropsType & MapDispatchPropType & RouteComponentProps<{ userId: string }>>, prevState: Readonly<{}>, snapshot?: any) {
+        
+        if (this.props.match.params.userId !== prevProps.match.params.userId)  this.refreshProfile()
     }
     
     render() {
@@ -69,7 +65,10 @@ class ProfileContainerC extends React.Component<MapStateToPropsType & MapDispatc
         return (
             <div className={s.content}>
                 {this.props.profile && <Profile profile={this.props.profile} statusText={this.props.status}
-                                                updateStatus={this.props.updateStatusThunk}/>}
+                                                isOwner={!this.props.match.params.userId}
+                                                updateStatus={this.props.updateStatusThunk}
+                                                savePhoto={this.props.savePhoto}
+                />}
             </div>
         )
     }
@@ -78,6 +77,6 @@ class ProfileContainerC extends React.Component<MapStateToPropsType & MapDispatc
 //export default withAuthRedirect(connect(mapStateToProps, {setUserProfile,setUserProfileThunk})(withRouter(ProfileContainerC)))
 export default compose<React.ComponentType>(
     // withAuthRedirect,
-    connect(mapStateToProps, {setUserProfile, setUserProfileThunk, setStatus, setStatusThunk, updateStatusThunk}),
+    connect(mapStateToProps, {setUserProfile, setUserProfileThunk, setStatus, setStatusThunk, updateStatusThunk, savePhoto}),
     withRouter,
 )(ProfileContainerC)

@@ -8,6 +8,8 @@ type PropsType = {
     profile: UserProfileType
     statusText: string
     updateStatus: (statusText: string) => void
+    isOwner: boolean
+    savePhoto: (photo:File)=>void
 }
 
 export function Profile(props: PropsType) {
@@ -16,6 +18,8 @@ export function Profile(props: PropsType) {
         <PropfileInfo profile={props.profile}
                       updateStatus={props.updateStatus}
                       statusText={props.statusText}
+                      isOwner={props.isOwner}
+                      savePhoto={props.savePhoto}
         />
         <MyPostsConteiner/>
     </div>
