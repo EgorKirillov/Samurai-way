@@ -1,9 +1,10 @@
-import React, { ChangeEvent } from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import s from './ProfileInfo.module.css'
-import {UserProfileType} from "../../../Redux/profileReducer";
+import {UpdateProfileType, UserProfileType, UsersContactType} from "../../../Redux/profileReducer";
 import ProfileStatus from "./ProfileStatus";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userphoto from "../../../assets/images/user.png";
+import {ContactForm} from "./ContactForm/ContactForm";
 
 type ProfileInfoType = {
   profile: UserProfileType
@@ -11,10 +12,11 @@ type ProfileInfoType = {
   updateStatus: (statusText: string) => void
   isOwner: boolean
   savePhoto: (photo:File)=>void
+  updateProfile:(updatedProfile: UpdateProfileType)=>void
 }
 
 export const PropfileInfo = (props: ProfileInfoType) => {
-  
+  const [showForm, setShowForm] = useState<boolean>(false)
   const onMainPhotoSelected =(e:ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
       
@@ -22,6 +24,24 @@ export const PropfileInfo = (props: ProfileInfoType) => {
       
     }
   }
+  
+  const submitForm = (data:UsersContactType) => {
+    const updatedProfile: UpdateProfileType = {
+  
+      contacts:{...data},
+      userId:props.profile.userId,
+      // aboutMe: props.profile.aboutMe,
+      // lookingForAJob: props.profile.lookingForAJob,
+      // lookingForAJobDescription: props.profile.lookingForAJobDescription,
+      aboutMe: 'йа торопыга',
+      lookingForAJob: true,
+      lookingForAJobDescription: 'скоро скоро...',
+      fullName: props.profile.fullName
+    }
+   props.updateProfile(updatedProfile)
+    alert('yo yo yo')
+  }
+  
   
   return (
     <div>
@@ -46,6 +66,8 @@ export const PropfileInfo = (props: ProfileInfoType) => {
         {(props.profile.contacts.mainLink) && <div>mainLink:{props.profile.contacts.mainLink}</div>}
         {(props.profile.contacts.youtube) && <div>youtube:{props.profile.contacts.youtube}</div>}
       </div>}
+      {props.isOwner && <button onClick={()=>setShowForm(true)}>change contacts</button>}
+      {showForm && <ContactForm profile={props.profile} submit={submitForm}/>}
       
       <div className={s.discritpionInfo}>ava + description</div>
       <div>Status:</div>

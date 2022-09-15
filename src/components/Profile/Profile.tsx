@@ -2,7 +2,7 @@ import React from "react";
 import s from "./Profile.module.css"
 import {PropfileInfo} from "./ProfileInfo/PropfileInfo";
 import {MyPostsConteiner} from "./MyPosts/MyPostsContainer";
-import {UserProfileType} from "../../Redux/profileReducer";
+import {UpdateProfileType, UserProfileType} from "../../Redux/profileReducer";
 
 type PropsType = {
     profile: UserProfileType
@@ -10,6 +10,7 @@ type PropsType = {
     updateStatus: (statusText: string) => void
     isOwner: boolean
     savePhoto: (photo:File)=>void
+    updateProfile:(updatedProfile: UpdateProfileType)=>void
 }
 
 export function Profile(props: PropsType) {
@@ -20,6 +21,7 @@ export function Profile(props: PropsType) {
                       statusText={props.statusText}
                       isOwner={props.isOwner}
                       savePhoto={props.savePhoto}
+                      updateProfile={props.updateProfile}
         />
         <MyPostsConteiner/>
     </div>

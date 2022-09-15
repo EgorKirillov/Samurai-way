@@ -1,4 +1,5 @@
 import axios from "axios";
+import {UpdateProfileType} from "../Redux/profileReducer";
 
 
 const instance = axios.create({
@@ -34,6 +35,9 @@ export const profileAPI = {
    },
    updateMyStatus(status:string) {
       return instance.put(`profile/status`, {status} ) // обновляем только свой
+   },
+   updateMyProfile(UpdatedProfile:UpdateProfileType) {
+      return instance.put(`profile`, UpdatedProfile ) // обновляем только свой
    },
    savePhoto(photo:File){
       const formData = new FormData()

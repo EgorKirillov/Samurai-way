@@ -44,6 +44,16 @@ export const updateStatusThunk = (status: string):AppThunk =>
     }
   }
 
+export const updateProfile = (updatedProfile: UpdateProfileType):AppThunk =>
+  async dispatch => {
+    const res = await profileAPI.updateMyProfile(updatedProfile)
+    if (res.data.resultCode === 0) {
+      console.log(res)
+      // dispatch(setUserProfileThunk(updatedProfile.userId))
+      // dispatch(setStatus(status))
+    }
+  }
+  
 export const savePhoto = (photo: File):AppThunk =>
   async dispatch => {
     const res = await profileAPI.savePhoto(photo)
@@ -148,13 +158,16 @@ export type ProfilePhotoType = {
   small: string
   large: string
 }
-export type UserProfileType = {
-  aboutMe: string
-  contacts: UsersContactType
+export type UpdateProfileType = {
+  userId: number
   lookingForAJob: boolean
   lookingForAJobDescription: string
   fullName: string
-  userId: number
+  aboutMe: string
+  contacts: UsersContactType
+}
+export type UserProfileType = UpdateProfileType & {
+  
   photos: ProfilePhotoType
 }
 export type MyPostsType = {
