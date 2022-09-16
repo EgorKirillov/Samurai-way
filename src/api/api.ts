@@ -27,10 +27,10 @@ export const usersAPI = {
    },
 }
 export const profileAPI = {
-   getUserProfile(userId="24445") {
+   getUserProfile(userId='24445') {
       return instance.get(`profile/${userId}`).then(response=>response.data)
    },
-   getUserStatus(userId="24445") {
+   getUserStatus(userId='24445') {
       return instance.get(`profile/status/${userId}`).then(response=>response.data) //возвращает сам статус
    },
    updateMyStatus(status:string) {

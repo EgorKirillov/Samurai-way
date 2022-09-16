@@ -1,84 +1,61 @@
-import React from "react";
+import React, {useEffect} from "react";
 import s from "./Profile.module.css"
 import {Profile} from "./Profile";
 import {
-    savePhoto,
-    setStatus,
-    setStatusThunk,
-    setUserProfile,
-    setUserProfileThunk, updateProfile, UpdateProfileType, updateStatusThunk,
-    UserProfileType
+  savePhoto,
+  setStatusThunk,
+  setUserProfileThunk,
+  updateProfile,
+  UpdateProfileType,
+  updateStatusThunk
 } from "../../Redux/profileReducer";
-import {connect} from "react-redux";
-import {AppStateType} from "../../Redux/redux-store";
-import {RouteComponentProps, withRouter} from "react-router-dom";
-import {compose} from "redux";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {useHistory, useParams} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../Redux/hooks";
 
-export type MapDispatchPropType = {
-    setUserProfile: (profile: UserProfileType) => void
-    setUserProfileThunk: (userId: string) => any
-    setStatus: (status: string) => void
-    setStatusThunk: (userId: string) => any
-    updateStatusThunk: (status: string) => any
-    savePhoto: (photo:File) => void
-    updateProfile:(updatedProfile: UpdateProfileType)=>void
-}
-
-type MapStateToPropsType = {
-    profile: UserProfileType
-    status: string
-    authID: string
-}
-const mapStateToProps = (state: AppStateType) => {
-    return {
-        profile: state.profilePage.userProfile,
-        status: state.profilePage.status,
-        authID: state.auth.id,
-    }
-}
-
-class ProfileContainerC extends React.Component<MapStateToPropsType & MapDispatchPropType & RouteComponentProps<{ userId: string }>> {
+const ProfileContainer = () => {
+  const profile = useAppSelector(state => state.profilePage.userProfile)
+  const status = useAppSelector(state => state.profilePage.status)
+  const authID = useAppSelector(state => state.auth.id)
+  const  params  = useParams<{userId?:string|undefined}>();
+  const userId = (params.userId) ? params?.userId : undefined
+  const history = useHistory();
+  const isOwner = !userId
+  const dispatch = useAppDispatch()
   
-    refreshProfile() {
-        let userId = this.props.match.params.userId
-        if (!userId) {
-            userId = this.props.authID
-            if (!userId) {
-                this.props.history.push("/login")
-            }
-        }
-        this.props.setUserProfileThunk(userId)
-        this.props.setStatusThunk(userId)
+  const updateStatusHandler = (status: string) => {
+    dispatch(updateStatusThunk(status))
+  }
+  
+  const savePhotoHandler = (photo: File) => {
+    dispatch(savePhoto(photo))
+  }
+  
+  const updateProfileHandler = (updatedProfile: UpdateProfileType) => {
+    dispatch(updateProfile(updatedProfile))
+  }
+  
+
+  useEffect(() => {
+    if (!!userId) {
+      dispatch(setUserProfileThunk(userId))
+      dispatch(setStatusThunk(userId))
+    } else if (!!authID) {
+      dispatch(setUserProfileThunk(authID))
+      dispatch(setStatusThunk(authID))
+    } else {
+      history.push("/login");
     }
-    
-    componentDidMount() {
-      this.refreshProfile()
-    }
-    
-    componentDidUpdate(prevProps: Readonly<MapStateToPropsType & MapDispatchPropType & RouteComponentProps<{ userId: string }>>, prevState: Readonly<{}>, snapshot?: any) {
-        
-        if (this.props.match.params.userId !== prevProps.match.params.userId)  this.refreshProfile()
-    }
-    
-    render() {
-        //  if (!this.props.isAuth) return <Redirect to={"/login"} />
-        return (
-            <div className={s.content}>
-                {this.props.profile && <Profile profile={this.props.profile} statusText={this.props.status}
-                                                isOwner={!this.props.match.params.userId}
-                                                updateStatus={this.props.updateStatusThunk}
-                                                savePhoto={this.props.savePhoto}
-                                                updateProfile={this.props.updateProfile}
-                />}
-            </div>
-        )
-    }
+  }, [userId, authID, dispatch])
+  
+  return (<div className={s.content}>
+    {profile && <Profile profile={profile}
+                         statusText={status}
+                         isOwner={isOwner}
+                         updateStatus={updateStatusHandler}
+                         savePhoto={savePhotoHandler}
+                         updateProfile={updateProfileHandler}
+    />}
+  </div>)
 }
 
-//export default withAuthRedirect(connect(mapStateToProps, {setUserProfile,setUserProfileThunk})(withRouter(ProfileContainerC)))
-export default compose<React.ComponentType>(
-    // withAuthRedirect,
-    connect(mapStateToProps, {setUserProfile, setUserProfileThunk, setStatus, setStatusThunk, updateStatusThunk, savePhoto, updateProfile}),
-    withRouter,
-)(ProfileContainerC)
+export default ProfileContainer

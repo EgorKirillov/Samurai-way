@@ -58,7 +58,7 @@ export const savePhoto = (photo: File):AppThunk =>
   async dispatch => {
     const res = await profileAPI.savePhoto(photo)
     if (res.data.resultCode === 0) {
-      debugger
+      
       dispatch(setPhotoSuccess(res.data.data.photos))
     }
   }
@@ -90,7 +90,7 @@ const initialStateProfilePage = {
     lookingForAJob: false,
     lookingForAJobDescription: "",
     fullName: "",
-    userId: 0,
+    userId: '0',
     photos: {
       small: "",
       large: "",
@@ -125,7 +125,7 @@ export const profileReducer = (state: ProfilePageType = initialStateProfilePage,
       }
     }
     case "profile/SET-PHOTO-SUCCESS": {
-      debugger
+      
       return {  ...state,
         userProfile: {
           ...state.userProfile,
@@ -159,7 +159,7 @@ export type ProfilePhotoType = {
   large: string
 }
 export type UpdateProfileType = {
-  userId: number
+  userId: string
   lookingForAJob: boolean
   lookingForAJobDescription: string
   fullName: string

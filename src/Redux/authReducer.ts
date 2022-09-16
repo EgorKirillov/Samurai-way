@@ -2,7 +2,7 @@ import {authAPI} from "../api/api";
 import {AppThunk} from "./redux-store";
 
 //action
-export const setAuthData = (id: number, login: string, email: string, isAuth: boolean) => ({
+export const setAuthData = (id: string, login: string, email: string, isAuth: boolean) => ({
   type: "auth/SET-AUTH-DATA", id, login, email, isAuth,
 } as const)
 export const setErrorLogin = (error: string) => ({
@@ -35,12 +35,12 @@ export const loginThunk = (email: string, password: string, rememberMe: boolean)
 export const logoutThunk = ():AppThunk => async dispatch => {
   const res = await authAPI.logout()
   if (res.resultCode === 0) {
-    dispatch(setAuthData(0, "", "", false))
+    dispatch(setAuthData('', "", "", false))
   }
 }
 
 const initialAuthState: AuthStateType = {
-  id: 0,
+  id: '',
   login: "",
   email: "",
   // isFetching: true,
@@ -81,7 +81,7 @@ export const authReducer = (state: AuthStateType = initialAuthState, action: Aut
 
 //types
 export type AuthStateType = {
-  id: number
+  id: string
   login: string
   email: string
   // isFetching: boolean

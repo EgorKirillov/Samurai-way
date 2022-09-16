@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import {NavLink} from "react-router-dom";
 import s from "./Header.module.css"
-import logo from "../../assets/images/logo3.png"
+import logo from "../../assets/images/logo3-removebg-preview.png"
 
 type HeaderPropsType = {
   isAuth: boolean

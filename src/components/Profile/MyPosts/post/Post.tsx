@@ -1,16 +1,17 @@
-import React from "react";
+import React, { memo } from "react";
 import s from "./Post.module.css"
 import {MyPostsType} from "../../../../Redux/profileReducer";
+import likeImg from '../../../../assets/images/like (20).jpg'
 
-export function Post(props: MyPostsType) {
+export const Post = memo((props: MyPostsType & {avatar:string}) => {
     return <div>
         <div className={s.post}>
-            <img className={s.imgAva} src={"http://hypeava.ru/uploads/posts/2018-03/1522076645_4.jpg"} alt={""}/>
+            <img className={s.imgAva} src={props.avatar} alt={""}/>
             {props.postText}
             <span className={s.span}> __ <img
-                src={'https://i.pinimg.com/originals/f3/6f/5a/f36f5a757623195f555f3c76ff0cc0e0.jpg'}
+                src={likeImg}
                 alt={""}
             />  +{props.likeCount}</span>
         </div>
     </div>
-}
+})

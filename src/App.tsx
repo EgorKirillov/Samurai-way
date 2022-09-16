@@ -13,6 +13,7 @@ import Login from "./components/Login/Login";
 import {initializeAppThunk} from "./Redux/appReducer";
 import {useAppDispatch, useAppSelector} from "./Redux/hooks";
 import Preloader from "./components/common/Preloader/Preloader";
+// import { ProfileContainer } from './components/Profile/ProfileContainer';
 
 const DialogsContainer = lazy(() => import ('./components/Dialogs/DialogsContainer'))
 const UsersPageContainer = lazy(() => import ('./components/Users/UsersPageConteiner'))
