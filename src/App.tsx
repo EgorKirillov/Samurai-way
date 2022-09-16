@@ -8,7 +8,7 @@ import {Settings} from "./components/settings/settings";
 // import DialogsContainer from "./components/Dialogs/DialogsContainer";
 // import UsersPageContainer from './components/Users/UsersPageConteiner';
 // import ProfileContainer from "./components/Profile/ProfileContainer";
-import HeaderContainer from "./components/Header/HeaderContainer";
+import {HeaderContainer} from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
 import {initializeAppThunk} from "./Redux/appReducer";
 import {useAppDispatch, useAppSelector} from "./Redux/hooks";
@@ -18,14 +18,14 @@ const DialogsContainer = lazy(() => import ('./components/Dialogs/DialogsContain
 const UsersPageContainer = lazy(() => import ('./components/Users/UsersPageConteiner'))
 const ProfileContainer = lazy(() => import ('./components/Profile/ProfileContainer'))
 
-function App() {
+export const App = () => {
   const dispatch = useAppDispatch()
   const initialized = useAppSelector(state => state.app.initialized)
   
   useEffect(() => {
     dispatch(initializeAppThunk())
   }, [dispatch])
-  console.log(initialized)
+  // console.log(initialized)
   return (
     <BrowserRouter>
       
@@ -70,5 +70,3 @@ function App() {
     </BrowserRouter>
   );
 }
-
-export default App;
