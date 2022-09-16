@@ -1,28 +1,33 @@
-import React from "react";
+import React, { memo } from "react";
 import {NavLink} from "react-router-dom";
 import s from "./Header.module.css"
-//import {AuthStateType} from "../../Redux/authReducer";
-import {HeaderContainerPropsType} from "./HeaderContainer";
+import logo from "../../assets/images/logo3.png"
 
-
-export const Header = (props: HeaderContainerPropsType) => {
-   
-   return <header className={s.header}>
+type HeaderPropsType = {
+  isAuth: boolean
+  loginName: string
+  logout: () => void
+}
+export const Header = memo((props: HeaderPropsType) => {
+  console.log('render header')
+  return (
+    <header className={s.header}>
       <img
-        src='https://w7.pngwing.com/pngs/376/116/png-transparent-flame-fire-logo-flame-orange-poster-logo.png'
+        src={logo}
         alt='img'/>
       
       <div className={s.loginBlock}>
-         {!props.isAuth
-           ? <NavLink to={"/login"}>not authorised Login </NavLink>
-           : <div>
-              <div>name:{props.login}</div>
-              {/*<div>id:{props.id}</div>*/}
-              {/*<div>email:{props.email}</div>*/}
-                <button onClick={props.logoutThunk}>log out</button>
-           </div>
-         }
+        {!props.isAuth
+          ? <NavLink to={"/login"}>not authorised Login </NavLink>
+          : <div>
+            <div>name:{props.loginName}</div>
+            {/*<div>id:{props.id}</div>*/}
+            {/*<div>email:{props.email}</div>*/}
+            <button onClick={props.logout}>log out</button>
+          </div>
+        }
       </div>
-   
-   </header>
-}
+    
+    </header>
+  )
+})

@@ -1,63 +1,19 @@
-import React from "react";
-import {authMeThunk, logoutThunk, setAuthData, setAuthIsFatchingValue} from "../../Redux/authReducer";
+import React, {useCallback} from "react";
 import {Header} from "./Header";
-import {AppStateType} from "../../Redux/redux-store";
-import {connect} from "react-redux";
+import {useAppDispatch, useAppSelector} from "../../Redux/hooks";
+import {logoutThunk} from "../../Redux/authReducer";
 
-class HeaderContainer extends React.Component<HeaderContainerPropsType> {
-   // constructor(props:HeaderContainerPropsType) {
-   //    super(props);
-   //
-   //
-   // }
-   
-   // componentDidMount() {
-   //    this.props.authMeThunk()
-   //    /*  this.props.setAuthIsFatchingValue(true)
-   //      authAPI.getMyData()
-   //        //axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`,{withCredentials:true})
-   //        .then(data => {
-   //           if (data.resultCode === 0) {
-   //              this.props.setAuthData(data.data.id, data.data.login, data.data.email,)
-   //           }
-   //
-   //           this.props.setAuthIsFatchingValue(false)
-   //        })*/
-   // }
-   
-   render = () => {
-      return (
-        <Header {...this.props}/>
-      )
-   }
-   
+export const HeaderContainer = () => {
+  const loginName = useAppSelector(state => state.auth.login)
+  const isAuth = useAppSelector(state => state.auth.isAuth)
+  // const id = useAppSelector(state => state.auth.id)
+  
+  const dispatch = useAppDispatch()
+  
+  const logoutHandler = useCallback(()=>{
+    dispatch(logoutThunk())
+  },[dispatch])
+  
+  return <Header key={'mainHeader'} isAuth={isAuth} loginName={loginName} logout={logoutHandler}/>
 }
 
-const mapStateToProps = (state: AppStateType) => {
-   return {
-      id: state.auth.id,
-      login: state.auth.login,
-      email: state.auth.email,
-      isFetching: state.auth.isFetching,
-      isAuth: state.auth.isAuth,
-   }
-}
-
-
-export type MapDispatchPropType = {
-   setAuthData: (id: number, login: string, email: string, isAuth:boolean) => void
-   setAuthIsFatchingValue: (isFatchung: boolean) => void
-   authMeThunk: () => any
-   logoutThunk: ()=>void
-}
-export type MapStatePropType = {
-   id: number
-   login: string
-   email: string
-   isFetching: boolean
-   isAuth: boolean
-}
-
-export type HeaderContainerPropsType = MapDispatchPropType & MapStatePropType
-
-export default connect(mapStateToProps, {setAuthIsFatchingValue, setAuthData, authMeThunk, logoutThunk})(HeaderContainer)
