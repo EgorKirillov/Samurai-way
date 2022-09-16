@@ -4,7 +4,7 @@ import {Redirect} from 'react-router-dom';
 import {useAppSelector} from "../Redux/hooks";
 
 
-export function withAuthRedirect<T>(Component: ComponentType<T>) {
+export const withAuthRedirect = <T,>(Component: ComponentType<T>) => {
   
   return (props: T) => {
     const isAuth = useAppSelector(state => state.auth.isAuth)
