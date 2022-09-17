@@ -3,12 +3,16 @@ import s from './Dialogs.module.css'
 import {DialogItem} from './DialogsItms/DialogItems';
 import {Message} from './Messages/Mesages';
 import {AddMessageForm} from './Messages/AddMessageForm';
-import {DialogsFromConteinerType} from "./DialogsContainer";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import { DialogPagesType } from '../../Redux/dialogsReducer';
 
 
-type DialogsPropsType = DialogsFromConteinerType
+type DialogsPropsType = {
+  addNewMessage: (newMessage: string) => void
+  dialogsPage: DialogPagesType
+}
 
-export const Dialogs = (props: DialogsPropsType) => {
+export const Dialogs = withAuthRedirect((props: DialogsPropsType) => {
     
     const onSubmit = (newText: string) => {
         props.addNewMessage(newText)
@@ -37,6 +41,6 @@ export const Dialogs = (props: DialogsPropsType) => {
             </div>
         </div>
     );
-}
+})
 
 
