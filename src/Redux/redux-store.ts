@@ -33,3 +33,6 @@ export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppStateType, 
 
 
 export default store
+
+// @ts-ignore
+window.store = store
