@@ -15,7 +15,7 @@ import Preloader from "./components/common/Preloader/Preloader";
 import {Header} from "./components/Header/Header";
 // import { ProfileContainer } from './components/Profile/ProfileContainer';
 
-const DialogsContainer = lazy(() => import ('./components/Dialogs/DialogsContainer'))
+const Dialogs = lazy(() => import ('./components/Dialogs/Dialogs'))
 const UsersPageContainer = lazy(() => import ('./components/Users/UsersPageConteiner'))
 const ProfileContainer = lazy(() => import ('./components/Profile/ProfileContainer'))
 
@@ -46,7 +46,7 @@ export const App = () => {
             <Route path={'/dialogs'} render={
               () =>
                 <Suspense fallback={<div>.... loading....</div>}>
-                  <DialogsContainer/>
+                  <Dialogs/>
                 </Suspense>
             }/>
             <Route path={'/profile/:userId?'} render={

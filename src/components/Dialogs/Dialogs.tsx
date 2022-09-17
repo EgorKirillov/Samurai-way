@@ -4,27 +4,28 @@ import {DialogItem} from './DialogsItms/DialogItems';
 import {Message} from './Messages/Mesages';
 import {AddMessageForm} from './Messages/AddMessageForm';
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
-import { DialogPagesType } from '../../Redux/dialogsReducer';
+import {addMessageActionCreator} from '../../Redux/dialogsReducer';
+import {useAppDispatch, useAppSelector} from "../../Redux/hooks";
 
+export const Dialogs = withAuthRedirect(() => {
+  
+  const dialogsData = useAppSelector(state => state.dialogsPage.dialogsData)
+  const messagesData = useAppSelector(state => state.dialogsPage.messagesData)
+  
+  const dispatch = useAppDispatch()
+  
+  const onSubmit = (newMessage: string) => {
+    dispatch(addMessageActionCreator(newMessage))
+  }
 
-type DialogsPropsType = {
-  addNewMessage: (newMessage: string) => void
-  dialogsPage: DialogPagesType
-}
-
-export const Dialogs = withAuthRedirect((props: DialogsPropsType) => {
     
-    const onSubmit = (newText: string) => {
-        props.addNewMessage(newText)
-    }
-    
-    let dialogElements = props.dialogsPage.dialogsData.map(dialog =>
+    let dialogElements = dialogsData.map(dialog =>
         <DialogItem
             linkID={dialog.linkID}
             userName={dialog.userName}
             avatarLink={dialog.avatarLink}/>)
     
-    let messageElements = props.dialogsPage.messagesData.map(message =>
+    let messageElements = messagesData.map(message =>
         <Message messageText={message.messageText}/>)
     
     return (
@@ -43,4 +44,5 @@ export const Dialogs = withAuthRedirect((props: DialogsPropsType) => {
     );
 })
 
+export default Dialogs
 
