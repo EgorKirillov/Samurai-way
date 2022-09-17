@@ -8,11 +8,11 @@ import {Settings} from "./components/settings/settings";
 // import DialogsContainer from "./components/Dialogs/DialogsContainer";
 // import UsersPageContainer from './components/Users/UsersPageConteiner';
 // import ProfileContainer from "./components/Profile/ProfileContainer";
-import {HeaderContainer} from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
 import {initializeAppThunk} from "./Redux/appReducer";
 import {useAppDispatch, useAppSelector} from "./Redux/hooks";
 import Preloader from "./components/common/Preloader/Preloader";
+import {Header} from "./components/Header/Header";
 // import { ProfileContainer } from './components/Profile/ProfileContainer';
 
 const DialogsContainer = lazy(() => import ('./components/Dialogs/DialogsContainer'))
@@ -31,7 +31,7 @@ export const App = () => {
     <BrowserRouter>
       
       <div className={'app-wrapper'}>
-        <HeaderContainer/>
+        <Header/>
         <Navbar/>
         {(!initialized) ? <div style={{backgroundColor: "grey"}}>загрузка <Preloader/></div>
           : <div className={'app-wrapper-content'}>
