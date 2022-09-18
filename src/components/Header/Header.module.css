@@ -1,29 +1,13 @@
 
 .header{
-    grid-area: h;
-    background-color: #e6f7ff;
+    /*grid-area: h;*/
+    /*background-color: #e6f7ff;*/
     /*border: solid black 1px;*/
 }
 
-.header .logo {
-    margin-left: 20px;
-    /*width: auto;*/
-    /*height: 60px;*/
-    /*background-color: aquamarine;*/
-    /*border: solid black 1px;*/
+/*.header .logo {*/
+/*    margin-left: 20px;*/
+/*    color: white;*/
 
-}
+/*}*/
 
-.loginBlock {
-    display: inline-block;
-/*float: right;*/
-/*    border: solid black 1px;*/
-
-}
-.loginBlock a {
-    color: white;
-}
-.loginBlock button{
-    display: inline-block;
-    color: white;
-}

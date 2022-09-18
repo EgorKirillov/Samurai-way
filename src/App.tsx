@@ -29,18 +29,31 @@ export const App = () => {
   const initialized = useAppSelector(state => state.app.initialized)
   const [collapsed, setCollapsed] = useState(false);
   
-  
+  const layoutCollapsedStyle = {
+     marginLeft: !collapsed ? '200px' : '50px',
+    transition: 'all 0.25s',
+  }
   useEffect(() => {
     dispatch(initializeAppThunk())
   }, [dispatch])
+  
   // console.log(initialized)
   return (
     <BrowserRouter>
-      <Layout>
-        <Sider trigger={null} collapsible collapsed={collapsed} theme={'light'}>
+      <div className={'app-wrapper'}>
+  
+      <Layout  >
+        <Sider trigger={null} collapsible collapsed={collapsed} theme={'dark'} collapsedWidth={50}  style={{
+          overflow: 'auto',
+          height: '100vh',
+          position: 'fixed',
+          left: 0,
+          top: 0,
+          bottom: 0,
+        }}>
           <div className="logo"/>
           
-          <Menu theme="light" mode="inline" defaultSelectedKeys={['profile']}>
+          <Menu theme={"dark"} mode="inline" defaultSelectedKeys={['profile']}>
             <Menu.Item icon={<UserOutlined/>} key={'profile'}>
               <NavLink key={"profile"} to={"/profile"}>Profile</NavLink>
             </Menu.Item>
@@ -56,17 +69,17 @@ export const App = () => {
           </Menu>
         
         </Sider>
-        <Layout className="site-layout">
-          
-          <AppHeader collapsed={collapsed} collapsedToggle={() => setCollapsed(!collapsed)}/>
-          
+        <Layout className="site-layout" style={layoutCollapsedStyle}>
+            <AppHeader collapsed={collapsed} collapsedToggle={() => setCollapsed(!collapsed)}/>
           
           <Content
             className="site-layout-background"
             style={{
-              margin: '24px 16px',
+              margin: '80px 16px 24px 16px',
+              border: "black 1px solid",
               padding: 24,
               minHeight: 280,
+              backgroundColor: 'rgba(0, 62, 102)',
             }}
           >
             {(!initialized) ? <div style={{backgroundColor: "grey"}}>загрузка <Preloader/></div>
@@ -104,14 +117,12 @@ export const App = () => {
             }
             
             
-            Content
           </Content>
         
         </Layout>
       </Layout>
       
       
-      {/*<div className={'app-wrapper'}>*/}
       {/*  <Header/>*/}
       {/*  <Navbar/>*/}
       {/*  {(!initialized) ? <div style={{backgroundColor: "grey"}}>загрузка <Preloader/></div>*/}
@@ -147,7 +158,7 @@ export const App = () => {
       {/*      <Route path={'/settings'} component={Settings}/>*/}
       {/*    </div>*/}
       {/*  }*/}
-      {/*</div>*/}
+      </div>
     
     
     </BrowserRouter>
