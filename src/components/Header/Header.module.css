@@ -1,18 +1,29 @@
 
 .header{
     grid-area: h;
-    background-color: cornflowerblue;
+    background-color: #e6f7ff;
+    /*border: solid black 1px;*/
 }
 
-.header img {
-    width: auto;
-    height: 60px;
+.header .logo {
+    margin-left: 20px;
+    /*width: auto;*/
+    /*height: 60px;*/
     /*background-color: aquamarine;*/
+    /*border: solid black 1px;*/
+
 }
 
 .loginBlock {
-float: right;
+    display: inline-block;
+/*float: right;*/
+/*    border: solid black 1px;*/
+
 }
 .loginBlock a {
+    color: white;
+}
+.loginBlock button{
+    display: inline-block;
     color: white;
 }

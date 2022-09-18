@@ -1,9 +1,9 @@
-import {authAPI} from "../api/api";
+import {authAPI, profileAPI} from "../api/api";
 import {AppThunk} from "./redux-store";
 
 //action
-export const setAuthData = (id: string, login: string, email: string, isAuth: boolean) => ({
-  type: "auth/SET-AUTH-DATA", id, login, email, isAuth,
+export const setAuthData = (id: string, login: string, email: string, isAuth: boolean, photo:string) => ({
+  type: "auth/SET-AUTH-DATA", id, login, email, isAuth, photo
 } as const)
 export const setErrorLogin = (error: string) => ({
   type: "auth/SET-ERROR-LOGIN", error,
@@ -15,12 +15,21 @@ export const setErrorLogin = (error: string) => ({
 //thunk
 export const authMeThunk = ():AppThunk => async (dispatch) => {
   // dispatch(setAuthIsFatchingValue(true))
-  const res = await authAPI.getMyData()
-  if (res.resultCode === 0) {
-    dispatch(setAuthData(res.data.id, res.data.login, res.data.email, true))
+  try {
+    const res = await authAPI.getMyData()
+    const ava = await profileAPI.getUserProfile(res.data.id)
+    console.log(ava)
+    if (res.resultCode === 0) {
+      dispatch(setAuthData(res.data.id, res.data.login, res.data.email, true, ava.photos.small))
+    }
+    // dispatch(setAuthIsFatchingValue(false))}
   }
-  // dispatch(setAuthIsFatchingValue(false))
+  catch (e) {
+    console.log(e)
+    
+  }
 }
+
 
 export const loginThunk = (email: string, password: string, rememberMe: boolean):AppThunk =>
   async (dispatch) => {
@@ -35,7 +44,7 @@ export const loginThunk = (email: string, password: string, rememberMe: boolean)
 export const logoutThunk = ():AppThunk => async dispatch => {
   const res = await authAPI.logout()
   if (res.resultCode === 0) {
-    dispatch(setAuthData('', "", "", false))
+    dispatch(setAuthData('', "", "", false, ''))
   }
 }
 
@@ -46,6 +55,7 @@ const initialAuthState: AuthStateType = {
   // isFetching: true,
   isAuth: false,
   errorLogin: "",
+  photo:'',
 }
 
 //reducer
@@ -86,6 +96,7 @@ export type AuthStateType = {
   email: string
   // isFetching: boolean
   isAuth: boolean
+  photo: string
   errorLogin?: string
 }
 
