@@ -1,8 +1,9 @@
-/*
-.content {
-    grid-area: c;
-    background-color: gray;
-}*/
+
+.content, h1, h2, h3, h4, h5 {
+    /*grid-area: c;*/
+    /*background-color: gray;*/
+    color: #fff;
+}
 
 /*.content img {
     height: 400px;
@@ -11,3 +12,4 @@
 .post {
     color: white;
 }
+

@@ -1,0 +1,23 @@
+.formContact {
+    display: grid;
+    /*grid-template-areas: 'l i';*/
+    grid-template-rows: repeat(8, 22px);
+
+    /*float:left;*/
+    width: 60%;
+    grid-template-columns: 2fr 5fr;
+}
+
+
+.formLabel {
+    display: block;
+    /*grid-area: l;*/
+}
+
+.formInput {
+    color: inherit;
+    background-color: inherit;
+    border: 1px solid white;
+    display: block;
+    /*grid-area: i;*/
+}

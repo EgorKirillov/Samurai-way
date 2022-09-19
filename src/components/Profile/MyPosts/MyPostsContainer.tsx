@@ -13,6 +13,7 @@ export const MyPostsContainer = () => {
    dispatch(addMyPost(newPost))
   },[dispatch])
   
-  return <MyPosts posts={posts} addMyPost={addMyPostHandler} avatar={avatar} />
+  return <div><MyPosts posts={posts} addMyPost={addMyPostHandler} avatar={avatar}/></div>
 }
+
 

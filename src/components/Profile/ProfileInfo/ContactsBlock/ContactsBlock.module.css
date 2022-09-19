@@ -1,0 +1,23 @@
+.contactsContainer {
+    display: grid;
+    /*grid-template-areas: 'l i';*/
+    grid-template-rows: auto;
+
+    /*float:left;*/
+    width: 60%;
+    grid-template-columns: 2fr 5fr;
+}
+
+
+.contactName {
+    display: block;
+    /*grid-area: l;*/
+}
+
+.contactValue {
+    color: inherit;
+    background-color: inherit;
+    /*border: 1px solid white;*/
+    display: block;
+    /*grid-area: i;*/
+}

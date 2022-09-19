@@ -4,6 +4,7 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 type ProfileStatusProps = {
   statusText: string
   updateStatus: (statusText: string) => void
+  isOwner: boolean
 }
 // 84 lesson change to hooks
 
@@ -17,7 +18,7 @@ const ProfileStatusWithHooks = (props: ProfileStatusProps) => {
   }
   
   const activateEditMode = () => {
-    setEditMode(true)
+   if (props.isOwner) setEditMode(true)
     
   }
   const deactivateEditMode = () => {
@@ -29,16 +30,16 @@ const ProfileStatusWithHooks = (props: ProfileStatusProps) => {
   }, [props.statusText] )
 
 return (
-  <div>
-    {editMode ?
-      <div>
-        <input type="text" autoFocus={true} onBlur={deactivateEditMode} value={status}
+  <span>
+    {editMode && props.isOwner?
+      <span>
+        <input type="text" autoFocus={true} onBlur={deactivateEditMode} value={status} style={{backgroundColor:"inherit", border:'none'}}
                onChange={onStatusChange}/>
-      </div>
-      : <div>
+      </span>
+      : <span>
         <span onDoubleClick={activateEditMode}>{props.statusText || "--*--"}</span>
-      </div>}
-  </div>
+      </span>}
+  </span>
 );
 }
 
