@@ -10,10 +10,10 @@ import {useAppDispatch, useAppSelector} from "../../../Redux/hooks";
 type ProfileInfoType = { isOwner: boolean }
 
 export const PropfileInfo = (props: ProfileInfoType) => {
+  
   const profile = useAppSelector(state => state.profilePage.userProfile)
   
   const dispatch = useAppDispatch()
-  
   const [showForm, setShowForm] = useState<boolean>(false)
   
   const openContactsForm = () => {
@@ -35,7 +35,7 @@ export const PropfileInfo = (props: ProfileInfoType) => {
   
   return (
     <div>
-      <PhotoBlock profile={profile} isOwner={props.isOwner}/>
+      <PhotoBlock isOwner={props.isOwner}/>
       <div className={s.contactsTitile}>
         Contacts:
         {props.isOwner && <Button size={'small'} onClick={openContactsForm}>change contacts</Button>}
