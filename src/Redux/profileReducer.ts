@@ -2,6 +2,7 @@ import {ProfilePageType} from "./store";
 import {Dispatch} from "redux";
 import {profileAPI} from "../api/api";
 import {AppThunk} from "./redux-store";
+import {setAuthPhoto} from "./authReducer";
 
 //action
 export const addMyPost = (newPost: string) => ({
@@ -49,7 +50,7 @@ export const updateProfile = (updatedProfile: UpdateProfileType):AppThunk =>
     const res = await profileAPI.updateMyProfile(updatedProfile)
     if (res.data.resultCode === 0) {
       console.log(res)
-      // dispatch(setUserProfileThunk(updatedProfile.userId))
+      dispatch(setUserProfileThunk(updatedProfile.userId))
       // dispatch(setStatus(status))
     }
   }
@@ -58,23 +59,24 @@ export const savePhoto = (photo: File):AppThunk =>
   async dispatch => {
     const res = await profileAPI.savePhoto(photo)
     if (res.data.resultCode === 0) {
-      
+      debugger
       dispatch(setPhotoSuccess(res.data.data.photos))
+      dispatch(setAuthPhoto(res.data.data.photos.small))
+      
     }
   }
-  
+const postsText=["Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem doloremque, ducimus eveniet iusto recusandae repudiandae sed voluptas voluptatem? Cum cupiditate debitis delectus, dolores impedit inventore, ipsam libero porro quam, quisquam sunt tempora vero voluptatum? Expedita facilis minus quo similique temporibus!", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic, magnam nihil perspiciatis repellat similique vero.", "Eveniet iusto recusandae repudiandae sed voluptas voluptatem? Cum cupiditate debitis delectus, dolores impedit inventore, ipsam libero porro quam, quisquam sunt","Aliquid consequuntur deserunt eligendi explicabo nemo, vero? A ad adipisci alias aut autem consequuntur deleniti, doloribus ","Necessitatibus neque nihil nostrum placeat praesentium quas quia quibusdam quidem quisquam repellendus sunt unde velit vero voluptates! Cumque fugit quia sunt?","Doloribus et ipsa minima molestiae. Aliquid consequuntur deserunt eligendi explicabo nemo, vero? A ad adipisci alias aut autem "," sequi sint sunt tenetur ut velit. Commodi cumque eligendi ex, fugit iure officia quae recusandae rerum sapiente sunt suscipit tempora vero, voluptate? Alias architecto earum, eius eveniet"     ]
 
-const initialStateProfilePage = {
+const initialStateProfilePage:ProfilePageType = {
   posts: [
-    {id: 0, postText: "First post ", likeCount: 25},
-    {id: 1, postText: "Second post ", likeCount: 5},
-    {id: 2, postText: "Bad post ", likeCount: 11},
-    {id: 3, postText: "Good post ", likeCount: 12},
-    {id: 4, postText: "Last post give me LIKE", likeCount: 0},
-    {id: 5, postText: "And Last post ", likeCount: 35},
-    {id: 6, postText: "Lastest post ", likeCount: 99}
+    {id: 0, postText: postsText[0], likeCount: Math.floor(Math.random()*100)},
+    {id: 1, postText: postsText[1], likeCount: Math.floor(Math.random()*100)},
+    {id: 2, postText: postsText[2], likeCount: Math.floor(Math.random()*100)},
+    {id: 3, postText: postsText[3], likeCount: Math.floor(Math.random()*100)},
+    {id: 4, postText: postsText[0], likeCount: Math.floor(Math.random()*100)},
+    {id: 5, postText: postsText[5], likeCount: Math.floor(Math.random()*100)},
+    {id: 6, postText: postsText[6], likeCount: Math.floor(Math.random()*100)},
   ],
-  newPostText: "",
   userProfile: {
     aboutMe: "",
     contacts: {

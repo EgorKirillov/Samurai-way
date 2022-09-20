@@ -1,17 +1,19 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
+import {updateStatusThunk} from "../../../Redux/profileReducer";
+import {useAppDispatch, useAppSelector} from "../../../Redux/hooks";
 
 
 type ProfileStatusProps = {
-  statusText: string
-  updateStatus: (statusText: string) => void
   isOwner: boolean
 }
-// 84 lesson change to hooks
+
 
 const ProfileStatusWithHooks = (props: ProfileStatusProps) => {
   
+  const statusText = useAppSelector(state => state.profilePage.status)
   const [editMode, setEditMode] = useState<boolean>(false)
-  const [status, setStatus] = useState<string>(props.statusText)
+  const [status, setStatus] = useState<string>(statusText)
+  const dispatch = useAppDispatch()
   
   const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
     setStatus(e.currentTarget.value)
@@ -23,11 +25,13 @@ const ProfileStatusWithHooks = (props: ProfileStatusProps) => {
   }
   const deactivateEditMode = () => {
     setEditMode(false)
-    props.updateStatus(status)
+    dispatch(updateStatusThunk(status))
   }
+
+  
   useEffect(() => {
-    setStatus(props.statusText)
-  }, [props.statusText] )
+    setStatus(statusText)
+  }, [statusText] )
 
 return (
   <span>
@@ -37,7 +41,7 @@ return (
                onChange={onStatusChange}/>
       </span>
       : <span>
-        <span onDoubleClick={activateEditMode}>{props.statusText || "--*--"}</span>
+        <span onDoubleClick={activateEditMode}>{statusText || "--*--"}</span>
       </span>}
   </span>
 );

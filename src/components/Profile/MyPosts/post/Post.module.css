@@ -4,14 +4,17 @@
     padding: 10px 20px;
 
 }
+img {
+    border-radius: 40%;
 
-.post img {
+}
+.imgAva {
     width: 50px;
     height: 50px;
-    border-radius: 40%;
-    background-color: white;
+    margin-right: 10px;
 }
 .span img {
     width: 20px;
     height: 20px;
+    margin-left: 20px;
 }

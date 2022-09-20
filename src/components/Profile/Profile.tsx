@@ -1,28 +1,36 @@
-import React from "react";
+import React, {useEffect} from "react";
 import s from "./Profile.module.css"
 import {PropfileInfo} from "./ProfileInfo/PropfileInfo";
-import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
-import {UpdateProfileType, UserProfileType} from "../../Redux/profileReducer";
+import {setStatusThunk, setUserProfileThunk,} from "../../Redux/profileReducer";
+import {useAppDispatch, useAppSelector} from "../../Redux/hooks";
+import {useHistory, useParams} from "react-router-dom";
+import {MyPosts} from "./MyPosts/MyPosts";
 
-type PropsType = {
-  profile: UserProfileType
-  statusText: string
-  updateStatus: (statusText: string) => void
-  isOwner: boolean
-  savePhoto: (photo: File) => void
-  updateProfile: (updatedProfile: UpdateProfileType) => void
-}
-
-export const Profile = (props: PropsType) => {
+const Profile = () => {
+  const authID = useAppSelector(state => state.auth.id)
+  const params = useParams<{ userId?: string | undefined }>();
+  const history = useHistory();
+  const dispatch = useAppDispatch()
+  
+  const userId = (params.userId) ? params?.userId : undefined
+  //if URL without userId then notOwner profile
+  const isOwner = !userId
+  
+  useEffect(() => {
+    if (!!userId) {
+      dispatch(setUserProfileThunk(userId))
+      dispatch(setStatusThunk(userId))
+    } else if (!!authID) {
+      dispatch(setUserProfileThunk(authID))
+      dispatch(setStatusThunk(authID))
+    } else {
+      history.push("/login");
+    }
+  }, [userId, authID, dispatch, history])
   
   return <div className={s.content}>
-    <PropfileInfo profile={props.profile}
-                  updateStatus={props.updateStatus}
-                  statusText={props.statusText}
-                  isOwner={props.isOwner}
-                  savePhoto={props.savePhoto}
-                  updateProfile={props.updateProfile}
-    />
-    <MyPostsContainer/>
+    <PropfileInfo isOwner={isOwner} />
+    <MyPosts/>
   </div>
 }
+export default Profile;

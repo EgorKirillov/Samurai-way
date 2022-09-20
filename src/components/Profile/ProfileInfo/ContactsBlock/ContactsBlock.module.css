@@ -1,11 +1,13 @@
 .contactsContainer {
     display: grid;
-    /*grid-template-areas: 'l i';*/
-    grid-template-rows: auto;
+    grid-template-columns: auto 3fr;
+    /*grid-template-rows: fit-content(40%);*/
+    grid-auto-rows: 30px;
+    grid-gap: 5px 5px;
 
-    /*float:left;*/
+    margin-top: 20px;
+
     width: 60%;
-    grid-template-columns: 2fr 5fr;
 }
 
 

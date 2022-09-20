@@ -5,9 +5,14 @@ import {AppThunk} from "./redux-store";
 export const setAuthData = (id: string, login: string, email: string, isAuth: boolean, photo:string) => ({
   type: "auth/SET-AUTH-DATA", id, login, email, isAuth, photo
 } as const)
+
+export const setAuthPhoto = (photo:string) => ({
+  type: "auth/SET-AUTH-PHOTO", photo} as const)
+
 export const setErrorLogin = (error: string) => ({
   type: "auth/SET-ERROR-LOGIN", error,
 } as const)
+
 // export const setAuthIsFatchingValue = (isFetching: boolean) => ({
 //   type: "auth/SET-AUTH-ISFATCHING-VALUE" as const, isFetching,
 // })
@@ -61,6 +66,8 @@ const initialAuthState: AuthStateType = {
 //reducer
 export const authReducer = (state: AuthStateType = initialAuthState, action: AuthReducerStateType): AuthStateType => {
   switch (action.type) {
+    case "auth/SET-AUTH-PHOTO":
+      return {...state, photo: action.photo}
     case "auth/SET-AUTH-DATA":
       return {
         ...state,
@@ -101,6 +108,7 @@ export type AuthStateType = {
 }
 
 export type AuthReducerStateType =
-  ReturnType<typeof setAuthData>
+  | ReturnType<typeof setAuthData>
+  | ReturnType<typeof setAuthPhoto>
   // | ReturnType<typeof setAuthIsFatchingValue>
   | ReturnType<typeof setErrorLogin>
