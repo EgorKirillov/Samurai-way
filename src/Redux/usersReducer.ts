@@ -10,6 +10,11 @@ export const changeCurrentPage = (currentUsersPage: number) => ({
   currentUsersPage
 } as const)
 
+export const changeUsersPerPage = (usersPerPage: number) => ({
+  type: "users/CHANGE-USERS-PER-PAGE",
+  usersPerPage
+} as const)
+
 export const changeTotalUsersCount = (totalUsersCount: number) => ({
   type: "users/CHANGE-TOTAL-USERS-COUNT",
   totalUsersCount
@@ -88,6 +93,13 @@ export const usersReducer = (state: UserPageStateType = initialStateUsersPage, a
         currentUsersPage: action.currentUsersPage,
       }
     }
+    case "users/CHANGE-USERS-PER-PAGE": {
+      return {
+        ...state,
+        countUsersPerPage: action.usersPerPage,
+      }
+      
+    }
     case "users/CHANGE-TOTAL-USERS-COUNT": {
       return {
         ...state,
@@ -147,6 +159,7 @@ export type UserPageStateType = {
 export type UsersReducerStateType =
   | ReturnType<typeof changeCurrentPage>
   | ReturnType<typeof changeTotalUsersCount>
+  | ReturnType<typeof changeUsersPerPage>
   | ReturnType<typeof changeTotalPagesCount>
   | ReturnType<typeof getUsers>
   | ReturnType<typeof setIsFatchingValue>

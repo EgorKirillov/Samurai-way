@@ -35,6 +35,7 @@ const UsersPageContainer = () => {
     // dispatch(getUsersThunkCreator(pageNumber, countUsersPerPage))
     dispatch(changeCurrentPage(pageNumber))
   }
+ 
   useEffect(() => {
     dispatch(getUsersThunkCreator(currentUsersPage, countUsersPerPage))
   }, [dispatch,currentUsersPage,countUsersPerPage])
