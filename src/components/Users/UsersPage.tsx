@@ -22,8 +22,8 @@ const UsersPage = (props: UserPagePropsType) => {
   const countUsersPerPage = useAppSelector(state => state.usersPage.countUsersPerPage)
   const dispatch = useAppDispatch()
   
-  const  changeUsersPerPageHandler = (currentUsersPage:number=props.currentUsersPage, countUsersPerPage:number) => {
-      dispatch(changeUsersPerPage(countUsersPerPage))
+  const changeUsersPerPageHandler = (currentUsersPage: number = props.currentUsersPage, countUsersPerPage: number) => {
+    dispatch(changeUsersPerPage(countUsersPerPage))
     
   }
   
@@ -42,15 +42,18 @@ const UsersPage = (props: UserPagePropsType) => {
       
       <div>{`total count=${props.totalUsersCount}`}</div>
       
-      <Pagination onChange={props.onChangeCurrentUsersPage}
-                  total={props.totalUsersCount}
-                  showQuickJumper
-                  showSizeChanger
-                  pageSize={countUsersPerPage}
-                  pageSizeOptions={[4,8,16,32,64]}
-                  onShowSizeChange={changeUsersPerPageHandler}
-                  size={'small'}
-      />
+      <div style={{color: 'red'}}><Pagination current={props.currentUsersPage}
+                                              onChange={props.onChangeCurrentUsersPage}
+                                              total={props.totalUsersCount}
+                                              showQuickJumper
+                                              showSizeChanger
+                                              className={s.paginator}
+                                              pageSize={countUsersPerPage}
+                                              pageSizeOptions={[4, 8, 16, 32, 64]}
+                                              onShowSizeChange={changeUsersPerPageHandler}
+                                              size={'small'}
+                                              disabled={false}
+      /></div>
       
       
       {props.isFatching
