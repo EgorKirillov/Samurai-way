@@ -113,6 +113,8 @@ export const App = () => {
                   <Route path={'/news'} component={News}/>
                   <Route path={'/music'} component={Music}/>
                   <Route path={'/settings'} component={Settings}/>
+                  <Route path={'*'} component={Login}/>
+                  
                 </div>
               }
             
