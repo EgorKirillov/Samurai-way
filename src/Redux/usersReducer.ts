@@ -61,7 +61,7 @@ const initialStateUsersPage: UserPageStateType = {
   totalUsersCount: 20,
   totalPagesCount: 5,
   countUsersPerPage: 8,
-  currentUsersPage: 1965,
+  currentUsersPage: 30,
   isFatching: false,
   followingInProgress: []
 }
