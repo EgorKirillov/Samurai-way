@@ -1,8 +1,8 @@
 import React from 'react';
 import s from "./UserPage.module.css"
-import {changeCurrentPage, changeUsersPerPage, UserType} from "../../Redux/usersReducer";
+import {changeUsersPerPage, UserType} from "../../Redux/usersReducer";
 import Preloader from "../common/Preloader/Preloader";
-import {User} from "./User";
+import {User} from "./user/User";
 import Pagination from 'antd/lib/pagination';
 import {useAppDispatch, useAppSelector} from "../../Redux/hooks";
 
@@ -27,41 +27,30 @@ const UsersPage = (props: UserPagePropsType) => {
     
   }
   
-  
   return (<div className={s.conteiner}>
-      {props.pagesArr.map(p => {
-        if (Math.abs(p - props.currentUsersPage) < 3 || p === props.pagesArr.length || p === 1) {
-          return <span onClick={() => props.onChangeCurrentUsersPage(p)}
-                       className={(props.currentUsersPage === p) ? s.selectedPages : ''}>
-              {p}.
-           </span>
-        } else if (Math.abs(p - props.currentUsersPage) < 5) {
-          return <span>..</span>
-        } else return ""
-      })}
+      {/*<div>{`total count=${props.totalUsersCount}`}</div>*/}
+      <Pagination current={props.currentUsersPage}
+                  onChange={props.onChangeCurrentUsersPage}
+                  total={props.totalUsersCount}
+                  showQuickJumper
+                  showSizeChanger
+                  className={s.paginator}
+                  pageSize={countUsersPerPage}
+                  pageSizeOptions={[4, 8, 16, 32, 64]}
+                  onShowSizeChange={changeUsersPerPageHandler}
+                  size={'small'}
+                  disabled={false}
+      />
       
-      <div>{`total count=${props.totalUsersCount}`}</div>
+      <div className={s.usersContainer}>
+        {props.isFatching
+          ? <Preloader/>
+          : props.users.map(u =>
+            <User user={u} onClickFollowToggle={props.onClickFollowToggle}
+                  followingIsProgress={props.followingIsProgress}/>
+          )}
+      </div>
       
-      <div style={{color: 'red'}}><Pagination current={props.currentUsersPage}
-                                              onChange={props.onChangeCurrentUsersPage}
-                                              total={props.totalUsersCount}
-                                              showQuickJumper
-                                              showSizeChanger
-                                              className={s.paginator}
-                                              pageSize={countUsersPerPage}
-                                              pageSizeOptions={[4, 8, 16, 32, 64]}
-                                              onShowSizeChange={changeUsersPerPageHandler}
-                                              size={'small'}
-                                              disabled={false}
-      /></div>
-      
-      
-      {props.isFatching
-        ? <Preloader/>
-        : props.users.map(u =>
-          <User user={u} onClickFollowToggle={props.onClickFollowToggle}
-                followingIsProgress={props.followingIsProgress}/>
-        )}
     </div>
   );
 };

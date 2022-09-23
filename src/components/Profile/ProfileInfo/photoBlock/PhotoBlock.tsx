@@ -1,5 +1,5 @@
 import React from 'react';
-import userphoto from "../../../../assets/images/user.png";
+import userphoto from "../../../../assets/images/user300.png";
 import {Col, Image, Row} from 'antd';
 import ProfileStatusWithHooks from '../ProfileStatusWithHooks';
 import {AddPhoto} from "./AddPhoto/AddPhoto";

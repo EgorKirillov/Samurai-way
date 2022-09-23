@@ -1,52 +1,8 @@
-.ava {
-    width: 100px;
-    /*height: 130px;*/
-    border: solid green 1px;
-    border-radius: 10%;
-}
-.conteiner {
 
-
-}
-/*.paginator a, .paginator span svg, .paginator button span, .paginator li a div span  {*/
-/*    color:white;*/
-/*}*/
-/*.paginator li a {*/
-/*    color: red !important;*/
-/*}*/
-.oneUser {
-    display: grid;
-    grid-template-columns: 150px 350px;
-    justify-items: start;
-    border: solid black 1px;
-    margin: 10px 15px 20px 15px;
-}
-.oneUserAva {
-
-    display: grid;
-    grid-template-rows: 150px 40px;
+.usersContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
     align-items: center;
-    justify-items: center;
-    background-color: cadetblue;
-
-}
-.oneUserDescription {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: minmax(200px, auto) minmax(120px, auto);
-    align-items: start;
-    justify-items: center;
-
-}
-.name {
-    background-color: green;
-}
-.status{
-    background-color: orange;
-}
-.location {
-    background-color: blue;
-}
-.selectedPages {
-    font-size: 130%;
 }
