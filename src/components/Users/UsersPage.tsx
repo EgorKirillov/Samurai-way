@@ -1,19 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import s from "./UserPage.module.css"
-import {
-  changeCurrentPage,
-  changeUsersPerPage,
-  followToggleUserThunk, getUsersThunkCreator,
-  toggleFollowInProgress,
-  UserType
-} from "../../Redux/usersReducer";
-import Preloader from "../common/Preloader/Preloader";
-import {User} from "./Users/user/User";
-import Pagination from 'antd/lib/pagination';
+import {followToggleUserThunk, getUsersThunkCreator} from "../../Redux/usersReducer";
 import {useAppDispatch, useAppSelector} from "../../Redux/hooks";
-import {Radio, Switch} from 'antd';
 import {UsersPaginator} from "./Paginator/UserPaginator";
 import {UsersList} from "./Users/Users";
+import {UsersFilter} from "./Filter/UsersFilter";
+import UsersSearch from "./Filter/UsersSearch";
 
 // type UserPagePropsType = {
 //   pagesArr: Array<number>
@@ -78,7 +70,7 @@ const UsersPage = () => {
   // }
   
   useEffect(() => {
-    debugger
+
     if (queryParams) dispatch(getUsersThunkCreator(queryParams))
 
   }, [dispatch, queryParams])
@@ -87,7 +79,8 @@ const UsersPage = () => {
   return (<div className={s.conteiner}>
    
       <UsersPaginator/>
-      
+      <UsersFilter />
+      <UsersSearch />
       {/*<Switch defaultChecked={showFriends} onChange={toggleShowFriends} />*/}
     
     

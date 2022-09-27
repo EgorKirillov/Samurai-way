@@ -67,6 +67,7 @@ const initialStateUsersPage: UserPageStateType = {
   usersQueryParam: {
     count:4,
     page:5,
+    friend:undefined,
   } as UserQueryParamType,
   totalUsersCount: 20,
   // totalPagesCount: 5,
@@ -99,24 +100,12 @@ export const usersReducer = (state: UserPageStateType = initialStateUsersPage, a
       }
     }
     case "users/SET-USER-QUERY-PARAM": {
-      debugger
+
       return {
         ...state,
         usersQueryParam: { ...action.params}
       }
     }
-    // case "users/CHANGE-CURRENT-PAGE": {
-    //   return {
-    //     ...state,
-    //     currentUsersPage: action.currentUsersPage,
-    //   }
-    // }
-    // case "users/CHANGE-USERS-PER-PAGE": {
-    //   return {
-    //     ...state,
-    //     countUsersPerPage: action.usersPerPage,
-    //   }
-    //       }
     case "users/CHANGE-TOTAL-USERS-COUNT": {
       return {
         ...state,

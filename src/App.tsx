@@ -20,7 +20,6 @@ import UsersPage from "./components/Users/UsersPage";
 // import { ProfileContainer } from './components/Profile/ProfileContainer';
 
 const Dialogs = lazy(() => import ('./components/Dialogs/Dialogs'))
-const UsersPageContainer = lazy(() => import ('./components/Users/UsersPageConteiner'))
 const Profile = lazy(() => import ('./components/Profile/Profile'))
 const {Sider, Content} = Layout;
 
@@ -29,7 +28,7 @@ export const App = () => {
   const dispatch = useAppDispatch()
   const initialized = useAppSelector(state => state.app.initialized)
   const [collapsed, setCollapsed] = useState(false);
-  
+
   const layoutCollapsedStyle = {
     marginLeft: !collapsed ? '200px' : '50px',
     transition: 'all 0.25s',
@@ -37,12 +36,12 @@ export const App = () => {
   useEffect(() => {
     dispatch(initializeAppThunk())
   }, [dispatch])
-  
+
   // console.log(initialized)
   return (
     <BrowserRouter>
       <div className={'app-wrapper'}>
-        
+
         <Layout>
           <Sider trigger={null} collapsible collapsed={collapsed} theme={'dark'} collapsedWidth={50} style={{
             overflow: 'auto',
@@ -53,26 +52,26 @@ export const App = () => {
             bottom: 0,
           }}>
             <div className="logo"/>
-            
+
             <Menu theme={"dark"} mode="inline" defaultSelectedKeys={['profile']}>
               <Menu.Item icon={<UserOutlined/>} key={'profile'}>
                 <NavLink key={"profile"} to={"/profile"}>Profile</NavLink>
               </Menu.Item>
-              
+
               <Menu.Item icon={<MessageOutlined key={'dialogs'}/>}>
                 <NavLink key={"dialogs"} to={"/dialogs"}>Messages</NavLink>
               </Menu.Item>
-              
+
               <Menu.Item icon={<TeamOutlined/>} key={'users'}>
                 <NavLink key={"users"} to={"/users"}>Users</NavLink>
               </Menu.Item>
-            
+
             </Menu>
-          
+
           </Sider>
           <Layout className="site-layout" style={layoutCollapsedStyle}>
             <AppHeader collapsed={collapsed} collapsedToggle={() => setCollapsed(!collapsed)}/>
-            
+
             <Content
               className="site-layout-background"
               style={{
@@ -105,27 +104,22 @@ export const App = () => {
                         <Profile/>
                       </Suspense>
                   }/>
-                  <Route path={'/users'} render={
-                    () =>
-                      <Suspense fallback={<div>.... loading....</div>}>
-                        <UsersPage/>
-                      </Suspense>
-                  }/>
+                  <Route path={'/users'} component={UsersPage}/>
                   <Route path={'/news'} component={News}/>
                   <Route path={'/music'} component={Music}/>
                   <Route path={'/settings'} component={Settings}/>
                   <Route path={'*'} component={Login}/>
-                  
+
                 </div>
               }
-            
-            
+
+
             </Content>
-          
+
           </Layout>
         </Layout>
-        
-        
+
+
         {/*  <Header/>*/}
         {/*  <Navbar/>*/}
         {/*  {(!initialized) ? <div style={{backgroundColor: "grey"}}>загрузка <Preloader/></div>*/}
@@ -162,8 +156,8 @@ export const App = () => {
         {/*    </div>*/}
         {/*  }*/}
       </div>
-    
-    
+
+
     </BrowserRouter>
   );
 }
