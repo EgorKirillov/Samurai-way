@@ -1,56 +1,109 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import s from "./UserPage.module.css"
-import {changeUsersPerPage, UserType} from "../../Redux/usersReducer";
+import {
+  changeCurrentPage,
+  changeUsersPerPage,
+  followToggleUserThunk, getUsersThunkCreator,
+  toggleFollowInProgress,
+  UserType
+} from "../../Redux/usersReducer";
 import Preloader from "../common/Preloader/Preloader";
-import {User} from "./user/User";
+import {User} from "./Users/user/User";
 import Pagination from 'antd/lib/pagination';
 import {useAppDispatch, useAppSelector} from "../../Redux/hooks";
+import {Radio, Switch} from 'antd';
+import {UsersPaginator} from "./Paginator/UserPaginator";
+import {UsersList} from "./Users/Users";
 
-type UserPagePropsType = {
-  pagesArr: Array<number>
-  users: Array<UserType>
-  currentUsersPage: number
-  totalUsersCount: number
-  onClickFollowToggle: (id: number, isFollow: boolean) => void
-  onChangeCurrentUsersPage: (n: number) => void
-  isFatching: boolean
-  followingIsProgress: Array<number>
-  toggleFollowInProgress: (isFatchung: boolean, id: number) => void
-}
+// type UserPagePropsType = {
+//   pagesArr: Array<number>
+//   users: Array<UserType>
+//   currentUsersPage: number
+//   totalUsersCount: number
+//   onClickFollowToggle: (id: number, isFollow: boolean) => void
+//   onChangeCurrentUsersPage: (n: number) => void
+//   isFatching: boolean
+//   followingIsProgress: Array<number>
+//   toggleFollowInProgress: (isFatchung: boolean, id: number) => void
+//   toggleShowFriends: () => void
+// }
 
-const UsersPage = (props: UserPagePropsType) => {
-  const countUsersPerPage = useAppSelector(state => state.usersPage.countUsersPerPage)
-  const dispatch = useAppDispatch()
+// const UsersPage = (props: UserPagePropsType) => {
+const UsersPage = () => {
   
-  const changeUsersPerPageHandler = (currentUsersPage: number = props.currentUsersPage, countUsersPerPage: number) => {
-    dispatch(changeUsersPerPage(countUsersPerPage))
-    
+  const queryParams = useAppSelector(state => state.usersPage.usersQueryParam)
+  const isFatching = useAppSelector(state => state.usersPage.isFatching)
+  const users = useAppSelector(state => state.usersPage.users)
+  const followingIsProgress = useAppSelector(state => state.usersPage.followingInProgress)
+  
+  
+  // const currentUsersPage = useAppSelector(state => state.usersPage.usersQueryParam?.page)
+  
+  
+  // const countUsersPerPage = useAppSelector(state => state.usersPage.usersQueryParam?.count)
+  
+  // const currentUsersPage = useAppSelector(state => state.usersPage.usersQueryParam?.page)
+  
+  // const totalPagesCount = useAppSelector(state => state.usersPage.totalPagesCount)
+  
+  //
+  // const totalUsersCount = useAppSelector(state => state.usersPage.totalUsersCount)
+  //
+  // const followingIsProgress = useAppSelector(state => state.usersPage.followingInProgress)
+  //
+  
+  const dispatch = useAppDispatch()
+  // const [showFriends, setShowFriends] = useState(false)
+  //
+  // const changeUsersPerPageHandler = (currentUsersPage: number = props.currentUsersPage, countUsersPerPage: number) => {
+  //   dispatch(changeUsersPerPage(countUsersPerPage))
+  //
+  // }
+  //
+  //
+  // let pages = []
+  // for (let i = 1; i <= totalPagesCount; i++) {
+  //   pages.push(i)
+  // }
+  
+  const onClickFollowToggle = (userid: number, isFollow: boolean) => {
+    dispatch(followToggleUserThunk(userid, isFollow))
   }
+  // const toggleFollowInProgressHandler = (isFatchung: boolean, id: number) => {
+  //   dispatch(toggleFollowInProgress(isFatchung, id))
+  // }
+  // const onChangeCurrentUsersPageHandler = (pageNumber: number) => {
+  //   // dispatch(getUsersThunkCreator(pageNumber, countUsersPerPage))
+  //   dispatch(changeCurrentPage(pageNumber))
+  // }
+  
+  useEffect(() => {
+    debugger
+    if (queryParams) dispatch(getUsersThunkCreator(queryParams))
+
+  }, [dispatch, queryParams])
+  
   
   return (<div className={s.conteiner}>
-      {/*<div>{`total count=${props.totalUsersCount}`}</div>*/}
-      <Pagination current={props.currentUsersPage}
-                  onChange={props.onChangeCurrentUsersPage}
-                  total={props.totalUsersCount}
-                  showQuickJumper
-                  showSizeChanger
-                  className={s.paginator}
-                  pageSize={countUsersPerPage}
-                  pageSizeOptions={[4, 8, 16, 32, 64]}
-                  onShowSizeChange={changeUsersPerPageHandler}
-                  size={'small'}
-                  disabled={false}
-      />
+   
+      <UsersPaginator/>
       
-      <div className={s.usersContainer}>
-        {props.isFatching
-          ? <Preloader/>
-          : props.users.map(u =>
-            <User user={u} onClickFollowToggle={props.onClickFollowToggle}
-                  followingIsProgress={props.followingIsProgress}/>
-          )}
-      </div>
+      {/*<Switch defaultChecked={showFriends} onChange={toggleShowFriends} />*/}
+    
+    
+      <UsersList />
+      {/*<div className={s.usersContainer}>*/}
+      {/*  */}
+      {/*  */}
+      {/*  {isFatching*/}
+      {/*    ? <Preloader/>*/}
+      {/*    : users.map(u =>*/}
+      {/*      <User user={u} onClickFollowToggle={onClickFollowToggle}*/}
+      {/*            followingIsProgress={followingIsProgress}/>*/}
+      {/*    )}*/}
       
+      {/*</div>*/}
+    
     </div>
   );
 };

@@ -10,6 +10,11 @@ export const changeCurrentPage = (currentUsersPage: number) => ({
   currentUsersPage
 } as const)
 
+export const setUserQueryParam = (params: UserQueryParamType) => ({
+  type: "users/SET-USER-QUERY-PARAM" as const,
+  params
+} )
+
 export const changeUsersPerPage = (usersPerPage: number) => ({
   type: "users/CHANGE-USERS-PER-PAGE",
   usersPerPage
@@ -35,13 +40,14 @@ export const toggleFollowInProgress = (isFatching: boolean, id: number) => ({
 })
 
 //thunk
-export const getUsersThunkCreator = (currentUsersPage: number, countUsersPerPage: number): AppThunk =>
+export const getUsersThunkCreator = (param: UserQueryParamType): AppThunk =>
   async dispatch => {
     dispatch(setIsFatchingValue(true))
-    const res = await usersAPI.getUsers(currentUsersPage, countUsersPerPage)
+    // const res = await usersAPI.getUsers(currentUsersPage, countUsersPerPage)
+    const res = await usersAPI.getUsers(param)
     dispatch(getUsers(res.items))
     dispatch(changeTotalUsersCount(res.totalCount))
-    dispatch(changeTotalPagesCount(Math.ceil(res.totalCount / countUsersPerPage)))
+    // dispatch(changeTotalPagesCount(Math.ceil(res.totalCount / param.count)))
     dispatch(setIsFatchingValue(false));
   }
 
@@ -58,12 +64,17 @@ export const followToggleUserThunk = (userID: number, isFollow: boolean): AppThu
 
 const initialStateUsersPage: UserPageStateType = {
   users: [] as Array<UserType>,
+  usersQueryParam: {
+    count:4,
+    page:5,
+  } as UserQueryParamType,
   totalUsersCount: 20,
-  totalPagesCount: 5,
-  countUsersPerPage: 8,
-  currentUsersPage: 30,
+  // totalPagesCount: 5,
+  // countUsersPerPage: 8,
+  // currentUsersPage: 30,
   isFatching: false,
   followingInProgress: []
+  
 }
 
 //reducer
@@ -87,31 +98,37 @@ export const usersReducer = (state: UserPageStateType = initialStateUsersPage, a
         
       }
     }
-    case "users/CHANGE-CURRENT-PAGE": {
+    case "users/SET-USER-QUERY-PARAM": {
+      debugger
       return {
         ...state,
-        currentUsersPage: action.currentUsersPage,
+        usersQueryParam: { ...action.params}
       }
     }
-    case "users/CHANGE-USERS-PER-PAGE": {
-      return {
-        ...state,
-        countUsersPerPage: action.usersPerPage,
-      }
-      
-    }
+    // case "users/CHANGE-CURRENT-PAGE": {
+    //   return {
+    //     ...state,
+    //     currentUsersPage: action.currentUsersPage,
+    //   }
+    // }
+    // case "users/CHANGE-USERS-PER-PAGE": {
+    //   return {
+    //     ...state,
+    //     countUsersPerPage: action.usersPerPage,
+    //   }
+    //       }
     case "users/CHANGE-TOTAL-USERS-COUNT": {
       return {
         ...state,
         totalUsersCount: action.totalUsersCount,
       }
     }
-    case "users/CHANGE-TOTAL-PAGES-COUNT": {
-      return {
-        ...state,
-        totalPagesCount: action.totalPagesCount,
-      }
-    }
+    // case "users/CHANGE-TOTAL-PAGES-COUNT": {
+    //   return {
+    //     ...state,
+    //     totalPagesCount: action.totalPagesCount,
+    //   }
+    // }
     case "users/SET-ISFATCHING-VALUE": {
       return {
         ...state,
@@ -147,13 +164,21 @@ export type UserType = {
 
 export type UserPageStateType = {
   users: Array<UserType>
+  usersQueryParam?: UserQueryParamType
   totalUsersCount: number
-  totalPagesCount: number
-  countUsersPerPage: number
-  currentUsersPage: number
+  // totalPagesCount: number
+  // countUsersPerPage: number
+  // currentUsersPage: number
   isFatching: boolean
   followingInProgress: Array<number>
   
+}
+
+export type UserQueryParamType = {
+  count?: number
+  page?: number
+  term?: string
+  friend?: boolean
 }
 
 export type UsersReducerStateType =
@@ -165,3 +190,4 @@ export type UsersReducerStateType =
   | ReturnType<typeof setIsFatchingValue>
   | ReturnType<typeof toggleFollowInProgress>
   | ReturnType<typeof followToggle>
+  | ReturnType<typeof setUserQueryParam>

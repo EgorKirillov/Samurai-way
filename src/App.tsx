@@ -16,6 +16,7 @@ import {AppHeader} from "./components/Header/AppHeader";
 import {Layout, Menu} from 'antd';
 
 import {MessageOutlined, TeamOutlined, UserOutlined,} from '@ant-design/icons';
+import UsersPage from "./components/Users/UsersPage";
 // import { ProfileContainer } from './components/Profile/ProfileContainer';
 
 const Dialogs = lazy(() => import ('./components/Dialogs/Dialogs'))
@@ -107,7 +108,7 @@ export const App = () => {
                   <Route path={'/users'} render={
                     () =>
                       <Suspense fallback={<div>.... loading....</div>}>
-                        <UsersPageContainer/>
+                        <UsersPage/>
                       </Suspense>
                   }/>
                   <Route path={'/news'} component={News}/>
