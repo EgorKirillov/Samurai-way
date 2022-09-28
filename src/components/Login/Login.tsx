@@ -6,7 +6,7 @@ import {AppStateType} from "../../Redux/redux-store";
 import {Redirect} from "react-router-dom";
 import {Button, Checkbox, Form, Input} from 'antd';
 
-const Login = () => {
+export const Login = () => {
     const dispatch = useDispatch<any>()
     const isAuth:boolean = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
     const errorLogin:string = useSelector<AppStateType, string>(state => state.auth.errorLogin ? state.auth.errorLogin : "")
@@ -25,7 +25,7 @@ const Login = () => {
     );
 };
 
-export default Login;
+
 
 type LoginFormType = {
     login: string
@@ -50,10 +50,9 @@ const LoginForm = (props:{onSubmit:(data: LoginFormType) => void}) => {
   };
     console.log(watch("login"))
     return (
-        /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
-  
   
       <Form
+        style={{ display:'inline-block', minWidth:'500px'}}
         name="basic"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
@@ -61,7 +60,6 @@ const LoginForm = (props:{onSubmit:(data: LoginFormType) => void}) => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
-        //onSubmit={handleSubmit(onSubmit)}
       >
         <Form.Item
           label="Username"
@@ -89,36 +87,6 @@ const LoginForm = (props:{onSubmit:(data: LoginFormType) => void}) => {
           </Button>
         </Form.Item>
       </Form>
-      
-      
-      
-        // <form onSubmit={handleSubmit(onSubmit)}>
-        //     <div>
-        //         <input placeholder={"login"}
-        //                {...register("login",
-        //                    {
-        //                        required: {value: true, message: 'this field is required'},
-        //                        maxLength: {value: 50, message: 'max length 50'}
-        //                    })
-        //                }
-        //         />
-        //         {errors.login && <span>{errors.login.message}</span>}
-        //     </div>
-        //     <div>
-        //         <input placeholder={"password"}
-        //                {...register("password",
-        //                    {
-        //                        required: {value: true, message: 'this field is required'},
-        //                        maxLength: {value: 50, message: 'max length 50'}
-        //                    })
-        //                }
-        //         />
-        //         {errors.password && <span>{errors.password.message}</span>}
-        //     </div>
-        //     <div>
-        //         <input type={"checkbox"} {...register("rememberMe")}/>
-        //     </div>
-        //     <button>submit</button>
-        // </form>
+
     )
 }

@@ -59,7 +59,6 @@ export const savePhoto = (photo: File):AppThunk =>
   async dispatch => {
     const res = await profileAPI.savePhoto(photo)
     if (res.data.resultCode === 0) {
-      debugger
       dispatch(setPhotoSuccess(res.data.data.photos))
       dispatch(setAuthPhoto(res.data.data.photos.small))
       

@@ -20,7 +20,7 @@ export const UsersFilter = () => {
 
 
   return (
-    <div>
+    <div style={{display:"inline-block"}}>
 
       <Radio.Group value={friends} onChange={onChangeFriends}>
         <Radio.Button value="friends">Friends</Radio.Button>
