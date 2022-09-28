@@ -17,6 +17,7 @@ export const Login = () => {
     if (isAuth) {return <Redirect to="/profile"/>}
     return (
         <div>
+          <p style={{color:'white'}}>for example use username 'free@samuraijs.com' password 'free'</p>
             <LoginForm onSubmit={onSubmit}/>
             {errorLogin}
           
