@@ -1,5 +1,5 @@
 import { usersAPI } from '../api/api'
-import { AppThunk } from './redux-store'
+import { AppThunk } from './store'
 
 //action
 
@@ -85,9 +85,6 @@ const initialStateUsersPage: UserPageStateType = {
     friend: undefined,
   } as UserQueryParamType,
   totalUsersCount: 20,
-  // totalPagesCount: 5,
-  // countUsersPerPage: 8,
-  // currentUsersPage: 30,
   isFatching: false,
   followingInProgress: [],
 }
@@ -125,12 +122,6 @@ export const usersReducer = (
         totalUsersCount: action.totalUsersCount,
       }
     }
-    // case "users/CHANGE-TOTAL-PAGES-COUNT": {
-    //   return {
-    //     ...state,
-    //     totalPagesCount: action.totalPagesCount,
-    //   }
-    // }
     case 'users/SET-ISFATCHING-VALUE': {
       return {
         ...state,
@@ -167,9 +158,6 @@ export type UserPageStateType = {
   users: Array<UserType>
   usersQueryParam?: UserQueryParamType
   totalUsersCount: number
-  // totalPagesCount: number
-  // countUsersPerPage: number
-  // currentUsersPage: number
   isFatching: boolean
   followingInProgress: Array<number>
 }

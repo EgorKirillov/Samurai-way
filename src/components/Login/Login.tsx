@@ -2,7 +2,7 @@ import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { loginThunk } from '../../Redux/authReducer'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppStateType } from '../../Redux/redux-store'
+import { AppStateType } from '../../Redux/store'
 import { Redirect } from 'react-router-dom'
 import { Button, Checkbox, Form, Input } from 'antd'
 

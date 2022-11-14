@@ -1,6 +1,7 @@
+import { useEffect } from 'react'
+
 import { useAppDispatch, useAppSelector } from '../../../Redux/hooks'
 import { followToggleUserThunk, getUsersThunkCreator } from '../../../Redux/usersReducer'
-import { useEffect } from 'react'
 import { Preloader } from '../../common/Preloader/Preloader'
 import { User } from './user/User'
 import s from './Users.module.css'

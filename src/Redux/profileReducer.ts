@@ -1,7 +1,6 @@
-import { ProfilePageType } from './store'
 import { Dispatch } from 'redux'
 import { profileAPI } from '../api/api'
-import { AppThunk } from './redux-store'
+import { AppThunk } from './store'
 import { setAuthPhoto } from './authReducer'
 
 //action
@@ -221,4 +220,9 @@ export type MyPostsType = {
   id: number
   postText: string
   likeCount: number
+}
+export type ProfilePageType = {
+  posts: Array<MyPostsType>
+  userProfile: UserProfileType
+  status: string
 }

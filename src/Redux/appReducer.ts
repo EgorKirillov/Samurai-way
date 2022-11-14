@@ -1,5 +1,5 @@
 import { authMeThunk } from './authReducer'
-import { AppThunk } from './redux-store'
+import { AppThunk } from './store'
 
 // action
 export const initializedSuccess = () => ({ type: 'app/SET-INITIALIZED' } as const)

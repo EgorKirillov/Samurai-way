@@ -2,27 +2,22 @@
   grid-area: n;
   background-color: mediumpurple;
   font-family: 'Cabin', sans-serif;
-  /* src: url(https://fonts.googleapis.com/css2?family=Cabin:wdth,wght@90,400&display=swap);
-    font-family: Pompadur; !* Имя шрифта *!
-    src: url(fonts/pompadur.ttf); !* Путь к файлу со шрифтом *!*/
   padding: 10px;
 }
+
 .item {
   padding: 5px;
-  text-decoration: none; /* cсылка без подчеркивания*/
+  text-decoration: none;
 }
 
 .item a {
   color: white;
-  /*height: 20px;*/
-  /*border: 1px ;*/
-  /*box-shadow: 8px 8px 5px #444;*/
   padding: 5px;
-  text-decoration: none; /* cсылка без подчеркивания*/
-  /*background-image: linear-gradient(180deg, #fff, #ddd 40%, #ccc);*/
+  text-decoration: none;
+
 }
+
 .item a.active {
   color: gold;
   padding-left: 15px;
-  /*background-color: greenyellow;*/
 }

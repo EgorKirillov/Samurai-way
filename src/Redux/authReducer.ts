@@ -1,5 +1,5 @@
 import { authAPI, profileAPI } from '../api/api'
-import { AppThunk } from './redux-store'
+import { AppThunk } from './store'
 
 //action
 export const setAuthData = (

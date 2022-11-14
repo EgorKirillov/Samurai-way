@@ -1,6 +1,6 @@
+import React, { useState } from 'react'
 import { Avatar, Button, Comment, Form, Input, List } from 'antd'
 import moment from 'moment'
-import React, { useState } from 'react'
 import { useAppSelector } from '../../../Redux/hooks'
 
 const { TextArea } = Input

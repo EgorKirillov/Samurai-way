@@ -16,6 +16,7 @@ export const AppHeader = memo(({ collapsed, collapsedToggle }: AppHeaderProps) =
   const loginName = useAppSelector(state => state.auth.login)
   const isAuth = useAppSelector(state => state.auth.isAuth)
   const ava = useAppSelector(state => state.auth.photo)
+
   const history = useHistory()
   const dispatch = useAppDispatch()
 
@@ -34,8 +35,6 @@ export const AppHeader = memo(({ collapsed, collapsedToggle }: AppHeaderProps) =
     } else if (key === 'login') {
       history.push('/login')
     }
-
-    // alert(`Click on item ${key}`);
   }
   const menu = (
     <Menu
@@ -75,6 +74,7 @@ export const AppHeader = memo(({ collapsed, collapsedToggle }: AppHeaderProps) =
             />
           )}
         </Col>
+
         <Col style={avaCollapsedStyle}>
           <div className={s.loginBlock}>
             <Popover content={loginName} placement={'left'}>
@@ -89,15 +89,9 @@ export const AppHeader = memo(({ collapsed, collapsedToggle }: AppHeaderProps) =
               </a>
             </Dropdown>
             {!isAuth && <NavLink to={'/login'}>not authorized</NavLink>}
-
-            {/*{isAuth && <Button onClick={logoutHandler}>log out</Button>}*/}
           </div>
         </Col>
       </Row>
     </Header>
   )
 })
-
-// import { DownOutlined } from '@ant-design/icons';
-// import type { MenuProps } from 'antd';
-// import { Dropdown, Menu, message, Space } from 'antd';
