@@ -1,25 +1,24 @@
 .formContact {
-    display: grid;
-    grid-template-columns: auto 3fr;
-    /*grid-template-rows:fit-content(80%);*/
-    grid-auto-rows: 30px;
-    grid-gap: 5px 5px;
+  display: grid;
+  grid-template-columns: auto 3fr;
+  /*grid-template-rows:fit-content(80%);*/
+  grid-auto-rows: 30px;
+  grid-gap: 5px 5px;
 
-    margin-top: 20px;
+  margin-top: 20px;
 
-    width: 60%;
+  width: 60%;
 }
 
-
 .formLabel {
-    display: block;
-    /*grid-area: l;*/
+  display: block;
+  /*grid-area: l;*/
 }
 
 .formInput {
-    color: inherit;
-    background-color: inherit;
-    border: 1px solid white;
-    display: block;
-    /*grid-area: i;*/
+  color: inherit;
+  background-color: inherit;
+  border: 1px solid white;
+  display: block;
+  /*grid-area: i;*/
 }

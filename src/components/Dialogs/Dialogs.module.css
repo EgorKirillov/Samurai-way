@@ -1,44 +1,41 @@
 .content {
-    display: grid;
-    grid-template-columns: 4fr 10fr;
-    padding: 0.5em;
-
+  display: grid;
+  grid-template-columns: 4fr 10fr;
+  padding: 0.5em;
 }
 
 .dialogList {
- /*   color: white;
+  /*   color: white;
     text-decoration: none;
 */
-    min-width: 200px;
+  min-width: 200px;
 }
 
-.dialogList a{
-    color: white;
-    text-decoration: none;
-    vertical-align: 50%;
-
-  }
+.dialogList a {
+  color: white;
+  text-decoration: none;
+  vertical-align: 50%;
+}
 .dialogList a.dialogListActive {
-    color: gold;
-    text-decoration: none;
-
+  color: gold;
+  text-decoration: none;
 }
 .dialog {
-    padding: 10px;
+  padding: 10px;
 }
-.dialog img{
-    width: 40px;
-    height: 40px;
+.dialog img {
+  width: 40px;
+  height: 40px;
 }
 
 .activeDialog {
-    /*color: greenyellow;*/
+  /*color: greenyellow;*/
 }
 
 .messageList {
-    color: white;
+  color: white;
 }
 
 .message {
-    padding: 0.3em;
+  padding: 0.3em;
 }

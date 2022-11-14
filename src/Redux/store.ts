@@ -1,41 +1,39 @@
-import {ProfileReducerActionType, UserProfileType} from "./profileReducer";
-import {DialogsReducerActionType} from "./dialogsReducer";
+import { ProfileReducerActionType, UserProfileType } from './profileReducer'
+import { DialogsReducerActionType } from './dialogsReducer'
 
 export type MessageTypes = {
-    messageText: string
+  messageText: string
 }
 export type DialogItemTypes = {
-    linkID: number
-    userName: string
-    avatarLink: string
+  linkID: number
+  userName: string
+  avatarLink: string
 }
 export type MyPostsType = {
-    id: number,
-    postText: string
-    likeCount: number
+  id: number
+  postText: string
+  likeCount: number
 }
 export type DialogPagesType = {
-    dialogsData: Array<DialogItemTypes>
-    messagesData: Array<MessageTypes>
-    newMessageText: string
-
+  dialogsData: Array<DialogItemTypes>
+  messagesData: Array<MessageTypes>
+  newMessageText: string
 }
 export type ProfilePageType = {
-    posts: Array<MyPostsType>
-    userProfile: UserProfileType
-    status:string
-
+  posts: Array<MyPostsType>
+  userProfile: UserProfileType
+  status: string
 }
 export type AppStateType = {
-    dialogsPage: DialogPagesType
-    profilePage: ProfilePageType
+  dialogsPage: DialogPagesType
+  profilePage: ProfilePageType
 }
 export type StoreType = {
-    //_state: AppStateType,
-    //_onChange: () => void,
-    getState: () => AppStateType
-    subscribe: (observer: () => void) => void,
-    dispatch: (action: ActionTypes) => void,
+  //_state: AppStateType,
+  //_onChange: () => void,
+  getState: () => AppStateType
+  subscribe: (observer: () => void) => void
+  dispatch: (action: ActionTypes) => void
 }
 export type ActionTypes = ProfileReducerActionType | DialogsReducerActionType
 

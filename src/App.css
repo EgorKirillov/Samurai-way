@@ -1,5 +1,5 @@
 .app-wrapper {
-min-width: 600px
+  min-width: 600px;
   /*margin: auto;*/
   /*display: grid;*/
   /*width: 1200px;*/
@@ -9,9 +9,8 @@ min-width: 600px
   /*grid-template-rows: 60px 1fr;*/
   /*grid-template-columns: 2fr 10fr;*/
   /*grid-gap: 10px;*/
-
 }
 .app-wrapper-content {
   /*grid-area: c;*/
   /*background-color: #e6f7ff;*/
-  }
+}
